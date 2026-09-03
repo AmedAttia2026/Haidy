@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>غرفة التحكم | الأستاذة هايدي عطية</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Readex+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #030712;
+            --bg-card: rgba(13, 20, 38, 0.95);
+            --cyan: #00f2fe;
+            --blue: #38bdf8;
+            --purple: #9b51e0;
+            --emerald: #10b981;
+            --rose: #f43f5e;
+            --amber: #f59e0b;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --font-sans: 'Readex Pro', 'Cairo', sans-serif;
+            --radius-md: 20px;
+            --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-sans); }
+        body { background: var(--bg-primary); color: var(--text-primary); padding: 1.2rem 3%; min-height: 100vh; }
+
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--bg-card); border: 1px solid rgba(0, 242, 254, 0.25);
+            padding: 1.2rem 1.8rem; border-radius: var(--radius-md); margin-bottom: 1.2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        /* شريط البروفايل العلوي فوق الصفوف */
+        .teacher-profile-bar {
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(0, 242, 254, 0.04); border: 1px solid rgba(0, 242, 254, 0.2);
+            padding: 10px 18px; border-radius: 16px; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 10px;
+        }
+
+        .grade-tabs {
+            display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 1.5rem;
+        }
+        .tab-link {
+            padding: 10px 20px; border-radius: 14px; background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.08); color: var(--text-secondary);
+            text-decoration: none; font-weight: 700; font-size: 0.9rem; white-space: nowrap; transition: var(--transition-smooth);
+        }
+        .tab-link:hover { border-color: var(--cyan); color: var(--cyan); }
+        .tab-link.active {
+            background: linear-gradient(135deg, var(--cyan), #0284c7);
+            color: #030712; border-color: var(--cyan);
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.35);
+        }
+
+        /* 🧭 شريط التنقل العلوي NAV */
+        .section-nav {
+            display: flex; gap: 8px; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 12px; overflow-x: auto;
+        }
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary); padding: 10px 18px; border-radius: 14px;
+            font-size: 0.92rem; font-weight: 800; cursor: pointer; transition: var(--transition-smooth);
+            display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; position: relative;
+        }
+        .nav-btn:hover { color: #fff; border-color: var(--cyan); background: rgba(0, 242, 254, 0.06); }
+        .nav-btn.active {
+            background: rgba(0, 242, 254, 0.15); border-color: var(--cyan);
+            color: var(--cyan); box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+        }
+
+        .badge-notify {
+            background: var(--rose); color: #fff; font-size: 0.75rem; font-weight: 900;
+            padding: 2px 7px; border-radius: 9999px; box-shadow: 0 0 10px rgba(244, 63, 94, 0.8);
+            animation: pulseNotify 1.5s infinite;
+        }
+        @keyframes pulseNotify { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+
+        .dashboard-section { display: none; }
+        .dashboard-section.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card {
+            background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-md); padding: 1.6rem; margin-bottom: 1.8rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        }
+        .card-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 10px; }
+
+        .session-control-bar {
+            display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;
+            background: rgba(0,0,0,0.35); padding: 10px 14px; border-radius: 14px;
+            border: 1px solid rgba(0,242,254,0.15); margin-bottom: 1.2rem;
+        }
+        .session-badge {
+            padding: 8px 16px; border-radius: 10px; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1); color: var(--text-secondary);
+            font-size: 0.88rem; font-weight: 700; cursor: pointer; text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+        .session-badge:hover { color: #fff; border-color: var(--cyan); }
+        .session-badge.active {
+            background: var(--cyan); color: #030712; border-color: var(--cyan); font-weight: 800;
+        }
+        .btn-new-session {
+            background: linear-gradient(135deg, var(--emerald), #059669); color: #fff;
+            border: none; padding: 8px 16px; border-radius: 10px; font-weight: 800;
+            font-size: 0.88rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+            transition: var(--transition-smooth);
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px 14px; text-align: right; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+        th { color: var(--text-secondary); font-size: 0.9rem; font-weight: 600; }
+
+        @media (max-width: 768px) {
+            .mobile-hide { display: none !important; }
+            body { padding: 0.8rem 2%; }
+            th, td { padding: 10px 6px; font-size: 0.84rem; }
+            .btn-act { padding: 6px 10px; font-size: 0.8rem; }
+            .card { padding: 1.2rem 0.8rem; }
+            .nav-btn { padding: 8px 12px; font-size: 0.82rem; }
+        }
+
+        .btn-act {
+            padding: 8px 14px; border-radius: 10px; border: none; font-weight: 700;
+            cursor: pointer; transition: var(--transition-smooth); display: inline-flex; align-items: center; gap: 5px;
+        }
+        .btn-p { background: rgba(16, 185, 129, 0.15); color: var(--emerald); border: 1px solid var(--emerald); }
+        .btn-a { background: rgba(244, 63, 94, 0.15); color: var(--rose); border: 1px solid var(--rose); }
+        .btn-del { background: rgba(244, 63, 94, 0.15); color: var(--rose); border: 1px solid var(--rose); }
+        .btn-edit { background: rgba(245, 158, 11, 0.15); color: var(--amber); border: 1px solid var(--amber); }
+
+        .word-box {
+            border: 2px dashed rgba(0, 242, 254, 0.35); background: rgba(0, 242, 254, 0.02);
+            border-radius: 18px; padding: 1.8rem; text-align: center; margin-bottom: 1.5rem;
+        }
+
+        .confirm-modal, .preview-modal {
+            position: fixed; inset: 0; background: rgba(3, 7, 18, 0.88);
+            backdrop-filter: blur(20px); display: none; align-items: center; justify-content: center;
+            z-index: 1000; padding: 1.2rem;
+        }
+        .confirm-modal.active, .preview-modal.active { display: flex; }
+
+        .box-inner {
+            background: #0c1427; border: 1px solid var(--rose); border-radius: 22px;
+            padding: 2rem; max-width: 460px; width: 100%; text-align: center;
+        }
+        .box-inner-session {
+            background: #0c1427; border: 1px solid var(--cyan); border-radius: 24px;
+            padding: 2.2rem; max-width: 460px; width: 100%; text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 242, 254, 0.25);
+        }
+
+        .preview-inner {
+            background: #0c1427; border: 1px solid var(--cyan); border-radius: 24px;
+            padding: 2rem; max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; text-align: right;
+        }
+        .form-ctrl {
+            width: 100%; padding: 12px 14px; background: rgba(7, 12, 26, 0.9);
+            border: 1px solid rgba(0, 242, 254, 0.2); border-radius: 12px;
+            color: #fff; font-size: 0.95rem; outline: none; margin-top: 6px;
+        }
+
+        .exam-report-card {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(0, 242, 254, 0.2);
+            border-radius: 18px; padding: 1.4rem; margin-bottom: 1.2rem;
+            transition: var(--transition-smooth);
+        }
+        .exam-report-card:hover { border-color: var(--cyan); }
+        .exam-report-header {
+            display: flex; justify-content: space-between; align-items: center; cursor: pointer; flex-wrap: wrap; gap: 10px;
+        }
+        .exam-report-body {
+            display: none; margin-top: 1.2rem; padding-top: 1.2rem; border-top: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+        .exam-report-body.open { display: block; animation: fadeIn 0.3s ease-in-out; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div style="display:flex; align-items:center; gap:14px;">
+            <div style="width:50px; height:50px; border-radius:50%; border:2px solid var(--cyan); overflow:hidden; background:#070d1e; flex-shrink:0;">
+                <img id="headerTeacherAvatar" src="{{ teacher_avatar }}" alt="صورة المعلمة" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div>
+                <h2 style="color:var(--cyan); font-size:1.3rem;">غرفة الإدارة والتحكم | {{ teacher_name }} 👑</h2>
+                <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:2px;">
+                    المرحلة الدراسية: <strong style="color:#fff;">{{ current_grade_title }}</strong>
+                </p>
+            </div>
+        </div>
+        <a href="/logout" style="color:var(--rose); text-decoration:none; font-weight:700; padding:6px 14px; border:1px solid var(--rose); border-radius:10px; font-size:0.88rem;">خروج</a>
+    </header>
+
+    <!-- 🌟 زر تعديل البروفايل والصورة الشخصية (فوق الصفوف مباشرة) -->
+    <div class="teacher-profile-bar">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <span style="font-size:1.3rem;">👑</span>
+            <span style="font-weight:700; color:#fff; font-size:0.95rem;">الملف التعريفي للأستاذة هايدي عطية</span>
+        </div>
+        <button type="button" class="btn-act" style="background:linear-gradient(135deg, var(--cyan), #0284c7); color:#030712; padding:8px 20px; border-radius:12px;" onclick="openProfileModal()">
+            🖼️ تعديل الصورة الشخصية والبروفايل
+        </button>
+    </div>
+
+    <!-- أزرار الصفوف الدراسية الخمسة -->
+    <div class="grade-tabs">
+        {% for g_key, g_title in grades.items() %}
+        <a href="/teacher-portal?grade={{ g_key }}" class="tab-link {{ 'active' if current_grade == g_key else '' }}">
+            {{ g_title }}
+        </a>
+        {% endfor %}
+    </div>
+
+    <!-- 🧭 شريط التنقل العلوي NAV -->
+    <div class="section-nav">
+        <button class="nav-btn" onclick="switchSection('pending', this)">
+            <span>🔔</span> طلبات الانضمام الجديدة
+            {% if pending_students|length > 0 %}
+                <span class="badge-notify">{{ pending_students|length }}</span>
+            {% endif %}
+        </button>
+        <button class="nav-btn active" onclick="switchSection('attendance', this)">
+            <span>📋</span> كشف الحضور والغياب
+        </button>
+        <button class="nav-btn" onclick="switchSection('students-list', this)">
+            <span>👥</span> شؤون وإحصائيات الطلاب
+        </button>
+        <button class="nav-btn" onclick="switchSection('exams', this)">
+            <span>📝</span> بنك وإدارة الامتحانات
+        </button>
+        <button class="nav-btn" onclick="switchSection('results', this)">
+            <span>📊</span> سجل درجات وتقارير الامتحانات
+        </button>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- 🔔 1. قسم طلبات الانضمام الجديدة -->
+    <!-- ============================================================= -->
+    <div id="sec-pending" class="dashboard-section">
+        <div class="card">
+            <div class="card-header-bar">
+                <h3 style="color:var(--cyan);">🔔 طلبات انضمام الطلاب بانتظار موافقتكِ ({{ current_grade_title }})</h3>
+                <span style="color:var(--text-secondary); font-size:0.88rem;">الطلبات المعلقة: {{ pending_students|length }} طالب</span>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>اسم الطالب</th>
+                        <th>كود مقترح</th>
+                        <th>هاتف الطالب</th>
+                        <th>هاتف ولي الأمر</th>
+                        <th style="text-align:center;">قرار المعلمة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in pending_students %}
+                    <tr id="pending_row_{{ p._id }}">
+                        <td><strong style="color:#fff; font-size:1rem;">{{ p.name }}</strong></td>
+                        <td><span style="color:var(--cyan); font-weight:800;">{{ p.student_code }}</span></td>
+                        <td>{{ p.phone }}</td>
+                        <td style="color:var(--text-secondary);">{{ p.parent_phone or 'غير مسجل' }}</td>
+                        <td style="text-align:center; white-space:nowrap;">
+                            <button class="btn-act btn-p" onclick="approveStudent('{{ p._id }}', '{{ p.name }}')">
+                                موافقة واعتماد ✓
+                            </button>
+                            <button class="btn-act btn-a" onclick="rejectStudent('{{ p._id }}', '{{ p.name }}')">
+                                رفض الطلب ✕
+                            </button>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" style="text-align:center; color:var(--text-secondary); padding:2.5rem;">
+                            ✨ لا توجد طلبات انضمام جديدة معلقة لهذا الصف حالياً.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- 📋 2. قسم كشف الحضور والغياب (مع إمكانية حذف كشف الحصة) -->
+    <!-- ============================================================= -->
+    <div id="sec-attendance" class="dashboard-section active">
+        <div class="card">
+            <div class="card-header-bar">
+                <h3 style="color:var(--cyan);">📋 كشف رصد طلاب ({{ current_grade_title }}) - {{ today }}</h3>
+                <span style="color:var(--text-secondary); font-size:0.88rem;">العدد المعتمد: {{ students|length }} طالب</span>
+            </div>
+
+            <div class="session-control-bar">
+                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                    <span style="font-weight:700; color:var(--cyan); font-size:0.88rem;">الحصص:</span>
+                    {% for sess in existing_sessions %}
+                    <a href="/teacher-portal?grade={{ current_grade }}&session={{ sess }}" class="session-badge {{ 'active' if current_session == sess else '' }}">
+                        {{ sess }}
+                    </a>
+                    {% endfor %}
+                    <button type="button" class="btn-new-session" onclick="openNewSessionModal()">
+                        <span>➕ إنشاء حصة جديدة</span>
+                    </button>
+                </div>
+
+                <button type="button" class="btn-act btn-del" style="font-size:0.82rem; padding:6px 14px;" onclick="openDeleteSessionModal('{{ current_session }}')">
+                    🗑️ مسح كشف ({{ current_session }}) بالكامل
+                </button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th class="mobile-hide">كود الطالب</th>
+                        <th>اسم الطالب</th>
+                        <th class="mobile-hide">هاتف ولي الأمر</th>
+                        <th>حالة ({{ current_session }})</th>
+                        <th>الإجراء المباشر</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s in students %}
+                    <tr>
+                        <td class="mobile-hide"><strong>{{ s.student_code }}</strong></td>
+                        <td><strong>{{ s.name }}</strong></td>
+                        <td class="mobile-hide" style="color:var(--text-secondary);">{{ s.parent_phone or 'غير مسجل' }}</td>
+                        <td>
+                            <span id="st_badge_{{ s._id }}" style="font-weight:800; color: {{ 'var(--emerald)' if today_status.get(s._id) == 'حاضر' else ('var(--rose)' if today_status.get(s._id) == 'غائب' else 'var(--text-secondary)') }}">
+                                {{ today_status.get(s._id) or 'لم يُرصد' }}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn-act btn-p" onclick="recordAttendance('{{ s._id }}', 'حاضر')">حضور ✓</button>
+                            <button class="btn-act btn-a" onclick="openAbsenceConfirm('{{ s._id }}', '{{ s.name }}')">غياب ✕</button>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="5" style="text-align:center; color:var(--text-secondary); padding:2rem;">لا يوجد طلاب معتمدون في هذا الصف حتى الآن.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- 👥 3. قسم شؤون وإحصائيات الطلاب -->
+    <!-- ============================================================= -->
+    <div id="sec-students-list" class="dashboard-section">
+        <div class="card">
+            <div class="card-header-bar">
+                <h3 style="color:var(--cyan);">👥 شؤون وإحصائيات حضور وغياب طلاب ({{ current_grade_title }})</h3>
+                <span style="color:var(--text-secondary); font-size:0.88rem;">إدارة شاملة لملفات الطلاب</span>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th class="mobile-hide">كود الطالب</th>
+                        <th>اسم الطالب</th>
+                        <th class="mobile-hide">هاتف ولي الأمر</th>
+                        <th style="color:var(--emerald);">مرات الحضور</th>
+                        <th style="color:var(--rose);">مرات الغياب</th>
+                        <th>نسبة الالتزام</th>
+                        <th style="text-align:center;">إدارة الطالب</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s in students %}
+                    <tr id="student_row_{{ s._id }}">
+                        <td class="mobile-hide"><strong>{{ s.student_code }}</strong></td>
+                        <td><strong>{{ s.name }}</strong></td>
+                        <td class="mobile-hide" style="color:var(--text-secondary);">{{ s.parent_phone or 'غير مسجل' }}</td>
+                        <td><strong style="color:var(--emerald); font-size:1.05rem;">{{ s.present_count }}</strong> حصص</td>
+                        <td><strong style="color:var(--rose); font-size:1.05rem;">{{ s.absent_count }}</strong> حصص</td>
+                        <td>
+                            <span style="font-weight:800; color: {{ 'var(--emerald)' if s.attendance_rate >= 85 else ('var(--amber)' if s.attendance_rate >= 60 else 'var(--rose)') }}">
+                                {{ s.attendance_rate }}%
+                            </span>
+                        </td>
+                        <td style="text-align:center;">
+                            <button class="btn-act btn-del" onclick="deleteStudentPermanently('{{ s._id }}', '{{ s.name }}')">
+                                🗑️ حذف الطالب
+                            </button>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="7" style="text-align:center; color:var(--text-secondary); padding:2rem;">لا يوجد طلاب مسجلون حتى الآن.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- 📝 4. قسم بنك وإدارة الامتحانات -->
+    <!-- ============================================================= -->
+    <div id="sec-exams" class="dashboard-section">
+        <div class="card">
+            <div class="card-header-bar">
+                <h3 style="color:var(--cyan);">📝 الامتحانات المنشورة لـ ({{ current_grade_title }})</h3>
+            </div>
+            
+            <div class="word-box">
+                <p style="margin-bottom:1.2rem; color:var(--text-secondary); font-size:1rem;">
+                    ارفعي ملف امتحان Word (.docx) - يدعم جميع أنواع الأسئلة:
+                </p>
+                <input type="file" id="docxInput" accept=".docx" style="display:none;" onchange="handleDocxUpload(this)">
+                <button class="btn-act" style="background:linear-gradient(135deg, var(--cyan), #0284c7); color:#030712; padding:12px 26px; font-size:1rem; border-radius:12px;" onclick="document.getElementById('docxInput').click()">
+                    📂 رفع امتحان جديد عبر Word
+                </button>
+                <div id="docxStatus" style="margin-top:10px; font-weight:700;"></div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>عنوان الامتحان</th>
+                        <th>المدة</th>
+                        <th>موعد الإغلاق</th>
+                        <th>درجة MCQ</th>
+                        <th>درجة T/F</th>
+                        <th>الإجمالي</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ex in exams %}
+                    <tr id="exam_row_{{ ex._id }}">
+                        <td><strong>{{ ex.title }}</strong></td>
+                        <td>{{ ex.duration }} دقيقة</td>
+                        <td>{{ ex.deadline or 'متاح دائماً' }}</td>
+                        <td><span style="color:var(--blue); font-weight:700;">{{ ex.points_mcq or 5 }}</span></td>
+                        <td><span style="color:var(--emerald); font-weight:700;">{{ ex.points_tf or 2.5 }}</span></td>
+                        <td><strong style="color:var(--cyan);">{{ ex.total_marks }}</strong> درجة</td>
+                        <td>
+                            <button class="btn-act btn-edit" onclick="openEditExamModal('{{ ex._id }}')">✏️ تعديل</button>
+                            <button class="btn-act btn-del" onclick="deleteExam('{{ ex._id }}', '{{ ex.title }}')">🗑️ حذف</button>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="7" style="text-align:center; color:var(--text-secondary); padding:1.5rem;">لا توجد امتحانات منشورة لهذا الصف بعد.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- 📊 5. قسم سجل الدرجات والتقارير -->
+    <!-- ============================================================= -->
+    <div id="sec-results" class="dashboard-section">
+        <div class="card">
+            <div class="card-header-bar">
+                <h3 style="color:var(--cyan);">📊 سجل نتائج وتقارير الامتحانات ({{ current_grade_title }})</h3>
+                <span style="color:var(--text-secondary); font-size:0.88rem;">اضغطي على أي امتحان لفتح كشف درجات طلابه</span>
+            </div>
+
+            {% for ex in exams %}
+            <div class="exam-report-card">
+                <div class="exam-report-header" onclick="toggleExamResults('{{ ex._id }}')">
+                    <div>
+                        <h4 style="color:#fff; font-size:1.15rem; display:inline-flex; align-items:center; gap:8px;">
+                            <span style="color:var(--cyan);">📝</span> {{ ex.title }}
+                        </h4>
+                        <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:4px;">
+                            الدرجة الكلية: <strong style="color:var(--cyan);">{{ ex.total_marks }}</strong> | 
+                            عدد الذين أدوا الامتحان: <strong style="color:var(--emerald);">{{ ex.submissions_count }}</strong> طالب
+                        </p>
+                    </div>
+                    <button class="btn-act" style="background:rgba(0, 242, 254, 0.1); color:var(--cyan); border:1px solid var(--cyan);">
+                        <span>عرض كشف درجات الطلاب</span> 👁️
+                    </button>
+                </div>
+
+                <div id="results_box_{{ ex._id }}" class="exam-report-body">
+                    {% if ex.results|length > 0 %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>اسم الطالب</th>
+                                <th>الدرجة المحصلة</th>
+                                <th>النسبة المئوية</th>
+                                <th>تاريخ ووقت الحل</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for r in ex.results %}
+                            <tr>
+                                <td><strong>{{ r.student_name }}</strong></td>
+                                <td>
+                                    {% if r.score == 'محضر غش' %}
+                                        <span style="color:var(--rose); font-weight:800;">🚨 محضر غش</span>
+                                    {% else %}
+                                        <strong style="color:var(--emerald); font-size:1.05rem;">{{ r.score }}</strong> / {{ r.total_marks }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if r.score != 'محضر غش' and r.total_marks > 0 %}
+                                        {% set pct = (r.score / r.total_marks * 100)|round(1) %}
+                                        <span style="font-weight:700; color: {{ 'var(--emerald)' if pct >= 85 else ('var(--amber)' if pct >= 50 else 'var(--rose)') }}">
+                                            {{ pct }}%
+                                        </span>
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                                <td style="color:var(--text-secondary);">{{ r.date }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p style="text-align:center; color:var(--text-secondary); padding:1rem;">لم يقم أي طالب بتقديم هذا الامتحان حتى الآن.</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% else %}
+            <p style="text-align:center; color:var(--text-secondary); padding:2rem;">لا توجد امتحانات مسجلة لهذا الصف بعد.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- 🖼️ نافذة تعديل البروفايل والصورة الشخصية للأستاذة هايدي -->
+    <div class="confirm-modal" id="profileModal">
+        <div class="box-inner-session" style="max-width:480px;">
+            <div style="width:130px; height:130px; margin:0 auto 1.2rem auto; border-radius:50%; border:3px solid var(--cyan); box-shadow:0 0 30px rgba(0,242,254,0.4); overflow:hidden; background:#070d1e;">
+                <img id="profilePreviewImg" src="{{ teacher_avatar }}" alt="معاينة الصورة" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+
+            <h3 style="color:var(--cyan); margin-bottom:0.6rem;">تعديل الصورة الشخصية والاسم</h3>
+            <p style="color:var(--text-secondary); font-size:0.85rem; margin-bottom:1.2rem;">
+                اختاري صورتكِ الجديدة لتظهر فوراً في الصفحة الرئيسية وفي كل أنحاء المنصة:
+            </p>
+
+            <div style="margin-bottom:1.2rem; text-align:right;">
+                <label style="font-size:0.85rem; color:var(--cyan); font-weight:700;">اسم المعلمة:</label>
+                <input type="text" id="profileNameInput" class="form-ctrl" value="{{ teacher_name }}" placeholder="اسم المعلمة">
+            </div>
+
+            <input type="file" id="avatarFileInput" accept="image/*" style="display:none;" onchange="previewImageFile(this)">
+            <button type="button" class="btn-act" style="background:rgba(255,255,255,0.08); color:#fff; width:100%; padding:12px; justify-content:center; border-radius:12px; border:1px dashed var(--cyan);" onclick="document.getElementById('avatarFileInput').click()">
+                📷 اختيار صورة جديدة من جهازكِ
+            </button>
+
+            <div style="display:flex; gap:10px; margin-top:1.5rem;">
+                <button type="button" class="btn-act" style="flex:1; background:linear-gradient(135deg, var(--emerald), #059669); color:#fff; padding:12px; justify-content:center; border-radius:12px;" onclick="saveProfileChanges()">
+                    💾 حفظ واعتماد الصورة
+                </button>
+                <button type="button" class="btn-act" style="flex:1; background:rgba(255,255,255,0.08); color:#fff; justify-content:center; border-radius:12px;" onclick="closeProfileModal()">
+                    إلغاء
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🚨 نافذة تحذير مسح كشف الحصة -->
+    <div class="confirm-modal" id="deleteSessionModal">
+        <div class="box-inner" style="border: 2px solid var(--rose); box-shadow: 0 0 50px rgba(244, 63, 94, 0.45);">
+            <span style="font-size:3.2rem;">🚨</span>
+            <h3 style="color:var(--rose); margin:0.8rem 0; font-size:1.3rem;">تحذير شديد: حذف كشف الحصة بالكامل!</h3>
+            <p style="color:#fff; font-size:0.95rem; line-height:1.7;" id="deleteSessionModalText"></p>
+            <p style="color:var(--rose); font-size:0.85rem; margin-top:10px; font-weight:700; background:rgba(244,63,94,0.1); padding:8px; border-radius:10px;">
+                ⚠️ تنبيه نهائي: سيتم مسح الحصة من القائمة وحذف كافة تسجيلات حضور وغياب الطلاب المسجلة بها لليوم، ولن يمكن استرجاعها مطلقاً!
+            </p>
+            <div style="display:flex; gap:12px; margin-top:1.8rem;">
+                <button class="btn-act btn-a" style="flex:1; padding:12px; justify-content:center; font-size:0.95rem;" onclick="confirmDeleteSession()">
+                    نعم، حذف الحصة وسجلاتها نهائياً 🗑️
+                </button>
+                <button class="btn-act" style="flex:1; background:rgba(255,255,255,0.1); color:#fff; justify-content:center;" onclick="closeDeleteSessionModal()">
+                    تراجع وإلغاء
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة إنشاء حصة جديدة -->
+    <div class="confirm-modal" id="newSessionModal">
+        <div class="box-inner-session">
+            <span style="font-size:2.8rem;">📚</span>
+            <h3 style="color:var(--cyan); margin:0.8rem 0;">إنشاء حصة جديدة وحفظها</h3>
+            <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:1.2rem;">
+                اكتبي اسم الحصة لرصد الغياب فيها بشكل دائم:
+            </p>
+            <input type="text" id="newSessionInput" class="form-ctrl" style="text-align:center; font-weight:800; font-size:1.1rem;" placeholder="مثال: الحصة الثانية">
+            <div style="display:flex; gap:12px; margin-top:1.5rem;">
+                <button class="btn-act" style="flex:1; background:linear-gradient(135deg, var(--emerald), #059669); color:#fff; padding:12px; justify-content:center; border-radius:12px;" onclick="confirmCreateSession()">
+                    اعتماد وحفظ الحصة ✓
+                </button>
+                <button class="btn-act" style="flex:1; background:rgba(255,255,255,0.08); color:#fff; justify-content:center; border-radius:12px;" onclick="closeNewSessionModal()">
+                    إلغاء
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة تأكيد تسجيل الغياب لطالب -->
+    <div class="confirm-modal" id="absenceModal">
+        <div class="box-inner">
+            <span style="font-size:2.8rem;">⚠️</span>
+            <h3 style="color:var(--rose); margin:0.8rem 0;">تأكيد رصد الغياب</h3>
+            <p style="color:var(--text-secondary); line-height:1.7;" id="absenceModalText"></p>
+            <div style="display:flex; gap:12px; margin-top:1.8rem;">
+                <button class="btn-act btn-a" style="flex:1; padding:12px; justify-content:center;" id="confirmAbsenceBtn">نعم، تأكيد الغياب</button>
+                <button class="btn-act" style="flex:1; background:rgba(255,255,255,0.1); color:#fff; justify-content:center;" onclick="closeAbsenceModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة معاينة وضبط درجات الامتحان -->
+    <div class="preview-modal" id="previewModal">
+        <div class="preview-inner">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 1.2rem;">
+                <div>
+                    <h3 id="modalHeading" style="color:var(--cyan); font-size:1.35rem;">🧪 إعداد وضبط درجات الامتحان</h3>
+                    <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:3px;">
+                        حددي درجات كل نمط ووقت الإغلاق بسهولة
+                    </p>
+                </div>
+                <button onclick="closePreviewModal()" style="background:rgba(255,255,255,0.08); border:none; color:#fff; width:34px; height:34px; border-radius:50%; cursor:pointer;">✕</button>
+            </div>
+
+            <input type="hidden" id="editingExamId" value="">
+
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 1.2rem; margin-bottom: 1.2rem;">
+                <div style="display:grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 12px;">
+                    <div>
+                        <label style="font-size:0.85rem; color:var(--cyan); font-weight:700;">📌 عنوان الامتحان:</label>
+                        <input type="text" id="examTitle" class="form-ctrl">
+                    </div>
+                    <div>
+                        <label style="font-size:0.85rem; color:var(--cyan); font-weight:700;">⏱️ المدة (بالدقائق):</label>
+                        <input type="number" id="examDuration" class="form-ctrl" value="20" min="5">
+                    </div>
+                </div>
+
+                <div>
+                    <label style="font-size:0.85rem; color:var(--cyan); font-weight:700; display:block; margin-bottom:6px;">
+                        ⏰ موعد إغلاق الامتحان:
+                    </label>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                        <input type="datetime-local" id="examDeadline" class="form-ctrl" style="flex:1; min-width:240px; font-weight:700; color:var(--cyan);">
+                        
+                        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                            <button type="button" class="btn-act" style="background:rgba(0,242,254,0.1); color:var(--cyan); font-size:0.85rem; padding:8px 16px; font-weight:700;" onclick="setQuickDeadline(24)">يوم</button>
+                            <button type="button" class="btn-act" style="background:rgba(0,242,254,0.1); color:var(--cyan); font-size:0.85rem; padding:8px 16px; font-weight:700;" onclick="setQuickDeadline(48)">يومين</button>
+                            <button type="button" class="btn-act" style="background:rgba(0,242,254,0.1); color:var(--cyan); font-size:0.85rem; padding:8px 16px; font-weight:700;" onclick="setQuickDeadline(168)">أسبوع</button>
+                            <button type="button" class="btn-act" style="background:rgba(255,255,255,0.08); color:#fff; font-size:0.85rem; padding:8px 16px; font-weight:700;" onclick="document.getElementById('examDeadline').value = ''">بدون قفل</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 12px; margin-bottom: 1.5rem;">
+                <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid var(--blue); border-radius: 14px; padding: 12px;">
+                    <span style="font-weight:800; color:var(--blue); font-size:0.9rem;">🔘 اختيار من متعدد (MCQ)</span>
+                    <input type="number" id="pts_mcq" class="form-ctrl" value="5" step="0.5" min="0.5" style="border-color:var(--blue); font-weight:800; text-align:center;" oninput="updateLiveScoreSummary()">
+                </div>
+
+                <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid var(--emerald); border-radius: 14px; padding: 12px;">
+                    <span style="font-weight:800; color:var(--emerald); font-size:0.9rem;">✔️ صح وخطأ (T / F)</span>
+                    <input type="number" id="pts_tf" class="form-ctrl" value="2.5" step="0.5" min="0.5" style="border-color:var(--emerald); font-weight:800; text-align:center;" oninput="updateLiveScoreSummary()">
+                </div>
+
+                <div style="background: rgba(0,0,0,0.4); border: 1px dashed rgba(0, 242, 254, 0.35); border-radius: 14px; padding: 12px; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                    <span style="color:var(--text-secondary); font-size:0.8rem;">المجموع الكلي</span>
+                    <div style="font-size: 1.8rem; font-weight: 900; color: var(--cyan);" id="live_total_score">0</div>
+                </div>
+            </div>
+
+            <div id="previewQuestionsList"></div>
+
+            <div style="display:flex; gap:10px; margin-top:1.5rem;">
+                <button class="btn-act" style="flex:2; background:linear-gradient(135deg, var(--emerald), #059669); color:#fff; padding:12px; justify-content:center; font-size:1.05rem; border-radius:12px;" onclick="confirmSaveExam()">
+                    💾 اعتماد ونشر الامتحان فوراً
+                </button>
+                <button class="btn-act" style="flex:1; background:rgba(255,255,255,0.1); color:#fff; justify-content:center; border-radius:12px;" onclick="closePreviewModal()">
+                    إلغاء
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const currentGrade = "{{ current_grade }}";
+        const currentSession = "{{ current_session }}";
+        const existingSessions = {{ existing_sessions|tojson }};
+        let targetStudentId = null;
+        let sessionToDelete = null;
+        let parsedQuestions = [];
+        let newAvatarBase64 = null;
+
+        // 🧭 التبديل بين أقسام الـ NAV
+        function switchSection(secName, btn) {
+            document.querySelectorAll('.dashboard-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+
+            document.getElementById(`sec-${secName}`).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        // 🖼️ تعديل ومعاينة صورة المعلمة
+        function openProfileModal() {
+            newAvatarBase64 = null;
+            document.getElementById('profilePreviewImg').src = "{{ teacher_avatar }}";
+            document.getElementById('profileNameInput').value = "{{ teacher_name }}";
+            document.getElementById('profileModal').classList.add('active');
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').classList.remove('active');
+        }
+
+        function previewImageFile(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                if (file.size > 5 * 1024 * 1024) {
+                    alert("حجم الصورة كبير، يرجى اختيار صورة أقل من 5 ميجابايت");
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    newAvatarBase64 = e.target.result;
+                    document.getElementById('profilePreviewImg').src = newAvatarBase64;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        async function saveProfileChanges() {
+            const name = document.getElementById('profileNameInput').value.trim();
+            const payload = {};
+            if (name) payload.name = name;
+            if (newAvatarBase64) payload.avatar = newAvatarBase64;
+
+            try {
+                const res = await fetch('/api/admin/update-profile', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                if (res.ok) {
+                    alert("✅ تم حفظ وتحديث الصورة الشخصية والاسم بنجاح!");
+                    location.reload();
+                } else {
+                    alert("❌ تعذر حفظ التعديلات");
+                }
+            } catch(e) {
+                alert("فشل الاتصال بالخادم");
+            }
+        }
+
+        // 📊 فتح وإغلاق كشف نتائج كل امتحان
+        function toggleExamResults(examId) {
+            const el = document.getElementById(`results_box_${examId}`);
+            if (el) el.classList.toggle('open');
+        }
+
+        // 🚨 فتح نافذة التحذير الأمني لحذف كشف الحصة
+        function openDeleteSessionModal(sessionName) {
+            sessionToDelete = sessionName;
+            document.getElementById('deleteSessionModalText').innerHTML = 
+                `أنتِ على وشك حذف كشف <strong>(${sessionName})</strong> بالكامل لصف (<strong>{{ current_grade_title }}</strong>) لتاريخ اليوم.`;
+            document.getElementById('deleteSessionModal').classList.add('active');
+        }
+
+        function closeDeleteSessionModal() {
+            sessionToDelete = null;
+            document.getElementById('deleteSessionModal').classList.remove('active');
+        }
+
+        // 🗑️ تأكيد حذف الحصة ومسح سجلاتها
+        async function confirmDeleteSession() {
+            if (!sessionToDelete) return;
+
+            try {
+                const res = await fetch('/api/admin/delete-session', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ grade: currentGrade, session_name: sessionToDelete })
+                });
+
+                if (res.ok) {
+                    alert(`✅ تم حذف كشف (${sessionToDelete}) ومسح جميع سجلات حضورها بنجاح.`);
+                    window.location.href = `/teacher-portal?grade=${currentGrade}`;
+                } else {
+                    alert("حدث خطأ أثناء محاولة حذف الحصة");
+                }
+            } catch(e) {
+                alert("فشل الاتصال بالخادم");
+            }
+        }
+
+        // ✅ موافقة واعتماد الطالب الجديد
+        async function approveStudent(studentId, name) {
+            if (!confirm(`هل أنتِ متأكدة من قبول واعتماد الطالب (${name}) للانضمام؟`)) return;
+            try {
+                const res = await fetch(`/api/admin/approve-student/${studentId}`, { method: 'POST' });
+                if (res.ok) {
+                    alert(`✅ تم اعتماد الطالب (${name}) بنجاح ويمكنه الآن تسجيل الدخول.`);
+                    location.reload();
+                } else {
+                    alert("حدث خطأ أثناء اعتماد الطالب");
+                }
+            } catch(e) {
+                alert("فشل الاتصال بالخادم");
+            }
+        }
+
+        // ❌ رفض طلب انضمام الطالب
+        async function rejectStudent(studentId, name) {
+            if (!confirm(`هل أنتِ متأكدة من رفض طلب الطالب (${name})؟ سيتم حذف طلبه.`)) return;
+            try {
+                const res = await fetch(`/api/admin/reject-student/${studentId}`, { method: 'POST' });
+                if (res.ok) {
+                    alert(`تم رفض وحذف طلب الطالب (${name}).`);
+                    location.reload();
+                } else {
+                    alert("حدث خطأ أثناء رفض الطلب");
+                }
+            } catch(e) {
+                alert("فشل الاتصال بالخادم");
+            }
+        }
+
+        // 🗑️ حذف طالب مسجل نهائياً
+        async function deleteStudentPermanently(studentId, name) {
+            if (!confirm(`⚠️ تحذير: هل أنتِ متأكدة تماماً من حذف الطالب (${name}) نهائياً؟\nسيتم مسح سجلات غيابه ونتائج امتحاناته بالكامل.`)) return;
+            try {
+                const res = await fetch(`/api/admin/delete-student/${studentId}`, { method: 'POST' });
+                if (res.ok) {
+                    const row = document.getElementById(`student_row_${studentId}`);
+                    if (row) row.remove();
+                    alert(`✅ تم حذف الطالب (${name}) نهائياً بنجاح.`);
+                    location.reload();
+                } else {
+                    alert("حدث خطأ أثناء حذف الطالب");
+                }
+            } catch(e) {
+                alert("فشل الاتصال بالخادم");
+            }
+        }
+
+        // 🧠 فتح نافذة إنشاء الحصة الجديدة
+        function openNewSessionModal() {
+            const arabicNumbers = [
+                'الأولى', 'الثانية', 'الثالثة', 'الرابعة', 'الخامسة', 
+                'السادسة', 'السابعة', 'الثامنة', 'التاسعة', 'العاشرة'
+            ];
+            const nextIdx = existingSessions.length;
+            const suggestedName = nextIdx < arabicNumbers.length ? `الحصة ${arabicNumbers[nextIdx]}` : `الحصة رقم ${nextIdx + 1}`;
+            
+            document.getElementById('newSessionInput').value = suggestedName;
+            document.getElementById('newSessionModal').classList.add('active');
+        }
+
+        function closeNewSessionModal() {
+            document.getElementById('newSessionModal').classList.remove('active');
+        }
+
+        async function confirmCreateSession() {
+            const name = document.getElementById('newSessionInput').value.trim();
+            if (!name) {
+                alert("يرجى كتابة اسم الحصة");
+                return;
+            }
+
+            const res = await fetch('/api/admin/create-session', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ grade: currentGrade, session_name: name })
+            });
+
+            if (res.ok) {
+                window.location.href = `/teacher-portal?grade=${currentGrade}&session=${encodeURIComponent(name)}`;
+            } else {
+                alert("تعذر حفظ الحصة");
+            }
+        }
+
+        // رصد الحضور
+        async function recordAttendance(id, status) {
+            const res = await fetch('/api/admin/attendance', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ 
+                    student_id: id, 
+                    status: status, 
+                    grade: currentGrade,
+                    session_name: currentSession 
+                })
+            });
+            if(res.ok) {
+                const badge = document.getElementById(`st_badge_${id}`);
+                badge.textContent = status;
+                badge.style.color = (status === 'حاضر') ? 'var(--emerald)' : 'var(--rose)';
+            }
+        }
+
+        function openAbsenceConfirm(id, name) {
+            targetStudentId = id;
+            document.getElementById('absenceModalText').innerHTML = `هل أنتِ متأكدة من تسجيل الطالب <strong>(${name})</strong> غائباً في <strong>(${currentSession})</strong>؟`;
+            document.getElementById('absenceModal').classList.add('active');
+        }
+        function closeAbsenceModal() { document.getElementById('absenceModal').classList.remove('active'); }
+
+        document.getElementById('confirmAbsenceBtn').addEventListener('click', () => {
+            if(targetStudentId) {
+                recordAttendance(targetStudentId, 'غائب');
+                closeAbsenceModal();
+            }
+        });
+
+        // مواعيد الإغلاق السريعة
+        function setQuickDeadline(hoursFromNow) {
+            const date = new Date();
+            date.setTime(date.getTime() + (hoursFromNow * 60 * 60 * 1000));
+            const pad = (n) => String(n).padStart(2, '0');
+            const formatted = `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+            document.getElementById('examDeadline').value = formatted;
+        }
+
+        function updateLiveScoreSummary() {
+            const mcqPts = parseFloat(document.getElementById('pts_mcq').value) || 0;
+            const tfPts = parseFloat(document.getElementById('pts_tf').value) || 0;
+
+            let mcqCount = 0, tfCount = 0;
+            parsedQuestions.forEach(q => {
+                if (q.type === 'tf' || q.options.length === 2) tfCount++;
+                else mcqCount++;
+            });
+
+            const totalScore = (mcqCount * mcqPts) + (tfCount * tfPts);
+            document.getElementById('live_total_score').textContent = `${Number(totalScore.toFixed(2))} درجة`;
+        }
+
+        // بناء محرر الأسئلة بنظام DOM المباشر
+        function renderQuestionsEditor() {
+            const list = document.getElementById('previewQuestionsList');
+            list.innerHTML = '';
+            const labels = ['A', 'B', 'C', 'D'];
+
+            parsedQuestions.forEach((q, i) => {
+                const cur = (q.correct || 'a').toLowerCase();
+                const optsCount = q.options.length;
+                const isTF = (q.type === 'tf' || optsCount === 2);
+
+                const card = document.createElement('div');
+                card.style.cssText = `background:rgba(255,255,255,0.03); border:1px solid ${isTF ? 'rgba(16, 185, 129, 0.3)' : 'rgba(0,242,254,0.2)'}; padding:14px; border-radius:14px; margin-bottom:12px;`;
+
+                const header = document.createElement('div');
+                header.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;';
+                header.innerHTML = `
+                    <label style="font-size:0.85rem; color:${isTF ? 'var(--emerald)' : 'var(--cyan)'}; font-weight:800;">
+                        السؤال ${i + 1} - ${isTF ? '⚡ (صح أو خطأ)' : '🔘 (اختيار من متعدد)'}:
+                    </label>
+                `;
+                card.appendChild(header);
+
+                const qTextarea = document.createElement('textarea');
+                qTextarea.className = 'form-ctrl';
+                qTextarea.rows = 2;
+                qTextarea.style.cssText = 'resize:vertical; font-weight:600; line-height:1.5; margin-bottom:8px;';
+                qTextarea.value = q.text || '';
+                qTextarea.oninput = function() { parsedQuestions[i].text = this.value; };
+                card.appendChild(qTextarea);
+
+                const optsDiv = document.createElement('div');
+                optsDiv.style.cssText = 'margin:8px 0;';
+
+                q.options.forEach((opt, idx) => {
+                    const optRow = document.createElement('div');
+                    optRow.style.cssText = 'display:flex; align-items:center; gap:6px; margin-bottom:4px;';
+
+                    const optLabel = document.createElement('span');
+                    optLabel.style.cssText = 'font-weight:800; color:#fff; width:20px;';
+                    optLabel.textContent = labels[idx] + ':';
+
+                    const optInput = document.createElement('input');
+                    optInput.type = 'text';
+                    optInput.className = 'form-ctrl';
+                    optInput.style.cssText = 'padding:6px 10px; font-size:0.85rem; margin:0;';
+                    optInput.value = opt || '';
+                    optInput.oninput = function() { parsedQuestions[i].options[idx] = this.value; };
+
+                    optRow.appendChild(optLabel);
+                    optRow.appendChild(optInput);
+                    optsDiv.appendChild(optRow);
+                });
+                card.appendChild(optsDiv);
+
+                const footer = document.createElement('div');
+                footer.style.cssText = 'display:flex; align-items:center; gap:10px; border-top:1px dashed rgba(255,255,255,0.1); padding-top:8px;';
+                footer.innerHTML = `<label style="color:var(--emerald); font-weight:700; font-size:0.85rem;">الإجابة الصحيحة:</label>`;
+
+                const select = document.createElement('select');
+                select.style.cssText = 'background:#070d1e; color:var(--emerald); border:1px solid var(--emerald); border-radius:8px; padding:4px 10px; font-weight:800; outline:none;';
+                for (let idx = 0; idx < optsCount; idx++) {
+                    const char = labels[idx].toLowerCase();
+                    const optEl = document.createElement('option');
+                    optEl.value = char;
+                    optEl.textContent = labels[idx];
+                    if (cur === char) optEl.selected = true;
+                    select.appendChild(optEl);
+                }
+                select.onchange = function() { parsedQuestions[i].correct = this.value; };
+                footer.appendChild(select);
+                card.appendChild(footer);
+
+                list.appendChild(card);
+            });
+
+            updateLiveScoreSummary();
+        }
+
+        function openPreviewModal() {
+            renderQuestionsEditor();
+            document.getElementById('previewModal').classList.add('active');
+        }
+        function closePreviewModal() { document.getElementById('previewModal').classList.remove('active'); }
+
+        async function handleDocxUpload(input) {
+            if (!input.files[0]) return;
+            const status = document.getElementById('docxStatus');
+            status.textContent = "جاري قراءة واستخراج الأسئلة...";
+            status.style.color = "var(--cyan)";
+
+            const formData = new FormData();
+            formData.append('file', input.files[0]);
+
+            try {
+                const res = await fetch('/api/admin/parse-word-exam', { method: 'POST', body: formData });
+                const data = await res.json();
+                if(res.ok && data.status === 'success') {
+                    document.getElementById('editingExamId').value = "";
+                    document.getElementById('modalHeading').textContent = "🧪 إعداد ونشر الامتحان الجديد";
+                    document.getElementById('examTitle').value = input.files[0].name.replace(/\.[^/.]+$/, "");
+                    setQuickDeadline(24);
+                    parsedQuestions = data.questions;
+                    status.textContent = `✅ تم استخراج ${data.questions_count} سؤال بنجاح!`;
+                    openPreviewModal();
+                } else {
+                    status.textContent = "❌ " + (data.msg || "حدث خطأ");
+                    status.style.color = "var(--rose)";
+                }
+            } catch (e) {
+                status.textContent = "❌ فشل الاتصال بالخادم";
+                status.style.color = "var(--rose)";
+            }
+        }
+
+        async function openEditExamModal(examId) {
+            try {
+                const res = await fetch(`/api/admin/get-exam/${examId}`);
+                const data = await res.json();
+                if(res.ok && data.status === 'success') {
+                    const ex = data.exam;
+                    document.getElementById('editingExamId').value = ex._id;
+                    document.getElementById('modalHeading').textContent = `✏️ تعديل: ${ex.title}`;
+                    document.getElementById('examTitle').value = ex.title;
+                    document.getElementById('examDuration').value = ex.duration;
+                    document.getElementById('examDeadline').value = ex.deadline || "";
+                    document.getElementById('pts_mcq').value = ex.points_mcq || 5;
+                    document.getElementById('pts_tf').value = ex.points_tf || 2.5;
+                    parsedQuestions = ex.questions || [];
+                    openPreviewModal();
+                }
+            } catch(e) { alert("خطأ في الاتصال"); }
+        }
+
+        async function confirmSaveExam() {
+            const examId = document.getElementById('editingExamId').value;
+            const title = document.getElementById('examTitle').value.trim();
+            const duration = document.getElementById('examDuration').value;
+            const deadline = document.getElementById('examDeadline').value;
+            const pts_mcq = parseFloat(document.getElementById('pts_mcq').value) || 5;
+            const pts_tf = parseFloat(document.getElementById('pts_tf').value) || 2.5;
+
+            if(!title) { alert("يرجى كتابة عنوان الامتحان"); return; }
+
+            const url = examId ? `/api/admin/update-exam/${examId}` : '/api/admin/publish-exam';
+            const payload = {
+                title: title, grade: currentGrade, duration: duration,
+                deadline: deadline, points_mcq: pts_mcq, points_tf: pts_tf,
+                questions: parsedQuestions
+            };
+
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            });
+
+            if(res.ok) {
+                alert(examId ? "✅ تم حفظ التعديل بنجاح!" : "✅ تم نشر الامتحان بنجاح!");
+                location.reload();
+            }
+        }
+
+        async function deleteExam(examId, title) {
+            if (!confirm(`هل أنتِ متأكدة من حذف امتحان (${title}) نهائياً وكافة درجاته؟`)) return;
+            const res = await fetch(`/api/admin/delete-exam/${examId}`, { method: 'POST' });
+            if(res.ok) {
+                const row = document.getElementById(`exam_row_${examId}`);
+                if (row) row.remove();
+                alert("تم حذف الامتحان ونتائجه بنجاح");
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>

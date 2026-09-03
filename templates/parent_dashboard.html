@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة ولي الأمر | الأستاذة هايدي عطية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030712; --card: rgba(13, 20, 38, 0.95); --cyan: #00f2fe; --emerald: #10b981;
+            --rose: #f43f5e; --text: #fff; --muted: #94a3b8;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Readex Pro', sans-serif; }
+        body { background: var(--bg); color: var(--text); padding: 1.5rem 5%; }
+
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--card); border: 1px solid rgba(0, 242, 254, 0.25);
+            padding: 1.2rem 2rem; border-radius: 20px; margin-bottom: 2rem;
+        }
+        .card { background: var(--card); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 1.8rem; margin-bottom: 2rem; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div>
+            <h2 style="color:var(--cyan);">لوحة متابعة ولي الأمر</h2>
+            <p style="color:var(--muted); font-size:0.85rem;">متابعة أداء وغياب الأبناء بدقة تحت إشراف الأستاذة هايدي عطية</p>
+        </div>
+        <a href="/logout" style="color:var(--rose); text-decoration:none; font-weight:700;">تسجيل الخروج</a>
+    </header>
+
+    {% for rep in reports %}
+    <div class="card">
+        <h3 style="color:var(--cyan); margin-bottom:0.5rem;">👨‍🎓 الطالب: {{ rep.child.name }} ({{ rep.grade_title }})</h3>
+        <p style="color:var(--muted); font-size:0.85rem; margin-bottom:1.5rem;">كود الطالب المعتمد: {{ rep.child.student_code }}</p>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem;">
+            <div>
+                <h4 style="color:#fff; margin-bottom:10px;">📅 سجل الحضور والغياب</h4>
+                <table>
+                    <thead><tr><th>التاريخ</th><th>الحالة</th></tr></thead>
+                    <tbody>
+                        {% for a in rep.attendance %}
+                        <tr>
+                            <td>{{ a.date }}</td>
+                            <td style="font-weight:700; color: {{ 'var(--emerald)' if a.status == 'حاضر' else 'var(--rose)' }}">{{ a.status }}</td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="2" style="text-align:center; color:var(--muted);">لا توجد تسجيلات بعد.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <h4 style="color:#fff; margin-bottom:10px;">📈 درجات الاختبارات</h4>
+                <table>
+                    <thead><tr><th>الامتحان</th><th>الدرجة</th><th>التاريخ</th></tr></thead>
+                    <tbody>
+                        {% for r in rep.results %}
+                        <tr>
+                            <td>{{ r.exam_title }}</td>
+                            <td><strong style="color:var(--emerald);">{{ r.score }}</strong> / {{ r.total_marks }}</td>
+                            <td>{{ r.date }}</td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="3" style="text-align:center; color:var(--muted);">لم يؤدِّ امتحانات بعد.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="card" style="text-align:center; padding:3rem;">
+        <h3 style="color:var(--rose); margin-bottom:1rem;">تنبيه: لا يوجد طلاب مسجلون برقم هاتفك هذا!</h3>
+        <p style="color:var(--muted);">تأكد من قيام الطالب بوضع رقم هاتفك في خانة (رقم هاتف ولي الأمر) عند التسجيل لربط البيانات مباشرة.</p>
+    </div>
+    {% endfor %}
+
+</body>
+</html>
