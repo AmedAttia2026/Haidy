@@ -88,26 +88,30 @@
             100% { transform: rotate(-28deg); }
         }
 
+        /* 💬 مربع الرسائل القصير والمحدد */
         .bot-bubble-top {
             position: absolute;
-            top: -26px;
+            top: -24px;
             right: 48px;
             background: rgba(13, 20, 38, 0.94);
-            border: 1px solid var(--cyan);
+            border: 1.5px solid var(--cyan);
             backdrop-filter: blur(12px);
             padding: 5px 12px;
-            border-radius: 14px 14px 2px 14px;
-            font-size: 0.76rem;
+            border-radius: 12px 12px 2px 12px;
+            font-size: 0.78rem;
             font-weight: 800;
             color: #fff;
             white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             box-shadow: 0 4px 15px rgba(0, 242, 254, 0.35);
             animation: bubbleBob 2.5s ease-in-out infinite alternate;
         }
 
         @keyframes bubbleBob {
             0% { transform: translateY(0); }
-            100% { transform: translateY(-4px); }
+            100% { transform: translateY(-3px); }
         }
 
         .avatar-box {
@@ -290,7 +294,12 @@
             .avatar-box { width: 195px; height: 195px; margin: 1.6rem auto 1.4rem auto; }
             .sitting-robot-companion { top: -56px; left: -14px; }
             .sitting-robot-companion svg { width: 70px; height: 70px; }
-            .bot-bubble-top { font-size: 0.7rem; top: -22px; right: 38px; }
+            .bot-bubble-top { 
+                top: -20px; 
+                right: 36px; 
+                padding: 4px 10px;
+                font-size: 0.72rem;
+            }
             .teacher-tag { font-size: 0.8rem; padding: 5px 15px; }
             .cta-button-group { flex-direction: column; width: 100%; gap: 0.75rem; }
             .btn-cta { width: 100%; min-width: unset; padding: 0.85rem 1.2rem; font-size: 0.95rem; }
@@ -311,41 +320,30 @@
             <div class="sitting-robot-companion" onclick="animateRobotWave()" title="أهلاً بك!">
                 <div class="bot-bubble-top" id="robotGreetingBubble">أهلاً يا بطل! 👋</div>
                 <svg width="84" height="84" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- الهوائي -->
                     <circle cx="50" cy="10" r="4.5" fill="#00f2fe" stroke="#1e293b" stroke-width="2"/>
                     <path d="M50 14.5V23" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
                     
-                    <!-- الرأس الكرتوني اللطيف -->
                     <rect x="26" y="22" width="48" height="36" rx="16" fill="#f8fafc" stroke="#1e293b" stroke-width="3"/>
                     <rect x="33" y="28" width="34" height="22" rx="9" fill="#0f172a"/>
-                    <!-- العينان المتوهجتان -->
                     <circle cx="43" cy="39" r="4.5" fill="#00f2fe"/>
                     <circle cx="57" cy="39" r="4.5" fill="#00f2fe"/>
-                    <!-- ابتسامة الروبوت -->
                     <path d="M47 45.5C48.5 47 51.5 47 53 45.5" stroke="#00f2fe" stroke-width="1.8" stroke-linecap="round"/>
 
-                    <!-- السماعات الجانبية -->
                     <rect x="22" y="32" width="5" height="15" rx="2.5" fill="#38bdf8" stroke="#1e293b" stroke-width="2"/>
                     <rect x="73" y="32" width="5" height="15" rx="2.5" fill="#38bdf8" stroke="#1e293b" stroke-width="2"/>
 
-                    <!-- الجسم -->
                     <path d="M37 57C37 54 41 53 50 53C59 53 63 54 63 57L60 74C60 77 40 77 40 74L37 57Z" fill="#f8fafc" stroke="#1e293b" stroke-width="2.8"/>
-                    <!-- شاشة الصدر -->
                     <rect x="42" y="58" width="16" height="11" rx="4" fill="#38bdf8" stroke="#1e293b" stroke-width="1.5"/>
 
-                    <!-- الرجل اليسرى جالسة -->
                     <path d="M38 73C38 73 34 78 35 83C35 85 41 85 41 83L42 74" fill="#e2e8f0" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
                     <ellipse cx="36" cy="85" rx="6" ry="4" fill="#64748b" stroke="#1e293b" stroke-width="2"/>
 
-                    <!-- الرجل اليمنى ممتدة كالصورة -->
                     <path d="M60 73C60 73 66 77 72 79C74 80 75 83 73 85L69 85" fill="#e2e8f0" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
                     <ellipse cx="73" cy="85" rx="7" ry="4" fill="#64748b" stroke="#1e293b" stroke-width="2"/>
 
-                    <!-- اليد الثابتة الساندة -->
                     <path d="M37 60L29 70L24 74" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
                     <circle cx="23" cy="75" r="3.5" fill="#38bdf8" stroke="#1e293b" stroke-width="2"/>
 
-                    <!-- 🖐️ اليد الملوحة الترحيبية -->
                     <g class="waving-hand-arm">
                         <path d="M63 60L72 52L78 40" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
                         <circle cx="79" cy="38" r="4.5" fill="#00f2fe" stroke="#1e293b" stroke-width="2"/>
@@ -458,12 +456,13 @@
             loop();
         })();
 
-        // عبارات الروبوت الكرتوني الملوح
+        // 🌟 رسائل قصيرة جداً وموجزة
         const botQuotes = [
             "أهلاً يا بطل! 👋",
             "جاهز للتفوق؟ 🚀",
-            "امتحاناتك أسهل هنا 🎯",
-            "مرحباً بك! ✨"
+            "امتحانات سهلة 🎯",
+            "مرحباً بك! ✨",
+            "نورت المنصة ⭐"
         ];
         let qIdx = 0;
 
@@ -484,7 +483,7 @@
         setInterval(() => {
             qIdx = (qIdx + 1) % botQuotes.length;
             document.getElementById('robotGreetingBubble').textContent = botQuotes[qIdx];
-        }, 5000);
+        }, 4500);
 
         const modal = document.getElementById('authModal');
         const modalTitle = document.getElementById('modalTitle');
