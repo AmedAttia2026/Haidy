@@ -48,12 +48,16 @@
             color: var(--cyan);
             font-size: 1.35rem;
             font-weight: 800;
+            white-space: nowrap;
         }
 
         .header-title p {
             color: var(--muted);
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             margin-top: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .btn-logout {
@@ -102,6 +106,7 @@
             color: var(--cyan);
             font-size: 1.15rem;
             font-weight: 800;
+            white-space: nowrap;
         }
 
         .exam-item {
@@ -122,16 +127,25 @@
             transform: translateY(-2px);
         }
 
+        .exam-meta {
+            min-width: 0;
+            flex: 1;
+        }
+
         .exam-meta h4 {
             font-size: 1.05rem;
             font-weight: 700;
             color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .exam-meta p {
             color: var(--muted); 
             font-size: 0.82rem; 
             margin-top: 5px;
+            white-space: nowrap;
         }
 
         .btn-enter {
@@ -188,6 +202,7 @@
             text-align: right; 
             border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
             font-size: 0.92rem;
+            white-space: nowrap;
         }
 
         th { 
@@ -202,6 +217,7 @@
             color: var(--muted); 
             padding: 2.2rem 1rem;
             font-size: 0.95rem;
+            white-space: nowrap;
         }
 
         @media (max-width: 900px) {
@@ -210,13 +226,27 @@
             header {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 14px;
-                padding: 1.2rem;
+                gap: 12px;
+                padding: 1rem;
+            }
+
+            .header-title {
+                width: 100%;
+            }
+
+            .header-title h2 {
+                font-size: 1.15rem;
+            }
+
+            .header-title p {
+                font-size: 0.8rem;
             }
 
             .btn-logout {
                 align-self: flex-end;
                 width: auto;
+                padding: 6px 14px;
+                font-size: 0.82rem;
             }
 
             .dashboard-grid { 
@@ -230,27 +260,35 @@
                 border-radius: 16px;
             }
 
+            .card-header h3 {
+                font-size: 1.02rem;
+            }
+
             .exam-item {
                 flex-direction: column;
                 align-items: stretch;
                 text-align: right;
                 padding: 1rem;
-                gap: 14px;
+                gap: 12px;
+            }
+
+            .exam-meta h4 {
+                font-size: 0.98rem;
             }
 
             .exam-meta p {
-                line-height: 1.6;
+                font-size: 0.76rem;
             }
 
             .btn-enter, .status-badge {
                 width: 100%;
-                padding: 12px;
-                font-size: 1rem;
+                padding: 10px;
+                font-size: 0.92rem;
             }
 
             th, td {
                 padding: 10px 8px;
-                font-size: 0.85rem;
+                font-size: 0.82rem;
             }
         }
     </style>
@@ -260,7 +298,7 @@
     <header>
         <div class="header-title">
             <h2>مرحباً، {{ session['name'] }} 👋</h2>
-            <p>المرحلة الدراسية: <strong style="color:#fff;">{{ grade_title }}</strong> · كود الطالب: <strong style="color:var(--cyan);">{{ session.get('student_code') }}</strong></p>
+            <p>المرحلة الدراسية: <strong style="color:#fff;">{{ grade_title }}</strong></p>
         </div>
         <a href="/logout" class="btn-logout">تسجيل الخروج 🚪</a>
     </header>
@@ -325,7 +363,7 @@
                             </tr>
                             {% else %}
                             <tr>
-                                <td colspan="3" class="empty-cell" style="text-align:center; color:var(--muted); padding:2rem 1rem;">لم تقم بتقديم أي امتحانات سابقة بعد.</td>
+                                <td colspan="3" class="empty-state">لم تقم بتقديم أي امتحانات سابقة بعد.</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -363,7 +401,7 @@
                             </tr>
                             {% else %}
                             <tr>
-                                <td colspan="3" class="empty-cell" style="text-align:center; color:var(--muted); padding:2rem 1rem;">لم يتم رصد حضور أو غياب لك حتى الآن.</td>
+                                <td colspan="3" class="empty-state">لم يتم رصد حضور أو غياب لك حتى الآن.</td>
                             </tr>
                             {% endfor %}
                         </tbody>
