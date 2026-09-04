@@ -299,7 +299,7 @@ def logout():
     return redirect(url_for('index'))
 
 # =========================================================================
-# 🔄 مسارات فحص التحديثات التلقائية المباشرة (Polling Live Sync)
+# 🔄 مسارات فحص التحديثات التلقائية المباشرة (Live Check)
 # =========================================================================
 @app.route('/api/admin/live-check')
 @login_required('admin')
@@ -314,7 +314,6 @@ def admin_live_check():
     sessions_count = sessions_col.count_documents({"grade": grade, "date": today})
     attendance_count = attendance_col.count_documents({"grade": grade, "date": today, "session_name": current_session})
     
-    # حساب إجمالي عدد تسليمات الامتحانات لهذا الصف
     grade_exams = list(exams_col.find({"grade": grade}, {"_id": 1}))
     exam_ids = [str(e["_id"]) for e in grade_exams]
     results_count = results_col.count_documents({"exam_id": {"$in": exam_ids}})
@@ -337,6 +336,23 @@ def student_live_check():
     results_count = results_col.count_documents({"student_id": student_id})
 
     signature = f"{exams_count}_{attendance_count}_{results_count}"
+
+    return jsonify({
+        "status": "success",
+        "signature": signature
+    })
+
+@app.route('/api/parent/live-check')
+@login_required('parent')
+def parent_live_check():
+    parent_user = users_col.find_one({"_id": ObjectId(session['user_id'])})
+    children = list(users_col.find({"parent_phone": parent_user['phone'], "role": "student"}, {"_id": 1}))
+    child_ids = [str(ch['_id']) for ch in children]
+
+    att_count = attendance_col.count_documents({"student_id": {"$in": child_ids}})
+    res_count = results_col.count_documents({"student_id": {"$in": child_ids}})
+
+    signature = f"{len(child_ids)}_{att_count}_{res_count}"
 
     return jsonify({
         "status": "success",
@@ -471,10 +487,15 @@ def parent_dashboard():
     children = list(users_col.find({"parent_phone": parent_user['phone'], "role": "student"}))
 
     reports = []
+    total_att = 0
+    total_res = 0
+
     for ch in children:
         ch_id = str(ch['_id'])
         attendance = list(attendance_col.find({"student_id": ch_id}).sort("date", -1))
         results = list(results_col.find({"student_id": ch_id}).sort("date", -1))
+        total_att += len(attendance)
+        total_res += len(results)
         reports.append({
             "child": ch,
             "grade_title": GRADE_NAMES.get(ch.get('grade'), ''),
@@ -482,7 +503,11 @@ def parent_dashboard():
             "results": results
         })
 
-    return render_template('parent_dashboard.html', reports=reports)
+    initial_signature = f"{len(children)}_{total_att}_{total_res}"
+
+    return render_template('parent_dashboard.html', 
+                           reports=reports, 
+                           initial_signature=initial_signature)
 
 # =========================================================================
 # 👑 مسارات الأستاذة هايدي عطية
