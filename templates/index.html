@@ -60,7 +60,6 @@
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* حاوية الصورة الشخصية في المنتصف تماماً */
         .avatar-box {
             position: relative; width: 220px; height: 220px;
             margin: 0 auto 2rem auto;
@@ -88,6 +87,7 @@
 
         .avatar-img-wrap img {
             width: 100%; height: 100%; object-fit: cover;
+            object-position: center top;
             border-radius: 50%;
         }
 
@@ -111,18 +111,12 @@
 
         h1.teacher-title {
             font-size: 3.6rem; font-weight: 900;
-            letter-spacing: -1px; margin-bottom: 0.8rem; line-height: 1.2;
+            letter-spacing: -1px; margin-bottom: 2.5rem; line-height: 1.2;
         }
 
         h1.teacher-title span {
             background: linear-gradient(135deg, #ffffff 40%, var(--cyan), var(--purple));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-
-        p.hero-bio {
-            color: var(--text-secondary);
-            font-size: 1.15rem; max-width: 600px;
-            margin-bottom: 3.2rem; line-height: 1.9;
         }
 
         .cta-button-group {
@@ -253,7 +247,6 @@
 
     <div class="hero-container">
         
-        <!-- الصورة الدائرية في المنتصف مع قراءة الصورة المحدثة من لوحة التحكم -->
         <div class="avatar-box">
             <div class="avatar-ring"></div>
             <div class="avatar-img-wrap">
@@ -270,11 +263,6 @@
             الأستاذة <span>هايدي عطية</span>
         </h1>
 
-        <p class="hero-bio">
-            المنصة الذكية المتخصصة للمرحلة الابتدائية والإعدادية (الصفوف 4، 5، 6 ابتدائي و 1، 2 إعدادي). تقييم فوري، اختبارات إلكترونية، ورصد دقيق للحضور والغياب.
-        </p>
-
-        <!-- زرين فقط في الواجهة -->
         <div class="cta-button-group">
             <button class="btn-cta btn-register-cta" onclick="openAuthModal('register')">
                 <span>طلب التسجيل</span>
@@ -288,7 +276,6 @@
 
     </div>
 
-    <!-- نافذة المودال -->
     <div class="modal-overlay" id="authModal">
         <div class="auth-card">
             <button class="modal-close" onclick="closeAuthModal()">✕</button>
@@ -305,7 +292,7 @@
                 <input type="hidden" id="authMode" value="login">
 
                 <div id="registerOnlyFields" style="display: none;">
-                    <input type="text" id="userName" class="form-input" placeholder="اسم الطالب / ولي الأمر ثلاثي">
+                    <input type="text" id="userName" class="form-input" placeholder="اسم الطالب ثلاثي">
                     
                     <div id="studentGradeField">
                         <label style="display:block; font-size:0.85rem; color:var(--cyan); margin-bottom:6px;">اختر المرحلة الدراسية بدقة:</label>
@@ -398,6 +385,16 @@
             const isReg = authMode.value === 'register';
             studentGradeField.style.display = (role === 'student' && isReg) ? 'block' : 'none';
             parentPhoneField.style.display = (role === 'student' && isReg) ? 'block' : 'none';
+
+            // تبديل نص placeholder حسب الدور المختار
+            const nameInput = document.getElementById('userName');
+            if (nameInput) {
+                if (role === 'student') {
+                    nameInput.placeholder = "اسم الطالب ثلاثي";
+                } else {
+                    nameInput.placeholder = "اسم ولي الأمر ثلاثي";
+                }
+            }
         }
 
         document.getElementById('authForm').addEventListener('submit', async (e) => {
