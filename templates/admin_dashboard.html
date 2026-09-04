@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Readex+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    
     <style>
         :root {
             --bg-primary: #030712;
@@ -36,7 +38,6 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
         }
 
-        /* شريط البروفايل العلوي فوق الصفوف */
         .teacher-profile-bar {
             display: flex; justify-content: space-between; align-items: center;
             background: rgba(0, 242, 254, 0.04); border: 1px solid rgba(0, 242, 254, 0.2);
@@ -58,7 +59,6 @@
             box-shadow: 0 4px 15px rgba(0, 242, 254, 0.35);
         }
 
-        /* 🧭 شريط التنقل العلوي NAV */
         .section-nav {
             display: flex; gap: 8px; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08);
             padding-bottom: 12px; overflow-x: auto;
@@ -155,7 +155,7 @@
         }
         .box-inner-session {
             background: #0c1427; border: 1px solid var(--cyan); border-radius: 24px;
-            padding: 2.2rem; max-width: 460px; width: 100%; text-align: center;
+            padding: 2.2rem; max-width: 520px; width: 100%; text-align: center;
             box-shadow: 0 20px 50px rgba(0, 242, 254, 0.25);
         }
 
@@ -182,6 +182,12 @@
             display: none; margin-top: 1.2rem; padding-top: 1.2rem; border-top: 1px dashed rgba(255, 255, 255, 0.1);
         }
         .exam-report-body.open { display: block; animation: fadeIn 0.3s ease-in-out; }
+
+        .cropper-container-wrapper {
+            width: 100%; height: 320px; background: #050a17; border-radius: 16px;
+            overflow: hidden; border: 1px dashed rgba(0, 242, 254, 0.3); margin-bottom: 14px;
+        }
+        .cropper-view-box, .cropper-face { border-radius: 50% !important; }
     </style>
 </head>
 <body>
@@ -201,18 +207,16 @@
         <a href="/logout" style="color:var(--rose); text-decoration:none; font-weight:700; padding:6px 14px; border:1px solid var(--rose); border-radius:10px; font-size:0.88rem;">خروج</a>
     </header>
 
-    <!-- 🌟 زر تعديل البروفايل والصورة الشخصية (فوق الصفوف مباشرة) -->
     <div class="teacher-profile-bar">
         <div style="display:flex; align-items:center; gap:10px;">
             <span style="font-size:1.3rem;">👑</span>
             <span style="font-weight:700; color:#fff; font-size:0.95rem;">الملف التعريفي للأستاذة هايدي عطية</span>
         </div>
         <button type="button" class="btn-act" style="background:linear-gradient(135deg, var(--cyan), #0284c7); color:#030712; padding:8px 20px; border-radius:12px;" onclick="openProfileModal()">
-            🖼️ تعديل الصورة الشخصية والبروفايل
+            🖼️ تعديل الصورة الشخصية وضبط الوجه
         </button>
     </div>
 
-    <!-- أزرار الصفوف الدراسية الخمسة -->
     <div class="grade-tabs">
         {% for g_key, g_title in grades.items() %}
         <a href="/teacher-portal?grade={{ g_key }}" class="tab-link {{ 'active' if current_grade == g_key else '' }}">
@@ -221,7 +225,6 @@
         {% endfor %}
     </div>
 
-    <!-- 🧭 شريط التنقل العلوي NAV -->
     <div class="section-nav">
         <button class="nav-btn" onclick="switchSection('pending', this)">
             <span>🔔</span> طلبات الانضمام الجديدة
@@ -243,9 +246,7 @@
         </button>
     </div>
 
-    <!-- ============================================================= -->
-    <!-- 🔔 1. قسم طلبات الانضمام الجديدة -->
-    <!-- ============================================================= -->
+    <!-- 1️⃣ قسم طلبات الانضمام -->
     <div id="sec-pending" class="dashboard-section">
         <div class="card">
             <div class="card-header-bar">
@@ -291,9 +292,7 @@
         </div>
     </div>
 
-    <!-- ============================================================= -->
-    <!-- 📋 2. قسم كشف الحضور والغياب (مع إمكانية حذف كشف الحصة) -->
-    <!-- ============================================================= -->
+    <!-- 2️⃣ قسم كشف الحضور والغياب -->
     <div id="sec-attendance" class="dashboard-section active">
         <div class="card">
             <div class="card-header-bar">
@@ -353,9 +352,7 @@
         </div>
     </div>
 
-    <!-- ============================================================= -->
-    <!-- 👥 3. قسم شؤون وإحصائيات الطلاب -->
-    <!-- ============================================================= -->
+    <!-- 3️⃣ قسم شؤون وإحصائيات الطلاب -->
     <div id="sec-students-list" class="dashboard-section">
         <div class="card">
             <div class="card-header-bar">
@@ -402,9 +399,7 @@
         </div>
     </div>
 
-    <!-- ============================================================= -->
-    <!-- 📝 4. قسم بنك وإدارة الامتحانات -->
-    <!-- ============================================================= -->
+    <!-- 4️⃣ قسم بنك وإدارة الامتحانات -->
     <div id="sec-exams" class="dashboard-section">
         <div class="card">
             <div class="card-header-bar">
@@ -456,9 +451,7 @@
         </div>
     </div>
 
-    <!-- ============================================================= -->
-    <!-- 📊 5. قسم سجل الدرجات والتقارير -->
-    <!-- ============================================================= -->
+    <!-- 5️⃣ قسم سجل الدرجات والتقارير -->
     <div id="sec-results" class="dashboard-section">
         <div class="card">
             <div class="card-header-bar">
@@ -531,31 +524,41 @@
         </div>
     </div>
 
-    <!-- 🖼️ نافذة تعديل البروفايل والصورة الشخصية للأستاذة هايدي -->
+    <!-- نافذة تعديل البروفايل وقص الصورة -->
     <div class="confirm-modal" id="profileModal">
-        <div class="box-inner-session" style="max-width:480px;">
-            <div style="width:130px; height:130px; margin:0 auto 1.2rem auto; border-radius:50%; border:3px solid var(--cyan); box-shadow:0 0 30px rgba(0,242,254,0.4); overflow:hidden; background:#070d1e;">
+        <div class="box-inner-session">
+            <h3 style="color:var(--cyan); margin-bottom:0.4rem;">تعديل وتحديد كادر الصورة</h3>
+            <p style="color:var(--text-secondary); font-size:0.85rem; margin-bottom:1rem;">
+                يمكنكِ تحريك وتكبير الصورة بالماوس أو اللمس لضبط الوجه في المنتصف تماماً:
+            </p>
+
+            <div id="cropperWrapper" class="cropper-container-wrapper" style="display:none;">
+                <img id="cropperTargetImg" src="" alt="قص الصورة" style="max-width:100%;">
+            </div>
+
+            <div id="avatarPreviewContainer" style="width:140px; height:140px; margin:0 auto 1rem auto; border-radius:50%; border:3px solid var(--cyan); box-shadow:0 0 30px rgba(0,242,254,0.4); overflow:hidden; background:#070d1e;">
                 <img id="profilePreviewImg" src="{{ teacher_avatar }}" alt="معاينة الصورة" style="width:100%; height:100%; object-fit:cover;">
             </div>
 
-            <h3 style="color:var(--cyan); margin-bottom:0.6rem;">تعديل الصورة الشخصية والاسم</h3>
-            <p style="color:var(--text-secondary); font-size:0.85rem; margin-bottom:1.2rem;">
-                اختاري صورتكِ الجديدة لتظهر فوراً في الصفحة الرئيسية وفي كل أنحاء المنصة:
-            </p>
-
-            <div style="margin-bottom:1.2rem; text-align:right;">
-                <label style="font-size:0.85rem; color:var(--cyan); font-weight:700;">اسم المعلمة:</label>
-                <input type="text" id="profileNameInput" class="form-ctrl" value="{{ teacher_name }}" placeholder="اسم المعلمة">
+            <div id="cropControls" style="display:none; gap:8px; justify-content:center; margin-bottom:12px;">
+                <button type="button" class="btn-act" style="background:rgba(255,255,255,0.08); color:#fff;" onclick="zoomCropper(0.1)">🔍➕ تكبير</button>
+                <button type="button" class="btn-act" style="background:rgba(255,255,255,0.08); color:#fff;" onclick="zoomCropper(-0.1)">🔍➖ تصغير</button>
+                <button type="button" class="btn-act" style="background:var(--cyan); color:#030712; font-weight:800;" onclick="applyCrop()">✂️ اعتماد الكادر المحدد</button>
             </div>
 
-            <input type="file" id="avatarFileInput" accept="image/*" style="display:none;" onchange="previewImageFile(this)">
-            <button type="button" class="btn-act" style="background:rgba(255,255,255,0.08); color:#fff; width:100%; padding:12px; justify-content:center; border-radius:12px; border:1px dashed var(--cyan);" onclick="document.getElementById('avatarFileInput').click()">
+            <div style="margin-bottom:1rem; text-align:right;">
+                <label style="font-size:0.85rem; color:var(--cyan); font-weight:700;">اسم المعلمة:</label>
+                <input type="text" id="profileNameInput" class="form-ctrl" value="{{ teacher_name }}">
+            </div>
+
+            <input type="file" id="avatarFileInput" accept="image/*" style="display:none;" onchange="initImageCropper(this)">
+            <button type="button" class="btn-act" style="background:rgba(255,255,255,0.06); color:#fff; width:100%; padding:10px; justify-content:center; border-radius:12px; border:1px dashed var(--cyan);" onclick="document.getElementById('avatarFileInput').click()">
                 📷 اختيار صورة جديدة من جهازكِ
             </button>
 
-            <div style="display:flex; gap:10px; margin-top:1.5rem;">
+            <div style="display:flex; gap:10px; margin-top:1.4rem;">
                 <button type="button" class="btn-act" style="flex:1; background:linear-gradient(135deg, var(--emerald), #059669); color:#fff; padding:12px; justify-content:center; border-radius:12px;" onclick="saveProfileChanges()">
-                    💾 حفظ واعتماد الصورة
+                    💾 حفظ واعتماد التعديلات
                 </button>
                 <button type="button" class="btn-act" style="flex:1; background:rgba(255,255,255,0.08); color:#fff; justify-content:center; border-radius:12px;" onclick="closeProfileModal()">
                     إلغاء
@@ -564,7 +567,7 @@
         </div>
     </div>
 
-    <!-- 🚨 نافذة تحذير مسح كشف الحصة -->
+    <!-- نافذة تحذير مسح كشف الحصة -->
     <div class="confirm-modal" id="deleteSessionModal">
         <div class="box-inner" style="border: 2px solid var(--rose); box-shadow: 0 0 50px rgba(244, 63, 94, 0.45);">
             <span style="font-size:3.2rem;">🚨</span>
@@ -691,6 +694,8 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
     <script>
         const currentGrade = "{{ current_grade }}";
         const currentSession = "{{ current_session }}";
@@ -698,50 +703,105 @@
         let targetStudentId = null;
         let sessionToDelete = null;
         let parsedQuestions = [];
-        let newAvatarBase64 = null;
+        let cropperInstance = null;
+        let finalCroppedBase64 = null;
 
-        // 🧭 التبديل بين أقسام الـ NAV
-        function switchSection(secName, btn) {
+        // الحفاظ على التبويب النشط بعد التحديث التلقائي
+        const savedTab = localStorage.getItem('adminActiveTab') || 'attendance';
+        const targetBtn = document.querySelector(`.nav-btn[onclick*="'${savedTab}'"]`);
+        if (targetBtn) {
+            switchSection(savedTab, targetBtn, false);
+        }
+
+        function switchSection(secName, btn, save = true) {
             document.querySelectorAll('.dashboard-section').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
 
-            document.getElementById(`sec-${secName}`).classList.add('active');
-            btn.classList.add('active');
+            const targetSection = document.getElementById(`sec-${secName}`);
+            if (targetSection) targetSection.classList.add('active');
+            if (btn) btn.classList.add('active');
+
+            if (save) {
+                localStorage.setItem('adminActiveTab', secName);
+            }
         }
 
-        // 🖼️ تعديل ومعاينة صورة المعلمة
         function openProfileModal() {
-            newAvatarBase64 = null;
+            if (cropperInstance) { cropperInstance.destroy(); cropperInstance = null; }
+            document.getElementById('cropperWrapper').style.display = 'none';
+            document.getElementById('cropControls').style.display = 'none';
+            document.getElementById('avatarPreviewContainer').style.display = 'block';
             document.getElementById('profilePreviewImg').src = "{{ teacher_avatar }}";
             document.getElementById('profileNameInput').value = "{{ teacher_name }}";
+            finalCroppedBase64 = null;
             document.getElementById('profileModal').classList.add('active');
         }
 
         function closeProfileModal() {
+            if (cropperInstance) { cropperInstance.destroy(); cropperInstance = null; }
             document.getElementById('profileModal').classList.remove('active');
         }
 
-        function previewImageFile(input) {
+        function initImageCropper(input) {
             if (input.files && input.files[0]) {
                 const file = input.files[0];
-                if (file.size > 5 * 1024 * 1024) {
-                    alert("حجم الصورة كبير، يرجى اختيار صورة أقل من 5 ميجابايت");
-                    return;
-                }
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    newAvatarBase64 = e.target.result;
-                    document.getElementById('profilePreviewImg').src = newAvatarBase64;
+                    const targetImg = document.getElementById('cropperTargetImg');
+                    targetImg.src = e.target.result;
+                    
+                    document.getElementById('avatarPreviewContainer').style.display = 'none';
+                    document.getElementById('cropperWrapper').style.display = 'block';
+                    document.getElementById('cropControls').style.display = 'flex';
+
+                    if (cropperInstance) cropperInstance.destroy();
+
+                    cropperInstance = new Cropper(targetImg, {
+                        aspectRatio: 1,
+                        viewMode: 1,
+                        dragMode: 'move',
+                        autoCropArea: 0.9,
+                        restore: false,
+                        guides: false,
+                        center: true,
+                        highlight: false,
+                        cropBoxMovable: false,
+                        cropBoxResizable: true,
+                        toggleDragModeOnDblclick: false,
+                    });
                 };
                 reader.readAsDataURL(file);
             }
+        }
+
+        function zoomCropper(ratio) {
+            if (cropperInstance) cropperInstance.zoom(ratio);
+        }
+
+        function applyCrop() {
+            if (!cropperInstance) return;
+            const canvas = cropperInstance.getCroppedCanvas({
+                width: 500,
+                height: 500,
+                imageSmoothingEnabled: true,
+                imageSmoothingQuality: 'high'
+            });
+
+            finalCroppedBase64 = canvas.toDataURL('image/jpeg', 0.92);
+            document.getElementById('profilePreviewImg').src = finalCroppedBase64;
+            
+            document.getElementById('cropperWrapper').style.display = 'none';
+            document.getElementById('cropControls').style.display = 'none';
+            document.getElementById('avatarPreviewContainer').style.display = 'block';
+            cropperInstance.destroy();
+            cropperInstance = null;
         }
 
         async function saveProfileChanges() {
             const name = document.getElementById('profileNameInput').value.trim();
             const payload = {};
             if (name) payload.name = name;
-            if (newAvatarBase64) payload.avatar = newAvatarBase64;
+            if (finalCroppedBase64) payload.avatar = finalCroppedBase64;
 
             try {
                 const res = await fetch('/api/admin/update-profile', {
@@ -750,7 +810,7 @@
                     body: JSON.stringify(payload)
                 });
                 if (res.ok) {
-                    alert("✅ تم حفظ وتحديث الصورة الشخصية والاسم بنجاح!");
+                    alert("✅ تم حفظ الصورة المضبوطة بنجاح!");
                     location.reload();
                 } else {
                     alert("❌ تعذر حفظ التعديلات");
@@ -760,13 +820,11 @@
             }
         }
 
-        // 📊 فتح وإغلاق كشف نتائج كل امتحان
         function toggleExamResults(examId) {
             const el = document.getElementById(`results_box_${examId}`);
             if (el) el.classList.toggle('open');
         }
 
-        // 🚨 فتح نافذة التحذير الأمني لحذف كشف الحصة
         function openDeleteSessionModal(sessionName) {
             sessionToDelete = sessionName;
             document.getElementById('deleteSessionModalText').innerHTML = 
@@ -779,17 +837,14 @@
             document.getElementById('deleteSessionModal').classList.remove('active');
         }
 
-        // 🗑️ تأكيد حذف الحصة ومسح سجلاتها
         async function confirmDeleteSession() {
             if (!sessionToDelete) return;
-
             try {
                 const res = await fetch('/api/admin/delete-session', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ grade: currentGrade, session_name: sessionToDelete })
                 });
-
                 if (res.ok) {
                     alert(`✅ تم حذف كشف (${sessionToDelete}) ومسح جميع سجلات حضورها بنجاح.`);
                     window.location.href = `/teacher-portal?grade=${currentGrade}`;
@@ -801,7 +856,6 @@
             }
         }
 
-        // ✅ موافقة واعتماد الطالب الجديد
         async function approveStudent(studentId, name) {
             if (!confirm(`هل أنتِ متأكدة من قبول واعتماد الطالب (${name}) للانضمام؟`)) return;
             try {
@@ -817,7 +871,6 @@
             }
         }
 
-        // ❌ رفض طلب انضمام الطالب
         async function rejectStudent(studentId, name) {
             if (!confirm(`هل أنتِ متأكدة من رفض طلب الطالب (${name})؟ سيتم حذف طلبه.`)) return;
             try {
@@ -833,7 +886,6 @@
             }
         }
 
-        // 🗑️ حذف طالب مسجل نهائياً
         async function deleteStudentPermanently(studentId, name) {
             if (!confirm(`⚠️ تحذير: هل أنتِ متأكدة تماماً من حذف الطالب (${name}) نهائياً؟\nسيتم مسح سجلات غيابه ونتائج امتحاناته بالكامل.`)) return;
             try {
@@ -851,7 +903,6 @@
             }
         }
 
-        // 🧠 فتح نافذة إنشاء الحصة الجديدة
         function openNewSessionModal() {
             const arabicNumbers = [
                 'الأولى', 'الثانية', 'الثالثة', 'الرابعة', 'الخامسة', 
@@ -859,7 +910,6 @@
             ];
             const nextIdx = existingSessions.length;
             const suggestedName = nextIdx < arabicNumbers.length ? `الحصة ${arabicNumbers[nextIdx]}` : `الحصة رقم ${nextIdx + 1}`;
-            
             document.getElementById('newSessionInput').value = suggestedName;
             document.getElementById('newSessionModal').classList.add('active');
         }
@@ -870,17 +920,12 @@
 
         async function confirmCreateSession() {
             const name = document.getElementById('newSessionInput').value.trim();
-            if (!name) {
-                alert("يرجى كتابة اسم الحصة");
-                return;
-            }
-
+            if (!name) { alert("يرجى كتابة اسم الحصة"); return; }
             const res = await fetch('/api/admin/create-session', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ grade: currentGrade, session_name: name })
             });
-
             if (res.ok) {
                 window.location.href = `/teacher-portal?grade=${currentGrade}&session=${encodeURIComponent(name)}`;
             } else {
@@ -888,17 +933,11 @@
             }
         }
 
-        // رصد الحضور
         async function recordAttendance(id, status) {
             const res = await fetch('/api/admin/attendance', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ 
-                    student_id: id, 
-                    status: status, 
-                    grade: currentGrade,
-                    session_name: currentSession 
-                })
+                body: JSON.stringify({ student_id: id, status: status, grade: currentGrade, session_name: currentSession })
             });
             if(res.ok) {
                 const badge = document.getElementById(`st_badge_${id}`);
@@ -915,36 +954,26 @@
         function closeAbsenceModal() { document.getElementById('absenceModal').classList.remove('active'); }
 
         document.getElementById('confirmAbsenceBtn').addEventListener('click', () => {
-            if(targetStudentId) {
-                recordAttendance(targetStudentId, 'غائب');
-                closeAbsenceModal();
-            }
+            if(targetStudentId) { recordAttendance(targetStudentId, 'غائب'); closeAbsenceModal(); }
         });
 
-        // مواعيد الإغلاق السريعة
         function setQuickDeadline(hoursFromNow) {
             const date = new Date();
             date.setTime(date.getTime() + (hoursFromNow * 60 * 60 * 1000));
             const pad = (n) => String(n).padStart(2, '0');
-            const formatted = `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
-            document.getElementById('examDeadline').value = formatted;
+            document.getElementById('examDeadline').value = `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
         }
 
         function updateLiveScoreSummary() {
             const mcqPts = parseFloat(document.getElementById('pts_mcq').value) || 0;
             const tfPts = parseFloat(document.getElementById('pts_tf').value) || 0;
-
             let mcqCount = 0, tfCount = 0;
             parsedQuestions.forEach(q => {
-                if (q.type === 'tf' || q.options.length === 2) tfCount++;
-                else mcqCount++;
+                if (q.type === 'tf' || q.options.length === 2) tfCount++; else mcqCount++;
             });
-
-            const totalScore = (mcqCount * mcqPts) + (tfCount * tfPts);
-            document.getElementById('live_total_score').textContent = `${Number(totalScore.toFixed(2))} درجة`;
+            document.getElementById('live_total_score').textContent = `${Number(((mcqCount * mcqPts) + (tfCount * tfPts)).toFixed(2))} درجة`;
         }
 
-        // بناء محرر الأسئلة بنظام DOM المباشر
         function renderQuestionsEditor() {
             const list = document.getElementById('previewQuestionsList');
             list.innerHTML = '';
@@ -960,11 +989,7 @@
 
                 const header = document.createElement('div');
                 header.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;';
-                header.innerHTML = `
-                    <label style="font-size:0.85rem; color:${isTF ? 'var(--emerald)' : 'var(--cyan)'}; font-weight:800;">
-                        السؤال ${i + 1} - ${isTF ? '⚡ (صح أو خطأ)' : '🔘 (اختيار من متعدد)'}:
-                    </label>
-                `;
+                header.innerHTML = `<label style="font-size:0.85rem; color:${isTF ? 'var(--emerald)' : 'var(--cyan)'}; font-weight:800;">السؤال ${i + 1} - ${isTF ? '⚡ (صح أو خطأ)' : '🔘 (اختيار من متعدد)'}:</label>`;
                 card.appendChild(header);
 
                 const qTextarea = document.createElement('textarea');
@@ -981,11 +1006,8 @@
                 q.options.forEach((opt, idx) => {
                     const optRow = document.createElement('div');
                     optRow.style.cssText = 'display:flex; align-items:center; gap:6px; margin-bottom:4px;';
-
-                    const optLabel = document.createElement('span');
-                    optLabel.style.cssText = 'font-weight:800; color:#fff; width:20px;';
-                    optLabel.textContent = labels[idx] + ':';
-
+                    optRow.innerHTML = `<span style="font-weight:800; color:#fff; width:20px;">${labels[idx]}:</span>`;
+                    
                     const optInput = document.createElement('input');
                     optInput.type = 'text';
                     optInput.className = 'form-ctrl';
@@ -993,7 +1015,6 @@
                     optInput.value = opt || '';
                     optInput.oninput = function() { parsedQuestions[i].options[idx] = this.value; };
 
-                    optRow.appendChild(optLabel);
                     optRow.appendChild(optInput);
                     optsDiv.appendChild(optRow);
                 });
@@ -1008,8 +1029,7 @@
                 for (let idx = 0; idx < optsCount; idx++) {
                     const char = labels[idx].toLowerCase();
                     const optEl = document.createElement('option');
-                    optEl.value = char;
-                    optEl.textContent = labels[idx];
+                    optEl.value = char; optEl.textContent = labels[idx];
                     if (cur === char) optEl.selected = true;
                     select.appendChild(optEl);
                 }
@@ -1023,10 +1043,7 @@
             updateLiveScoreSummary();
         }
 
-        function openPreviewModal() {
-            renderQuestionsEditor();
-            document.getElementById('previewModal').classList.add('active');
-        }
+        function openPreviewModal() { renderQuestionsEditor(); document.getElementById('previewModal').classList.add('active'); }
         function closePreviewModal() { document.getElementById('previewModal').classList.remove('active'); }
 
         async function handleDocxUpload(input) {
@@ -1117,6 +1134,29 @@
                 location.reload();
             }
         }
+
+        // =========================================================================
+        // 🔄 المراقبة والتحديث التلقائي اللحظي لشاشة الإدارة
+        // =========================================================================
+        let lastAdminSignature = "{{ initial_signature }}";
+
+        setInterval(async () => {
+            // لا يتم التحديث أثناء فتح النوافذ المنبثقة لمنع مقاطعة المعلمة
+            const hasOpenModal = document.querySelector('.confirm-modal.active, .preview-modal.active');
+            if (hasOpenModal) return;
+
+            try {
+                const res = await fetch(`/api/admin/live-check?grade=${currentGrade}&session=${encodeURIComponent(currentSession)}`);
+                const data = await res.json();
+                if (data.status === 'success') {
+                    if (lastAdminSignature && data.signature !== lastAdminSignature) {
+                        location.reload();
+                    }
+                }
+            } catch (e) {
+                // تجاهل أخطاء الشبكة المؤقتة
+            }
+        }, 4000);
     </script>
 </body>
 </html>
