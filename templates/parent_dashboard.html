@@ -2,85 +2,353 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>بوابة ولي الأمر | الأستاذة هايدي عطية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Readex+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --bg: #030712; --card: rgba(13, 20, 38, 0.95); --cyan: #00f2fe; --emerald: #10b981;
-            --rose: #f43f5e; --text: #fff; --muted: #94a3b8;
+            --bg: #030712;
+            --card: rgba(13, 20, 38, 0.95);
+            --cyan: #00f2fe;
+            --blue: #38bdf8;
+            --emerald: #10b981;
+            --rose: #f43f5e;
+            --amber: #f59e0b;
+            --text: #ffffff;
+            --muted: #94a3b8;
+            --font-main: 'Readex Pro', 'Cairo', sans-serif;
+            --radius-lg: 20px;
+            --radius-md: 14px;
         }
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Readex Pro', sans-serif; }
-        body { background: var(--bg); color: var(--text); padding: 1.5rem 5%; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
+        
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            padding: 1.5rem 5%; 
+            min-height: 100vh;
+            -webkit-tap-highlight-color: transparent;
+        }
 
         header {
-            display: flex; justify-content: space-between; align-items: center;
-            background: var(--card); border: 1px solid rgba(0, 242, 254, 0.25);
-            padding: 1.2rem 2rem; border-radius: 20px; margin-bottom: 2rem;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            background: var(--card); 
+            border: 1px solid rgba(0, 242, 254, 0.25);
+            padding: 1.2rem 2rem; 
+            border-radius: var(--radius-lg); 
+            margin-bottom: 1.8rem;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
         }
-        .card { background: var(--card); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 1.8rem; margin-bottom: 2rem; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 12px; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        .header-title h2 {
+            color: var(--cyan);
+            font-size: 1.35rem;
+            font-weight: 800;
+        }
+
+        .header-title p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .btn-logout {
+            color: var(--rose); 
+            text-decoration: none; 
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 8px 18px;
+            border: 1px solid var(--rose);
+            border-radius: var(--radius-md);
+            background: rgba(244, 63, 94, 0.06);
+            white-space: nowrap;
+            transition: 0.25s ease;
+        }
+
+        .btn-logout:hover {
+            background: var(--rose);
+            color: #fff;
+        }
+
+        .child-card { 
+            background: var(--card); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            border-radius: var(--radius-lg); 
+            padding: 1.8rem; 
+            margin-bottom: 2rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .child-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .child-info h3 {
+            color: var(--cyan);
+            font-size: 1.25rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .child-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 242, 254, 0.08);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            padding: 6px 14px;
+            border-radius: var(--radius-md);
+            color: #fff;
+            font-size: 0.88rem;
+            font-weight: 700;
+        }
+
+        .child-sections-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.8rem;
+        }
+
+        .section-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: var(--radius-md);
+            padding: 1.2rem;
+        }
+
+        .section-title {
+            color: #fff;
+            font-size: 1.05rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            min-width: 280px;
+        }
+
+        th, td { 
+            padding: 11px 12px; 
+            text-align: right; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
+            font-size: 0.9rem;
+        }
+
+        th { 
+            color: var(--muted); 
+            font-weight: 700;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .badge-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 800;
+        }
+        .status-present { background: rgba(16, 185, 129, 0.15); color: var(--emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .status-absent { background: rgba(244, 63, 94, 0.15); color: var(--rose); border: 1px solid rgba(244, 63, 94, 0.3); }
+
+        .empty-cell {
+            text-align: center;
+            color: var(--muted);
+            padding: 2rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+            body { padding: 1rem 3%; }
+
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 14px;
+                padding: 1.2rem;
+            }
+
+            .btn-logout {
+                align-self: flex-end;
+            }
+
+            .child-card {
+                padding: 1.2rem;
+                margin-bottom: 1.5rem;
+                border-radius: 16px;
+            }
+
+            .child-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .child-sections-grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+
+            .section-box {
+                padding: 1rem 0.8rem;
+            }
+
+            th, td {
+                padding: 9px 8px;
+                font-size: 0.84rem;
+            }
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <div>
-            <h2 style="color:var(--cyan);">لوحة متابعة ولي الأمر</h2>
-            <p style="color:var(--muted); font-size:0.85rem;">متابعة أداء وغياب الأبناء بدقة تحت إشراف الأستاذة هايدي عطية</p>
+        <div class="header-title">
+            <h2>لوحة متابعة ولي الأمر 👨‍👩‍👧</h2>
+            <p>متابعة تقارير الحضور والغياب والنتائج تحت إشراف <strong style="color:var(--cyan);">الأستاذة هايدي عطية</strong></p>
         </div>
-        <a href="/logout" style="color:var(--rose); text-decoration:none; font-weight:700;">تسجيل الخروج</a>
+        <a href="/logout" class="btn-logout">تسجيل الخروج 🚪</a>
     </header>
 
     {% for rep in reports %}
-    <div class="card">
-        <h3 style="color:var(--cyan); margin-bottom:0.5rem;">👨‍🎓 الطالب: {{ rep.child.name }} ({{ rep.grade_title }})</h3>
-        <p style="color:var(--muted); font-size:0.85rem; margin-bottom:1.5rem;">كود الطالب المعتمد: {{ rep.child.student_code }}</p>
+    <div class="child-card">
+        <div class="child-header">
+            <div class="child-info">
+                <h3>👨‍🎓 الطالب: {{ rep.child.name }}</h3>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <span class="child-badge">📚 المرحلة: {{ rep.grade_title }}</span>
+                <span class="child-badge">🔖 الكود: <strong style="color:var(--cyan);">{{ rep.child.student_code }}</strong></span>
+            </div>
+        </div>
 
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem;">
-            <div>
-                <h4 style="color:#fff; margin-bottom:10px;">📅 سجل الحضور والغياب</h4>
-                <table>
-                    <thead><tr><th>التاريخ</th><th>الحالة</th></tr></thead>
-                    <tbody>
-                        {% for a in rep.attendance %}
-                        <tr>
-                            <td>{{ a.date }}</td>
-                            <td style="font-weight:700; color: {{ 'var(--emerald)' if a.status == 'حاضر' else 'var(--rose)' }}">{{ a.status }}</td>
-                        </tr>
-                        {% else %}
-                        <tr><td colspan="2" style="text-align:center; color:var(--muted);">لا توجد تسجيلات بعد.</td></tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+        <div class="child-sections-grid">
+            <div class="section-box">
+                <div class="section-title">
+                    <span>📅</span> سجل الحضور والغياب
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>التاريخ</th>
+                                <th>الحصة</th>
+                                <th>الحالة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for a in rep.attendance %}
+                            <tr>
+                                <td>{{ a.date }}</td>
+                                <td style="color:var(--muted);">{{ a.session_name or 'الحصة الأولى' }}</td>
+                                <td>
+                                    <span class="badge-status {{ 'status-present' if a.status == 'حاضر' else 'status-absent' }}">
+                                        {{ a.status }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="3" class="empty-cell">لم يتم تسجيل حضور أو غياب بعد.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <div>
-                <h4 style="color:#fff; margin-bottom:10px;">📈 درجات الاختبارات</h4>
-                <table>
-                    <thead><tr><th>الامتحان</th><th>الدرجة</th><th>التاريخ</th></tr></thead>
-                    <tbody>
-                        {% for r in rep.results %}
-                        <tr>
-                            <td>{{ r.exam_title }}</td>
-                            <td><strong style="color:var(--emerald);">{{ r.score }}</strong> / {{ r.total_marks }}</td>
-                            <td>{{ r.date }}</td>
-                        </tr>
-                        {% else %}
-                        <tr><td colspan="3" style="text-align:center; color:var(--muted);">لم يؤدِّ امتحانات بعد.</td></tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <div class="section-box">
+                <div class="section-title">
+                    <span>📈</span> درجات الاختبارات الإلكترونية
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>الامتحان</th>
+                                <th>الدرجة</th>
+                                <th>التاريخ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for r in rep.results %}
+                            <tr>
+                                <td><strong>{{ r.exam_title }}</strong></td>
+                                <td>
+                                    {% if r.score == 'محضر غش' %}
+                                        <span style="color:var(--rose); font-weight:800;">🚨 محضر غش</span>
+                                    {% else %}
+                                        <strong style="color:var(--emerald); font-size:1.05rem;">{{ r.score }}</strong> / {{ r.total_marks }}
+                                    {% endif %}
+                                </td>
+                                <td style="color:var(--muted); font-size:0.85rem;">{{ r.date }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="3" class="empty-cell">لم يؤدِّ الطالب أي اختبارات حتى الآن.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
     {% else %}
-    <div class="card" style="text-align:center; padding:3rem;">
-        <h3 style="color:var(--rose); margin-bottom:1rem;">تنبيه: لا يوجد طلاب مسجلون برقم هاتفك هذا!</h3>
-        <p style="color:var(--muted);">تأكد من قيام الطالب بوضع رقم هاتفك في خانة (رقم هاتف ولي الأمر) عند التسجيل لربط البيانات مباشرة.</p>
+    <div class="child-card" style="text-align:center; padding:3.5rem 1.5rem;">
+        <span style="font-size:3rem; display:block; margin-bottom:1rem;">⚠️</span>
+        <h3 style="color:var(--rose); margin-bottom:0.8rem; font-size:1.3rem;">لا يوجد طلاب مرتبطين برقم هذا الحساب حتى الآن</h3>
+        <p style="color:var(--muted); max-width:550px; margin:0 auto; line-height:1.8; font-size:0.95rem;">
+            يرجى التأكد من قيام الطالب بإدخال رقم هاتفك في خانة <strong>(رقم هاتف ولي الأمر)</strong> عند إنشاء حسابه، ليتم ربط تقاريره ونتائجه بحسابك تلقائياً.
+        </p>
     </div>
     {% endfor %}
 
+    <!-- ========================================================================= -->
+    <!-- 🔄 المراقبة والتحديث التلقائي اللحظي لشاشة ولي الأمر -->
+    <!-- ========================================================================= -->
+    <script>
+        let lastParentSignature = "{{ initial_signature }}";
+
+        setInterval(async () => {
+            try {
+                const res = await fetch('/api/parent/live-check');
+                const data = await res.json();
+                if (data.status === 'success') {
+                    if (lastParentSignature && data.signature !== lastParentSignature) {
+                        location.reload();
+                    }
+                }
+            } catch (e) {
+                // تجاهل انقطاع الشبكة المؤقت
+            }
+        }, 4000);
+    </script>
 </body>
 </html>
