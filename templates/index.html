@@ -33,7 +33,7 @@
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             overflow-x: hidden; position: relative;
-            padding: 1.5rem 1rem;
+            padding: 2.5rem 1rem 1.5rem 1rem;
         }
 
         canvas#bg-canvas {
@@ -46,8 +46,8 @@
             pointer-events: none; z-index: 0; opacity: 0.25;
             animation: orbFloat 22s infinite alternate ease-in-out;
         }
-        .orb--1 { width: 420px; height: 420px; top: -150px; right: -100px; background: radial-gradient(circle, var(--cyan), transparent 70%); }
-        .orb--2 { width: 400px; height: 400px; bottom: -150px; left: -100px; background: radial-gradient(circle, var(--purple), transparent 70%); }
+        .orb--1 { width: 440px; height: 440px; top: -150px; right: -100px; background: radial-gradient(circle, var(--cyan), transparent 70%); }
+        .orb--2 { width: 420px; height: 420px; bottom: -150px; left: -100px; background: radial-gradient(circle, var(--purple), transparent 70%); }
 
         @keyframes orbFloat {
             0% { transform: translate(0, 0) scale(1); }
@@ -61,11 +61,59 @@
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* 🌟 تكبير كادر الصورة الشخصية بصورة واضحة وجذابة */
+        /* 🤖 كارت الروبوت الملوح الجالس أعلى كادر الصورة */
+        .sitting-robot-companion {
+            position: absolute;
+            top: -62px;
+            left: -18px;
+            z-index: 25;
+            display: flex;
+            align-items: flex-end;
+            cursor: pointer;
+            filter: drop-shadow(0 10px 18px rgba(0, 242, 254, 0.35));
+            transition: var(--transition-smooth);
+        }
+
+        .sitting-robot-companion:hover {
+            transform: scale(1.1) translateY(-4px);
+        }
+
+        .waving-hand-arm {
+            transform-origin: 34px 44px;
+            animation: waveArm 1.6s ease-in-out infinite alternate;
+        }
+
+        @keyframes waveArm {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(-28deg); }
+        }
+
+        .bot-bubble-top {
+            position: absolute;
+            top: -26px;
+            right: 48px;
+            background: rgba(13, 20, 38, 0.94);
+            border: 1px solid var(--cyan);
+            backdrop-filter: blur(12px);
+            padding: 5px 12px;
+            border-radius: 14px 14px 2px 14px;
+            font-size: 0.76rem;
+            font-weight: 800;
+            color: #fff;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.35);
+            animation: bubbleBob 2.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes bubbleBob {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-4px); }
+        }
+
         .avatar-box {
             position: relative; 
-            width: 200px; height: 200px;
-            margin: 0 auto 1.6rem auto;
+            width: 225px; height: 225px;
+            margin: 1.8rem auto 1.6rem auto;
         }
 
         .avatar-ring {
@@ -95,11 +143,11 @@
         }
 
         .badge-verified {
-            position: absolute; bottom: 8px; right: 12px;
+            position: absolute; bottom: 10px; right: 14px;
             background: linear-gradient(135deg, var(--cyan), var(--blue));
-            color: #030712; width: 34px; height: 34px;
+            color: #030712; width: 36px; height: 36px;
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 1.15rem; font-weight: 900; border: 3px solid var(--bg-primary);
+            font-size: 1.2rem; font-weight: 900; border: 3px solid var(--bg-primary);
             box-shadow: 0 0 18px rgba(0, 242, 254, 0.65);
         }
 
@@ -113,8 +161,16 @@
         }
 
         h1.teacher-title {
-            font-size: 2.6rem; font-weight: 900;
-            letter-spacing: -0.5px; margin-bottom: 2rem; line-height: 1.25;
+            font-size: clamp(1.6rem, 7.5vw, 2.7rem);
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
         h1.teacher-title span {
@@ -230,18 +286,11 @@
         }
         .btn-submit:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
-        .admin-link {
-            position: fixed; bottom: 12px; left: 16px;
-            color: var(--text-secondary); text-decoration: none;
-            font-size: 0.75rem; opacity: 0.65; transition: 0.25s;
-            z-index: 20;
-        }
-        .admin-link:hover { opacity: 1; color: var(--cyan); }
-
-        /* 📱 تكبير متناسق لشاشات الموبايل */
         @media (max-width: 480px) {
-            .avatar-box { width: 175px; height: 175px; margin-bottom: 1.4rem; }
-            h1.teacher-title { font-size: 2.25rem; margin-bottom: 1.6rem; }
+            .avatar-box { width: 195px; height: 195px; margin: 1.6rem auto 1.4rem auto; }
+            .sitting-robot-companion { top: -56px; left: -14px; }
+            .sitting-robot-companion svg { width: 70px; height: 70px; }
+            .bot-bubble-top { font-size: 0.7rem; top: -22px; right: 38px; }
             .teacher-tag { font-size: 0.8rem; padding: 5px 15px; }
             .cta-button-group { flex-direction: column; width: 100%; gap: 0.75rem; }
             .btn-cta { width: 100%; min-width: unset; padding: 0.85rem 1.2rem; font-size: 0.95rem; }
@@ -255,14 +304,61 @@
     <div class="orb orb--2"></div>
     <canvas id="bg-canvas"></canvas>
 
-    <a href="/teacher-portal" class="admin-link">🔒 بوابة الأستاذة هايدي عطية</a>
-
     <div class="hero-container">
         
         <div class="avatar-box">
+            <!-- 🤖 الروبوت الجالس يلوح بيده للطلاب -->
+            <div class="sitting-robot-companion" onclick="animateRobotWave()" title="أهلاً بك!">
+                <div class="bot-bubble-top" id="robotGreetingBubble">أهلاً يا بطل! 👋</div>
+                <svg width="84" height="84" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- الهوائي -->
+                    <circle cx="50" cy="10" r="4.5" fill="#00f2fe" stroke="#1e293b" stroke-width="2"/>
+                    <path d="M50 14.5V23" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                    
+                    <!-- الرأس الكرتوني اللطيف -->
+                    <rect x="26" y="22" width="48" height="36" rx="16" fill="#f8fafc" stroke="#1e293b" stroke-width="3"/>
+                    <rect x="33" y="28" width="34" height="22" rx="9" fill="#0f172a"/>
+                    <!-- العينان المتوهجتان -->
+                    <circle cx="43" cy="39" r="4.5" fill="#00f2fe"/>
+                    <circle cx="57" cy="39" r="4.5" fill="#00f2fe"/>
+                    <!-- ابتسامة الروبوت -->
+                    <path d="M47 45.5C48.5 47 51.5 47 53 45.5" stroke="#00f2fe" stroke-width="1.8" stroke-linecap="round"/>
+
+                    <!-- السماعات الجانبية -->
+                    <rect x="22" y="32" width="5" height="15" rx="2.5" fill="#38bdf8" stroke="#1e293b" stroke-width="2"/>
+                    <rect x="73" y="32" width="5" height="15" rx="2.5" fill="#38bdf8" stroke="#1e293b" stroke-width="2"/>
+
+                    <!-- الجسم -->
+                    <path d="M37 57C37 54 41 53 50 53C59 53 63 54 63 57L60 74C60 77 40 77 40 74L37 57Z" fill="#f8fafc" stroke="#1e293b" stroke-width="2.8"/>
+                    <!-- شاشة الصدر -->
+                    <rect x="42" y="58" width="16" height="11" rx="4" fill="#38bdf8" stroke="#1e293b" stroke-width="1.5"/>
+
+                    <!-- الرجل اليسرى جالسة -->
+                    <path d="M38 73C38 73 34 78 35 83C35 85 41 85 41 83L42 74" fill="#e2e8f0" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                    <ellipse cx="36" cy="85" rx="6" ry="4" fill="#64748b" stroke="#1e293b" stroke-width="2"/>
+
+                    <!-- الرجل اليمنى ممتدة كالصورة -->
+                    <path d="M60 73C60 73 66 77 72 79C74 80 75 83 73 85L69 85" fill="#e2e8f0" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                    <ellipse cx="73" cy="85" rx="7" ry="4" fill="#64748b" stroke="#1e293b" stroke-width="2"/>
+
+                    <!-- اليد الثابتة الساندة -->
+                    <path d="M37 60L29 70L24 74" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="23" cy="75" r="3.5" fill="#38bdf8" stroke="#1e293b" stroke-width="2"/>
+
+                    <!-- 🖐️ اليد الملوحة الترحيبية -->
+                    <g class="waving-hand-arm">
+                        <path d="M63 60L72 52L78 40" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="79" cy="38" r="4.5" fill="#00f2fe" stroke="#1e293b" stroke-width="2"/>
+                        <path d="M76 34L77 31M80 33L82 30M83 36L86 34" stroke="#00f2fe" stroke-width="2" stroke-linecap="round"/>
+                    </g>
+                </svg>
+            </div>
+
             <div class="avatar-ring"></div>
             <div class="avatar-img-wrap">
-                <img src="{{ teacher_avatar }}" alt="{{ teacher_name }}">
+                <img src="{{ teacher_avatar or 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop' }}" 
+                     alt="{{ teacher_name }}"
+                     onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop';">
             </div>
             <div class="badge-verified">✓</div>
         </div>
@@ -288,6 +384,7 @@
 
     </div>
 
+    <!-- نافذة المودال -->
     <div class="modal-overlay" id="authModal">
         <div class="auth-card">
             <button class="modal-close" onclick="closeAuthModal()">✕</button>
@@ -360,6 +457,34 @@
             }
             loop();
         })();
+
+        // عبارات الروبوت الكرتوني الملوح
+        const botQuotes = [
+            "أهلاً يا بطل! 👋",
+            "جاهز للتفوق؟ 🚀",
+            "امتحاناتك أسهل هنا 🎯",
+            "مرحباً بك! ✨"
+        ];
+        let qIdx = 0;
+
+        function animateRobotWave() {
+            qIdx = (qIdx + 1) % botQuotes.length;
+            const bubble = document.getElementById('robotGreetingBubble');
+            bubble.textContent = botQuotes[qIdx];
+            
+            const arm = document.querySelector('.waving-hand-arm');
+            arm.style.animation = 'none';
+            arm.offsetHeight;
+            arm.style.animation = 'waveArm 0.3s ease-in-out infinite alternate';
+            setTimeout(() => {
+                arm.style.animation = 'waveArm 1.6s ease-in-out infinite alternate';
+            }, 1200);
+        }
+
+        setInterval(() => {
+            qIdx = (qIdx + 1) % botQuotes.length;
+            document.getElementById('robotGreetingBubble').textContent = botQuotes[qIdx];
+        }, 5000);
 
         const modal = document.getElementById('authModal');
         const modalTitle = document.getElementById('modalTitle');
