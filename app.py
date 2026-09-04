@@ -200,7 +200,6 @@ def index():
         elif role == 'parent': return redirect(url_for('parent_dashboard'))
         elif role == 'admin': return redirect(url_for('teacher_portal'))
 
-    # جلب صورة الأستاذة هايدي المعتمدة لعرضها في الصفحة الرئيسية
     admin = users_col.find_one({"role": "admin"})
     teacher_avatar = admin.get('avatar') if admin and admin.get('avatar') else DEFAULT_AVATAR
     teacher_name = admin.get('name', 'الأستاذة هايدي عطية') if admin else 'الأستاذة هايدي عطية'
@@ -300,6 +299,51 @@ def logout():
     return redirect(url_for('index'))
 
 # =========================================================================
+# 🔄 مسارات فحص التحديثات التلقائية المباشرة (Polling Live Sync)
+# =========================================================================
+@app.route('/api/admin/live-check')
+@login_required('admin')
+def admin_live_check():
+    grade = request.args.get('grade', 'p4')
+    today = datetime.now().strftime("%Y-%m-%d")
+    current_session = request.args.get('session', 'الحصة الأولى').strip()
+
+    pending_count = users_col.count_documents({"grade": grade, "role": "student", "status": "pending"})
+    students_count = users_col.count_documents({"grade": grade, "role": "student", "status": {"$ne": "pending"}})
+    exams_count = exams_col.count_documents({"grade": grade})
+    sessions_count = sessions_col.count_documents({"grade": grade, "date": today})
+    attendance_count = attendance_col.count_documents({"grade": grade, "date": today, "session_name": current_session})
+    
+    # حساب إجمالي عدد تسليمات الامتحانات لهذا الصف
+    grade_exams = list(exams_col.find({"grade": grade}, {"_id": 1}))
+    exam_ids = [str(e["_id"]) for e in grade_exams]
+    results_count = results_col.count_documents({"exam_id": {"$in": exam_ids}})
+
+    signature = f"{pending_count}_{students_count}_{exams_count}_{sessions_count}_{attendance_count}_{results_count}"
+
+    return jsonify({
+        "status": "success",
+        "signature": signature
+    })
+
+@app.route('/api/student/live-check')
+@login_required('student')
+def student_live_check():
+    student_id = session.get('user_id')
+    student_grade = session.get('grade', 'p4')
+
+    exams_count = exams_col.count_documents({"grade": student_grade, "status": "published"})
+    attendance_count = attendance_col.count_documents({"student_id": student_id})
+    results_count = results_col.count_documents({"student_id": student_id})
+
+    signature = f"{exams_count}_{attendance_count}_{results_count}"
+
+    return jsonify({
+        "status": "success",
+        "signature": signature
+    })
+
+# =========================================================================
 # 👨‍🎓 مسارات الطالب
 # =========================================================================
 @app.route('/student')
@@ -329,11 +373,14 @@ def student_dashboard():
     my_results = list(results_col.find({"student_id": student_id}).sort("date", -1))
     my_attendance = list(attendance_col.find({"student_id": student_id}).sort("date", -1))
 
+    initial_signature = f"{len(active_exams)}_{len(my_attendance)}_{len(my_results)}"
+
     return render_template('student_dashboard.html',
                            exams=active_exams,
                            results=my_results,
                            attendance=my_attendance,
-                           grade_title=GRADE_NAMES.get(student_grade, ''))
+                           grade_title=GRADE_NAMES.get(student_grade, ''),
+                           initial_signature=initial_signature)
 
 @app.route('/exam/<exam_id>')
 @login_required('student')
@@ -448,12 +495,10 @@ def teacher_portal():
     selected_grade = request.args.get('grade', 'p4')
     today = datetime.now().strftime("%Y-%m-%d")
 
-    # بيانات المعلمة وصورتها الشخصية
     teacher = users_col.find_one({"role": "admin"}) or {}
     teacher_avatar = teacher.get('avatar') or DEFAULT_AVATAR
     teacher_name = teacher.get('name', 'الأستاذة هايدي عطية')
 
-    # 1. طلبات الانضمام المعلقة
     pending_students = list(users_col.find({
         "role": "student", 
         "grade": selected_grade, 
@@ -464,7 +509,6 @@ def teacher_portal():
 
     total_pending_all = users_col.count_documents({"role": "student", "status": "pending"})
 
-    # 2. الطلاب المعتمدون
     students = list(users_col.find({
         "role": "student", 
         "grade": selected_grade, 
@@ -483,7 +527,6 @@ def teacher_portal():
         s['absent_count'] = a_count
         s['attendance_rate'] = round((p_count / total * 100), 1) if total > 0 else 100.0
 
-    # 3. إدارة الحصص
     sessions_col.update_one(
         {"grade": selected_grade, "date": today, "name": "الحصة الأولى"},
         {"$setOnInsert": {"created_at": datetime.now(timezone.utc)}},
@@ -506,14 +549,17 @@ def teacher_portal():
     }))
     today_status = {r['student_id']: r['status'] for r in today_records}
 
-    # 4. الامتحانات
     exams = list(exams_col.find({"grade": selected_grade}).sort("created_at", -1))
+    total_submissions = 0
     for ex in exams:
         ex_id_str = str(ex['_id'])
         ex['_id'] = ex_id_str
         ex_results = list(results_col.find({"exam_id": ex_id_str}).sort("date", -1))
         ex['submissions_count'] = len(ex_results)
         ex['results'] = ex_results
+        total_submissions += len(ex_results)
+
+    initial_signature = f"{len(pending_students)}_{len(students)}_{len(exams)}_{len(existing_sessions)}_{len(today_records)}_{total_submissions}"
 
     return render_template('admin_dashboard.html',
                            grades=GRADE_NAMES,
@@ -528,9 +574,9 @@ def teacher_portal():
                            today=today,
                            existing_sessions=existing_sessions,
                            current_session=current_session,
-                           exams=exams)
+                           exams=exams,
+                           initial_signature=initial_signature)
 
-# 👤 مسار تعديل صورة وبروفايل المعلمة
 @app.route('/api/admin/update-profile', methods=['POST'])
 @login_required('admin')
 def update_profile():
@@ -550,7 +596,6 @@ def update_profile():
         return jsonify({'status': 'success'})
     return jsonify({'status': 'error', 'msg': 'لم يتم إرسال أي تعديلات'}), 400
 
-# ✅ اعتماد الطالب الجديد
 @app.route('/api/admin/approve-student/<student_id>', methods=['POST'])
 @login_required('admin')
 def approve_student(student_id):
@@ -563,7 +608,6 @@ def approve_student(student_id):
     except Exception as e:
         return jsonify({'status': 'error', 'msg': str(e)}), 400
 
-# ❌ رفض طلب الطالب الجديد
 @app.route('/api/admin/reject-student/<student_id>', methods=['POST'])
 @login_required('admin')
 def reject_student(student_id):
@@ -573,7 +617,6 @@ def reject_student(student_id):
     except Exception as e:
         return jsonify({'status': 'error', 'msg': str(e)}), 400
 
-# 🗑️ حذف طالب مسجل نهائياً مع كافة سجلاته
 @app.route('/api/admin/delete-student/<student_id>', methods=['POST'])
 @login_required('admin')
 def delete_student(student_id):
@@ -585,7 +628,6 @@ def delete_student(student_id):
     except Exception as e:
         return jsonify({'status': 'error', 'msg': str(e)}), 400
 
-# 💾 مسار حفظ الحصة الجديدة في قاعدة البيانات
 @app.route('/api/admin/create-session', methods=['POST'])
 @login_required('admin')
 def create_session():
@@ -604,7 +646,6 @@ def create_session():
     )
     return jsonify({'status': 'success'})
 
-# 🗑️ مسار حذف كشف حصة بالكامل
 @app.route('/api/admin/delete-session', methods=['POST'])
 @login_required('admin')
 def delete_session():
