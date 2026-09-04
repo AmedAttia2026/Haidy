@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>غرفة التحكم | الأستاذة هايدي عطية</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,196 +24,264 @@
             --text-primary: #ffffff;
             --text-secondary: #94a3b8;
             --font-sans: 'Readex Pro', 'Cairo', sans-serif;
-            --radius-md: 20px;
-            --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            --radius-md: 18px;
+            --radius-sm: 12px;
+            --transition-smooth: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-sans); }
-        body { background: var(--bg-primary); color: var(--text-primary); padding: 1.2rem 3%; min-height: 100vh; }
+        body { 
+            background: var(--bg-primary); 
+            color: var(--text-primary); 
+            padding: 1rem 3%; 
+            min-height: 100vh; 
+            -webkit-tap-highlight-color: transparent;
+        }
 
         header {
             display: flex; justify-content: space-between; align-items: center;
             background: var(--bg-card); border: 1px solid rgba(0, 242, 254, 0.25);
-            padding: 1.2rem 1.8rem; border-radius: var(--radius-md); margin-bottom: 1.2rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            padding: 1rem 1.4rem; border-radius: var(--radius-md); margin-bottom: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
+
+        .header-teacher-wrap { display: flex; align-items: center; gap: 10px; }
+        .header-avatar {
+            width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--cyan);
+            overflow: hidden; background: #070d1e; flex-shrink: 0;
+        }
+        .header-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        .header-title-text h2 { color: var(--cyan); font-size: 1.15rem; font-weight: 800; }
+        .header-title-text p { color: var(--text-secondary); font-size: 0.78rem; margin-top: 2px; }
 
         .teacher-profile-bar {
             display: flex; justify-content: space-between; align-items: center;
             background: rgba(0, 242, 254, 0.04); border: 1px solid rgba(0, 242, 254, 0.2);
-            padding: 10px 18px; border-radius: 16px; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 10px;
+            padding: 10px 14px; border-radius: var(--radius-sm); margin-bottom: 1rem; flex-wrap: wrap; gap: 8px;
         }
 
         .grade-tabs {
-            display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 1.5rem;
+            display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 1rem;
+            -webkit-overflow-scrolling: touch; scrollbar-width: none;
         }
+        .grade-tabs::-webkit-scrollbar { display: none; }
+        
         .tab-link {
-            padding: 10px 20px; border-radius: 14px; background: var(--bg-card);
+            padding: 8px 14px; border-radius: 10px; background: var(--bg-card);
             border: 1px solid rgba(255, 255, 255, 0.08); color: var(--text-secondary);
-            text-decoration: none; font-weight: 700; font-size: 0.9rem; white-space: nowrap; transition: var(--transition-smooth);
+            text-decoration: none; font-weight: 700; font-size: 0.82rem; white-space: nowrap; transition: var(--transition-smooth);
         }
         .tab-link:hover { border-color: var(--cyan); color: var(--cyan); }
         .tab-link.active {
             background: linear-gradient(135deg, var(--cyan), #0284c7);
             color: #030712; border-color: var(--cyan);
-            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.35);
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
         }
 
         .section-nav {
-            display: flex; gap: 8px; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08);
-            padding-bottom: 12px; overflow-x: auto;
+            display: flex; gap: 6px; margin-bottom: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
         }
+        .section-nav::-webkit-scrollbar { display: none; }
+
         .nav-btn {
             background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-secondary); padding: 10px 18px; border-radius: 14px;
-            font-size: 0.92rem; font-weight: 800; cursor: pointer; transition: var(--transition-smooth);
-            display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; position: relative;
+            color: var(--text-secondary); padding: 8px 14px; border-radius: 12px;
+            font-size: 0.84rem; font-weight: 800; cursor: pointer; transition: var(--transition-smooth);
+            display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; position: relative;
         }
-        .nav-btn:hover { color: #fff; border-color: var(--cyan); background: rgba(0, 242, 254, 0.06); }
         .nav-btn.active {
             background: rgba(0, 242, 254, 0.15); border-color: var(--cyan);
             color: var(--cyan); box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
         }
 
         .badge-notify {
-            background: var(--rose); color: #fff; font-size: 0.75rem; font-weight: 900;
-            padding: 2px 7px; border-radius: 9999px; box-shadow: 0 0 10px rgba(244, 63, 94, 0.8);
-            animation: pulseNotify 1.5s infinite;
+            background: var(--rose); color: #fff; font-size: 0.7rem; font-weight: 900;
+            padding: 2px 6px; border-radius: 9999px;
         }
-        @keyframes pulseNotify { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
 
         .dashboard-section { display: none; }
-        .dashboard-section.active { display: block; animation: fadeIn 0.3s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .dashboard-section.active { display: block; animation: fadeIn 0.25s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
         .card {
             background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: var(--radius-md); padding: 1.6rem; margin-bottom: 1.8rem;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            border-radius: var(--radius-md); padding: 1.4rem; margin-bottom: 1.4rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
-        .card-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 10px; }
+        .card-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 8px; }
 
         .session-control-bar {
-            display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;
-            background: rgba(0,0,0,0.35); padding: 10px 14px; border-radius: 14px;
-            border: 1px solid rgba(0,242,254,0.15); margin-bottom: 1.2rem;
+            display: flex; flex-direction: column; gap: 8px;
+            background: rgba(0,0,0,0.35); padding: 10px 12px; border-radius: 14px;
+            border: 1px solid rgba(0,242,254,0.15); margin-bottom: 1rem;
         }
+        .session-top-actions {
+            display: flex; justify-content: space-between; align-items: center; gap: 8px; width: 100%;
+        }
+        .session-scroll-list {
+            display: flex; align-items: center; gap: 6px; overflow-x: auto;
+            width: 100%; padding-bottom: 4px; scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+        .session-scroll-list::-webkit-scrollbar { display: none; }
+
         .session-badge {
-            padding: 8px 16px; border-radius: 10px; background: rgba(255,255,255,0.05);
+            padding: 6px 14px; border-radius: 8px; background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1); color: var(--text-secondary);
-            font-size: 0.88rem; font-weight: 700; cursor: pointer; text-decoration: none;
-            transition: var(--transition-smooth);
+            font-size: 0.8rem; font-weight: 700; cursor: pointer; text-decoration: none;
+            transition: var(--transition-smooth); white-space: nowrap; flex-shrink: 0;
         }
-        .session-badge:hover { color: #fff; border-color: var(--cyan); }
-        .session-badge.active {
-            background: var(--cyan); color: #030712; border-color: var(--cyan); font-weight: 800;
-        }
+        .session-badge.active { background: var(--cyan); color: #030712; font-weight: 800; border-color: var(--cyan); }
+        
         .btn-new-session {
             background: linear-gradient(135deg, var(--emerald), #059669); color: #fff;
-            border: none; padding: 8px 16px; border-radius: 10px; font-weight: 800;
-            font-size: 0.88rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
-            transition: var(--transition-smooth);
-        }
-
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 12px 14px; text-align: right; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
-        th { color: var(--text-secondary); font-size: 0.9rem; font-weight: 600; }
-
-        @media (max-width: 768px) {
-            .mobile-hide { display: none !important; }
-            body { padding: 0.8rem 2%; }
-            th, td { padding: 10px 6px; font-size: 0.84rem; }
-            .btn-act { padding: 6px 10px; font-size: 0.8rem; }
-            .card { padding: 1.2rem 0.8rem; }
-            .nav-btn { padding: 8px 12px; font-size: 0.82rem; }
+            border: none; padding: 6px 12px; border-radius: 8px; font-weight: 800;
+            font-size: 0.78rem; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;
+            white-space: nowrap; flex-shrink: 0;
         }
 
         .btn-act {
-            padding: 8px 14px; border-radius: 10px; border: none; font-weight: 700;
-            cursor: pointer; transition: var(--transition-smooth); display: inline-flex; align-items: center; gap: 5px;
+            padding: 7px 12px; border-radius: 10px; border: none; font-weight: 700;
+            cursor: pointer; transition: var(--transition-smooth); display: inline-flex; 
+            align-items: center; justify-content: center; gap: 4px; font-size: 0.85rem;
         }
         .btn-p { background: rgba(16, 185, 129, 0.15); color: var(--emerald); border: 1px solid var(--emerald); }
         .btn-a { background: rgba(244, 63, 94, 0.15); color: var(--rose); border: 1px solid var(--rose); }
         .btn-del { background: rgba(244, 63, 94, 0.15); color: var(--rose); border: 1px solid var(--rose); }
         .btn-edit { background: rgba(245, 158, 11, 0.15); color: var(--amber); border: 1px solid var(--amber); }
 
+        .desktop-table-wrap { display: block; width: 100%; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th, td { padding: 10px 12px; text-align: right; border-bottom: 1px solid rgba(255, 255, 255, 0.06); font-size: 0.88rem; }
+        th { color: var(--text-secondary); font-weight: 600; }
+
+        .mobile-cards-list { display: none; flex-direction: column; gap: 6px; }
+        
+        .m-student-attend-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .m-student-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+        .m-student-name {
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .m-student-status {
+            font-size: 0.72rem;
+            font-weight: 800;
+        }
+        .m-student-buttons { display: flex; gap: 5px; flex-shrink: 0; }
+        .m-btn-pill {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.78rem;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            transition: var(--transition-smooth);
+        }
+
+        .m-item-card {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px; padding: 12px;
+            display: flex; flex-direction: column; gap: 8px;
+        }
+        .m-item-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.84rem; }
+        .m-item-title { font-size: 0.95rem; font-weight: 800; color: #fff; }
+        .m-item-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+        .m-item-actions-single { display: flex; gap: 8px; margin-top: 4px; }
+
         .word-box {
             border: 2px dashed rgba(0, 242, 254, 0.35); background: rgba(0, 242, 254, 0.02);
-            border-radius: 18px; padding: 1.8rem; text-align: center; margin-bottom: 1.5rem;
+            border-radius: 14px; padding: 1.2rem; text-align: center; margin-bottom: 1.2rem;
         }
 
         .confirm-modal, .preview-modal {
             position: fixed; inset: 0; background: rgba(3, 7, 18, 0.88);
             backdrop-filter: blur(20px); display: none; align-items: center; justify-content: center;
-            z-index: 1000; padding: 1.2rem;
+            z-index: 1000; padding: 0.8rem;
         }
         .confirm-modal.active, .preview-modal.active { display: flex; }
 
-        .box-inner {
-            background: #0c1427; border: 1px solid var(--rose); border-radius: 22px;
-            padding: 2rem; max-width: 460px; width: 100%; text-align: center;
+        .box-inner, .box-inner-session {
+            background: #0c1427; border: 1px solid var(--cyan); border-radius: 18px;
+            padding: 1.4rem; max-width: 480px; width: 100%; text-align: center;
         }
-        .box-inner-session {
-            background: #0c1427; border: 1px solid var(--cyan); border-radius: 24px;
-            padding: 2.2rem; max-width: 520px; width: 100%; text-align: center;
-            box-shadow: 0 20px 50px rgba(0, 242, 254, 0.25);
+        .preview-inner {
+            background: #0c1427; border: 1px solid var(--cyan); border-radius: 18px;
+            padding: 1.2rem; max-width: 900px; width: 100%; max-height: 92vh; overflow-y: auto; text-align: right;
         }
 
-        .preview-inner {
-            background: #0c1427; border: 1px solid var(--cyan); border-radius: 24px;
-            padding: 2rem; max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; text-align: right;
-        }
         .form-ctrl {
-            width: 100%; padding: 12px 14px; background: rgba(7, 12, 26, 0.9);
-            border: 1px solid rgba(0, 242, 254, 0.2); border-radius: 12px;
-            color: #fff; font-size: 0.95rem; outline: none; margin-top: 6px;
+            width: 100%; padding: 10px 12px; background: rgba(7, 12, 26, 0.9);
+            border: 1px solid rgba(0, 242, 254, 0.2); border-radius: 10px;
+            color: #fff; font-size: 0.9rem; outline: none; margin-top: 4px;
         }
 
         .exam-report-card {
             background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(0, 242, 254, 0.2);
-            border-radius: 18px; padding: 1.4rem; margin-bottom: 1.2rem;
-            transition: var(--transition-smooth);
+            border-radius: 14px; padding: 1rem; margin-bottom: 1rem;
         }
-        .exam-report-card:hover { border-color: var(--cyan); }
-        .exam-report-header {
-            display: flex; justify-content: space-between; align-items: center; cursor: pointer; flex-wrap: wrap; gap: 10px;
-        }
-        .exam-report-body {
-            display: none; margin-top: 1.2rem; padding-top: 1.2rem; border-top: 1px dashed rgba(255, 255, 255, 0.1);
-        }
-        .exam-report-body.open { display: block; animation: fadeIn 0.3s ease-in-out; }
 
         .cropper-container-wrapper {
-            width: 100%; height: 320px; background: #050a17; border-radius: 16px;
-            overflow: hidden; border: 1px dashed rgba(0, 242, 254, 0.3); margin-bottom: 14px;
+            width: 100%; height: 260px; background: #050a17; border-radius: 14px;
+            overflow: hidden; border: 1px dashed rgba(0, 242, 254, 0.3); margin-bottom: 12px;
         }
-        .cropper-view-box, .cropper-face { border-radius: 50% !important; }
+
+        @media (max-width: 768px) {
+            body { padding: 0.6rem 2%; }
+            header { padding: 0.8rem; border-radius: 14px; }
+            .header-title-text h2 { font-size: 0.98rem; }
+            .header-title-text p { font-size: 0.72rem; }
+            .header-avatar { width: 38px; height: 38px; }
+            
+            .card { padding: 1rem 0.8rem; border-radius: 14px; }
+            .teacher-profile-bar { flex-direction: column; align-items: stretch; text-align: center; }
+            .teacher-profile-bar button { width: 100%; }
+
+            .desktop-table-wrap { display: none !important; }
+            .mobile-cards-list { display: flex !important; }
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <div style="display:flex; align-items:center; gap:14px;">
-            <div style="width:50px; height:50px; border-radius:50%; border:2px solid var(--cyan); overflow:hidden; background:#070d1e; flex-shrink:0;">
-                <img id="headerTeacherAvatar" src="{{ teacher_avatar }}" alt="صورة المعلمة" style="width:100%; height:100%; object-fit:cover;">
+        <div class="header-teacher-wrap">
+            <div class="header-avatar">
+                <img id="headerTeacherAvatar" src="{{ teacher_avatar }}" alt="صورة المعلمة">
             </div>
-            <div>
-                <h2 style="color:var(--cyan); font-size:1.3rem;">غرفة الإدارة والتحكم | {{ teacher_name }} 👑</h2>
-                <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:2px;">
-                    المرحلة الدراسية: <strong style="color:#fff;">{{ current_grade_title }}</strong>
-                </p>
+            <div class="header-title-text">
+                <h2>{{ teacher_name }} 👑</h2>
+                <p>المرحلة: <strong style="color:#fff;">{{ current_grade_title }}</strong></p>
             </div>
         </div>
-        <a href="/logout" style="color:var(--rose); text-decoration:none; font-weight:700; padding:6px 14px; border:1px solid var(--rose); border-radius:10px; font-size:0.88rem;">خروج</a>
+        <a href="/logout" style="color:var(--rose); text-decoration:none; font-weight:700; padding:6px 12px; border:1px solid var(--rose); border-radius:10px; font-size:0.8rem;">خروج 🚪</a>
     </header>
 
     <div class="teacher-profile-bar">
-        <div style="display:flex; align-items:center; gap:10px;">
-            <span style="font-size:1.3rem;">👑</span>
-            <span style="font-weight:700; color:#fff; font-size:0.95rem;">الملف التعريفي للأستاذة هايدي عطية</span>
+        <div style="display:flex; align-items:center; justify-content:center; gap:6px;">
+            <span>👑</span>
+            <span style="font-weight:700; color:#fff; font-size:0.88rem;">الملف التعريفي للأستاذة هايدي عطية</span>
         </div>
-        <button type="button" class="btn-act" style="background:linear-gradient(135deg, var(--cyan), #0284c7); color:#030712; padding:8px 20px; border-radius:12px;" onclick="openProfileModal()">
-            🖼️ تعديل الصورة الشخصية وضبط الوجه
+        <button type="button" class="btn-act" style="background:linear-gradient(135deg, var(--cyan), #0284c7); color:#030712; border-radius:10px;" onclick="openProfileModal()">
+            🖼️ تعديل الصورة الشخصية
         </button>
     </div>
 
@@ -227,22 +295,22 @@
 
     <div class="section-nav">
         <button class="nav-btn" onclick="switchSection('pending', this)">
-            <span>🔔</span> طلبات الانضمام الجديدة
+            <span>🔔</span> الطلبات
             {% if pending_students|length > 0 %}
                 <span class="badge-notify">{{ pending_students|length }}</span>
             {% endif %}
         </button>
         <button class="nav-btn active" onclick="switchSection('attendance', this)">
-            <span>📋</span> كشف الحضور والغياب
+            <span>📋</span> كشف الحضور
         </button>
         <button class="nav-btn" onclick="switchSection('students-list', this)">
-            <span>👥</span> شؤون وإحصائيات الطلاب
+            <span>👥</span> شؤون الطلاب
         </button>
         <button class="nav-btn" onclick="switchSection('exams', this)">
-            <span>📝</span> بنك وإدارة الامتحانات
+            <span>📝</span> بنك الامتحانات
         </button>
         <button class="nav-btn" onclick="switchSection('results', this)">
-            <span>📊</span> سجل درجات وتقارير الامتحانات
+            <span>📊</span> سجل الدرجات
         </button>
     </div>
 
@@ -250,45 +318,60 @@
     <div id="sec-pending" class="dashboard-section">
         <div class="card">
             <div class="card-header-bar">
-                <h3 style="color:var(--cyan);">🔔 طلبات انضمام الطلاب بانتظار موافقتكِ ({{ current_grade_title }})</h3>
-                <span style="color:var(--text-secondary); font-size:0.88rem;">الطلبات المعلقة: {{ pending_students|length }} طالب</span>
+                <h3 style="color:var(--cyan); font-size:1.05rem;">🔔 طلبات الانضمام المعلقة ({{ current_grade_title }})</h3>
+                <span style="color:var(--text-secondary); font-size:0.8rem;">المعلق: {{ pending_students|length }} طالب</span>
             </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>اسم الطالب</th>
-                        <th>كود مقترح</th>
-                        <th>هاتف الطالب</th>
-                        <th>هاتف ولي الأمر</th>
-                        <th style="text-align:center;">قرار المعلمة</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for p in pending_students %}
-                    <tr id="pending_row_{{ p._id }}">
-                        <td><strong style="color:#fff; font-size:1rem;">{{ p.name }}</strong></td>
-                        <td><span style="color:var(--cyan); font-weight:800;">{{ p.student_code }}</span></td>
-                        <td>{{ p.phone }}</td>
-                        <td style="color:var(--text-secondary);">{{ p.parent_phone or 'غير مسجل' }}</td>
-                        <td style="text-align:center; white-space:nowrap;">
-                            <button class="btn-act btn-p" onclick="approveStudent('{{ p._id }}', '{{ p.name }}')">
-                                موافقة واعتماد ✓
-                            </button>
-                            <button class="btn-act btn-a" onclick="rejectStudent('{{ p._id }}', '{{ p.name }}')">
-                                رفض الطلب ✕
-                            </button>
-                        </td>
-                    </tr>
-                    {% else %}
-                    <tr>
-                        <td colspan="5" style="text-align:center; color:var(--text-secondary); padding:2.5rem;">
-                            ✨ لا توجد طلبات انضمام جديدة معلقة لهذا الصف حالياً.
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="desktop-table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>اسم الطالب</th>
+                            <th>كود مقترح</th>
+                            <th>هاتف الطالب</th>
+                            <th>هاتف ولي الأمر</th>
+                            <th style="text-align:center;">قرار المعلمة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in pending_students %}
+                        <tr id="pending_row_{{ p._id }}">
+                            <td><strong style="color:#fff;">{{ p.name }}</strong></td>
+                            <td><span style="color:var(--cyan); font-weight:800;">{{ p.student_code }}</span></td>
+                            <td>{{ p.phone }}</td>
+                            <td style="color:var(--text-secondary);">{{ p.parent_phone or 'غير مسجل' }}</td>
+                            <td style="text-align:center;">
+                                <button class="btn-act btn-p" onclick="approveStudent('{{ p._id }}', '{{ p.name }}')">موافقة ✓</button>
+                                <button class="btn-act btn-a" onclick="rejectStudent('{{ p._id }}', '{{ p.name }}')">رفض ✕</button>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="5" style="text-align:center; color:var(--text-secondary); padding:2rem;">✨ لا توجد طلبات جديدة معلقة.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mobile-cards-list">
+                {% for p in pending_students %}
+                <div class="m-item-card" id="m_pending_row_{{ p._id }}">
+                    <div class="m-item-row">
+                        <span class="m-item-title">{{ p.name }}</span>
+                        <span style="color:var(--cyan); font-weight:800; font-size:0.8rem;">{{ p.student_code }}</span>
+                    </div>
+                    <div class="m-item-row" style="color:var(--text-secondary); font-size:0.8rem;">
+                        <span>هاتف: {{ p.phone }}</span>
+                        <span>ولي الأمر: {{ p.parent_phone or 'غير مسجل' }}</span>
+                    </div>
+                    <div class="m-item-actions">
+                        <button class="btn-act btn-p" onclick="approveStudent('{{ p._id }}', '{{ p.name }}')">موافقة ✓</button>
+                        <button class="btn-act btn-a" onclick="rejectStudent('{{ p._id }}', '{{ p.name }}')">رفض ✕</button>
+                    </div>
+                </div>
+                {% else %}
+                <div style="text-align:center; color:var(--text-secondary); padding:1.5rem;">✨ لا توجد طلبات جديدة معلقة.</div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 
@@ -296,293 +379,369 @@
     <div id="sec-attendance" class="dashboard-section active">
         <div class="card">
             <div class="card-header-bar">
-                <h3 style="color:var(--cyan);">📋 كشف رصد طلاب ({{ current_grade_title }}) - {{ today }}</h3>
-                <span style="color:var(--text-secondary); font-size:0.88rem;">العدد المعتمد: {{ students|length }} طالب</span>
+                <h3 style="color:var(--cyan); font-size:1.05rem;">📋 رصد الحضور ({{ today }})</h3>
+                <span style="color:var(--text-secondary); font-size:0.8rem;">المعتمد: {{ students|length }} طالب</span>
             </div>
 
             <div class="session-control-bar">
-                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                    <span style="font-weight:700; color:var(--cyan); font-size:0.88rem;">الحصص:</span>
+                <div class="session-top-actions">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span style="font-weight:800; color:var(--cyan); font-size:0.82rem;">الحصص:</span>
+                        <button type="button" class="btn-new-session" onclick="openNewSessionModal()">
+                            <span>➕ حصة جديدة</span>
+                        </button>
+                    </div>
+                    <button type="button" class="btn-act btn-del" style="font-size:0.75rem; padding:4px 10px;" onclick="openDeleteSessionModal('{{ current_session }}')">
+                        🗑️ مسح كشف ({{ current_session }})
+                    </button>
+                </div>
+
+                <div class="session-scroll-list">
                     {% for sess in existing_sessions %}
                     <a href="/teacher-portal?grade={{ current_grade }}&session={{ sess }}" class="session-badge {{ 'active' if current_session == sess else '' }}">
                         {{ sess }}
                     </a>
                     {% endfor %}
-                    <button type="button" class="btn-new-session" onclick="openNewSessionModal()">
-                        <span>➕ إنشاء حصة جديدة</span>
-                    </button>
                 </div>
-
-                <button type="button" class="btn-act btn-del" style="font-size:0.82rem; padding:6px 14px;" onclick="openDeleteSessionModal('{{ current_session }}')">
-                    🗑️ مسح كشف ({{ current_session }}) بالكامل
-                </button>
             </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th class="mobile-hide">كود الطالب</th>
-                        <th>اسم الطالب</th>
-                        <th class="mobile-hide">هاتف ولي الأمر</th>
-                        <th>حالة ({{ current_session }})</th>
-                        <th>الإجراء المباشر</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for s in students %}
-                    <tr>
-                        <td class="mobile-hide"><strong>{{ s.student_code }}</strong></td>
-                        <td><strong>{{ s.name }}</strong></td>
-                        <td class="mobile-hide" style="color:var(--text-secondary);">{{ s.parent_phone or 'غير مسجل' }}</td>
-                        <td>
-                            <span id="st_badge_{{ s._id }}" style="font-weight:800; color: {{ 'var(--emerald)' if today_status.get(s._id) == 'حاضر' else ('var(--rose)' if today_status.get(s._id) == 'غائب' else 'var(--text-secondary)') }}">
-                                {{ today_status.get(s._id) or 'لم يُرصد' }}
-                            </span>
-                        </td>
-                        <td>
-                            <button class="btn-act btn-p" onclick="recordAttendance('{{ s._id }}', 'حاضر')">حضور ✓</button>
-                            <button class="btn-act btn-a" onclick="openAbsenceConfirm('{{ s._id }}', '{{ s.name }}')">غياب ✕</button>
-                        </td>
-                    </tr>
-                    {% else %}
-                    <tr><td colspan="5" style="text-align:center; color:var(--text-secondary); padding:2rem;">لا يوجد طلاب معتمدون في هذا الصف حتى الآن.</td></tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="desktop-table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>كود الطالب</th>
+                            <th>اسم الطالب</th>
+                            <th>هاتف ولي الأمر</th>
+                            <th>حالة ({{ current_session }})</th>
+                            <th>الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in students %}
+                        <tr>
+                            <td><strong>{{ s.student_code }}</strong></td>
+                            <td><strong>{{ s.name }}</strong></td>
+                            <td style="color:var(--text-secondary);">{{ s.parent_phone or 'غير مسجل' }}</td>
+                            <td>
+                                <span id="st_badge_{{ s._id }}" style="font-weight:800; color: {{ 'var(--emerald)' if today_status.get(s._id) == 'حاضر' else ('var(--rose)' if today_status.get(s._id) == 'غائب' else 'var(--text-secondary)') }}">
+                                    {{ today_status.get(s._id) or 'لم يُرصد' }}
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn-act btn-p" onclick="recordAttendance('{{ s._id }}', 'حاضر')">حضور ✓</button>
+                                <button class="btn-act btn-a" onclick="openAbsenceConfirm('{{ s._id }}', '{{ s.name }}')">غياب ✕</button>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="5" style="text-align:center; color:var(--text-secondary); padding:2rem;">لا يوجد طلاب معتمدون بعد.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mobile-cards-list">
+                {% for s in students %}
+                <div class="m-student-attend-card">
+                    <div class="m-student-info">
+                        <span class="m-student-name">{{ s.name }}</span>
+                        <span class="m-student-status" id="m_st_badge_{{ s._id }}" style="color: {{ 'var(--emerald)' if today_status.get(s._id) == 'حاضر' else ('var(--rose)' if today_status.get(s._id) == 'غائب' else 'var(--text-secondary)') }}">
+                            {{ today_status.get(s._id) or 'لم يُرصد بعد' }}
+                        </span>
+                    </div>
+                    <div class="m-student-buttons">
+                        <button class="m-btn-pill btn-p" onclick="recordAttendance('{{ s._id }}', 'حاضر')">
+                            <span>✓</span> حضور
+                        </button>
+                        <button class="m-btn-pill btn-a" onclick="openAbsenceConfirm('{{ s._id }}', '{{ s.name }}')">
+                            <span>✕</span> غياب
+                        </button>
+                    </div>
+                </div>
+                {% else %}
+                <div style="text-align:center; color:var(--text-secondary); padding:1.5rem;">لا يوجد طلاب معتمدون بعد.</div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 
-    <!-- 3️⃣ قسم شؤون وإحصائيات الطلاب -->
+    <!-- 3️⃣ قسم شؤون الطلاب -->
     <div id="sec-students-list" class="dashboard-section">
         <div class="card">
             <div class="card-header-bar">
-                <h3 style="color:var(--cyan);">👥 شؤون وإحصائيات حضور وغياب طلاب ({{ current_grade_title }})</h3>
-                <span style="color:var(--text-secondary); font-size:0.88rem;">إدارة شاملة لملفات الطلاب</span>
+                <h3 style="color:var(--cyan); font-size:1.05rem;">👥 إحصائيات الطلاب ({{ current_grade_title }})</h3>
             </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th class="mobile-hide">كود الطالب</th>
-                        <th>اسم الطالب</th>
-                        <th class="mobile-hide">هاتف ولي الأمر</th>
-                        <th style="color:var(--emerald);">مرات الحضور</th>
-                        <th style="color:var(--rose);">مرات الغياب</th>
-                        <th>نسبة الالتزام</th>
-                        <th style="text-align:center;">إدارة الطالب</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for s in students %}
-                    <tr id="student_row_{{ s._id }}">
-                        <td class="mobile-hide"><strong>{{ s.student_code }}</strong></td>
-                        <td><strong>{{ s.name }}</strong></td>
-                        <td class="mobile-hide" style="color:var(--text-secondary);">{{ s.parent_phone or 'غير مسجل' }}</td>
-                        <td><strong style="color:var(--emerald); font-size:1.05rem;">{{ s.present_count }}</strong> حصص</td>
-                        <td><strong style="color:var(--rose); font-size:1.05rem;">{{ s.absent_count }}</strong> حصص</td>
-                        <td>
-                            <span style="font-weight:800; color: {{ 'var(--emerald)' if s.attendance_rate >= 85 else ('var(--amber)' if s.attendance_rate >= 60 else 'var(--rose)') }}">
-                                {{ s.attendance_rate }}%
-                            </span>
-                        </td>
-                        <td style="text-align:center;">
-                            <button class="btn-act btn-del" onclick="deleteStudentPermanently('{{ s._id }}', '{{ s.name }}')">
-                                🗑️ حذف الطالب
-                            </button>
-                        </td>
-                    </tr>
-                    {% else %}
-                    <tr><td colspan="7" style="text-align:center; color:var(--text-secondary); padding:2rem;">لا يوجد طلاب مسجلون حتى الآن.</td></tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="desktop-table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>كود الطالب</th>
+                            <th>اسم الطالب</th>
+                            <th>هاتف ولي الأمر</th>
+                            <th style="color:var(--emerald);">الحضور</th>
+                            <th style="color:var(--rose);">الغياب</th>
+                            <th>الالتزام</th>
+                            <th style="text-align:center;">إدارة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in students %}
+                        <tr id="student_row_{{ s._id }}">
+                            <td><strong>{{ s.student_code }}</strong></td>
+                            <td><strong>{{ s.name }}</strong></td>
+                            <td style="color:var(--text-secondary);">{{ s.parent_phone or 'غير مسجل' }}</td>
+                            <td><strong style="color:var(--emerald);">{{ s.present_count }}</strong></td>
+                            <td><strong style="color:var(--rose);">{{ s.absent_count }}</strong></td>
+                            <td>
+                                <span style="font-weight:800; color: {{ 'var(--emerald)' if s.attendance_rate >= 85 else ('var(--amber)' if s.attendance_rate >= 60 else 'var(--rose)') }}">
+                                    {{ s.attendance_rate }}%
+                                </span>
+                            </td>
+                            <td style="text-align:center;">
+                                <button class="btn-act btn-del" onclick="deleteStudentPermanently('{{ s._id }}', '{{ s.name }}')">🗑️ حذف</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mobile-cards-list">
+                {% for s in students %}
+                <div class="m-item-card" id="m_student_row_{{ s._id }}" style="padding:10px 12px;">
+                    <div class="m-item-row">
+                        <span class="m-item-title">{{ s.name }}</span>
+                        <span style="font-weight:800; font-size:0.82rem; color: {{ 'var(--emerald)' if s.attendance_rate >= 85 else ('var(--amber)' if s.attendance_rate >= 60 else 'var(--rose)') }}">
+                            التزام {{ s.attendance_rate }}%
+                        </span>
+                    </div>
+                    <div class="m-item-row" style="font-size:0.8rem;">
+                        <span style="color:var(--emerald);">حضور: {{ s.present_count }}</span>
+                        <span style="color:var(--rose);">غياب: {{ s.absent_count }}</span>
+                        <button class="btn-act btn-del" style="padding:4px 10px; font-size:0.75rem;" onclick="deleteStudentPermanently('{{ s._id }}', '{{ s.name }}')">
+                            🗑️ حذف الطالب
+                        </button>
+                    </div>
+                </div>
+                {% else %}
+                <div style="text-align:center; color:var(--text-secondary); padding:1.5rem;">لا يوجد طلاب مسجلون بعد.</div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 
-    <!-- 4️⃣ قسم بنك وإدارة الامتحانات -->
+    <!-- 4️⃣ قسم بنك الامتحانات -->
     <div id="sec-exams" class="dashboard-section">
         <div class="card">
             <div class="card-header-bar">
-                <h3 style="color:var(--cyan);">📝 الامتحانات المنشورة لـ ({{ current_grade_title }})</h3>
+                <h3 style="color:var(--cyan); font-size:1.05rem;">📝 بنك الامتحانات ({{ current_grade_title }})</h3>
             </div>
             
             <div class="word-box">
-                <p style="margin-bottom:1.2rem; color:var(--text-secondary); font-size:1rem;">
-                    ارفعي ملف امتحان Word (.docx) - يدعم جميع أنواع الأسئلة:
+                <p style="margin-bottom:0.8rem; color:var(--text-secondary); font-size:0.85rem;">
+                    ارفعي ملف امتحان Word (.docx):
                 </p>
                 <input type="file" id="docxInput" accept=".docx" style="display:none;" onchange="handleDocxUpload(this)">
-                <button class="btn-act" style="background:linear-gradient(135deg, var(--cyan), #0284c7); color:#030712; padding:12px 26px; font-size:1rem; border-radius:12px;" onclick="document.getElementById('docxInput').click()">
-                    📂 رفع امتحان جديد عبر Word
+                <button class="btn-act" style="background:linear-gradient(135deg, var(--cyan), #0284c7); color:#030712; padding:8px 16px; border-radius:10px;" onclick="document.getElementById('docxInput').click()">
+                    📂 رفع امتحان Word
                 </button>
-                <div id="docxStatus" style="margin-top:10px; font-weight:700;"></div>
+                <div id="docxStatus" style="margin-top:6px; font-weight:700; font-size:0.82rem;"></div>
             </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>عنوان الامتحان</th>
-                        <th>المدة</th>
-                        <th>موعد الإغلاق</th>
-                        <th>درجة MCQ</th>
-                        <th>درجة T/F</th>
-                        <th>الإجمالي</th>
-                        <th>الإجراءات</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for ex in exams %}
-                    <tr id="exam_row_{{ ex._id }}">
-                        <td><strong>{{ ex.title }}</strong></td>
-                        <td>{{ ex.duration }} دقيقة</td>
-                        <td>{{ ex.deadline or 'متاح دائماً' }}</td>
-                        <td><span style="color:var(--blue); font-weight:700;">{{ ex.points_mcq or 5 }}</span></td>
-                        <td><span style="color:var(--emerald); font-weight:700;">{{ ex.points_tf or 2.5 }}</span></td>
-                        <td><strong style="color:var(--cyan);">{{ ex.total_marks }}</strong> درجة</td>
-                        <td>
-                            <button class="btn-act btn-edit" onclick="openEditExamModal('{{ ex._id }}')">✏️ تعديل</button>
-                            <button class="btn-act btn-del" onclick="deleteExam('{{ ex._id }}', '{{ ex.title }}')">🗑️ حذف</button>
-                        </td>
-                    </tr>
-                    {% else %}
-                    <tr><td colspan="7" style="text-align:center; color:var(--text-secondary); padding:1.5rem;">لا توجد امتحانات منشورة لهذا الصف بعد.</td></tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="desktop-table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>عنوان الامتحان</th>
+                            <th>المدة</th>
+                            <th>الإغلاق</th>
+                            <th>MCQ</th>
+                            <th>T/F</th>
+                            <th>الإجمالي</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ex in exams %}
+                        <tr id="exam_row_{{ ex._id }}">
+                            <td><strong>{{ ex.title }}</strong></td>
+                            <td>{{ ex.duration }} د</td>
+                            <td>{{ ex.deadline or 'متاح' }}</td>
+                            <td>{{ ex.points_mcq or 5 }}</td>
+                            <td>{{ ex.points_tf or 2.5 }}</td>
+                            <td><strong style="color:var(--cyan);">{{ ex.total_marks }}</strong></td>
+                            <td>
+                                <button class="btn-act btn-edit" onclick="openEditExamModal('{{ ex._id }}')">✏️</button>
+                                <button class="btn-act btn-del" onclick="deleteExam('{{ ex._id }}', '{{ ex.title }}')">🗑️</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mobile-cards-list">
+                {% for ex in exams %}
+                <div class="m-item-card" id="m_exam_row_{{ ex._id }}" style="padding:10px 12px;">
+                    <div class="m-item-row">
+                        <span class="m-item-title">{{ ex.title }}</span>
+                        <strong style="color:var(--cyan); font-size:0.88rem;">{{ ex.total_marks }} درجة</strong>
+                    </div>
+                    <div class="m-item-row" style="color:var(--text-secondary); font-size:0.78rem;">
+                        <span>⏱️ {{ ex.duration }} دقيقة</span>
+                        <span>📅 {{ ex.deadline or 'متاح دائماً' }}</span>
+                    </div>
+                    <div class="m-item-actions">
+                        <button class="btn-act btn-edit" style="font-size:0.8rem;" onclick="openEditExamModal('{{ ex._id }}')">✏️ تعديل</button>
+                        <button class="btn-act btn-del" style="font-size:0.8rem;" onclick="deleteExam('{{ ex._id }}', '{{ ex.title }}')">🗑️ حذف</button>
+                    </div>
+                </div>
+                {% else %}
+                <div style="text-align:center; color:var(--text-secondary); padding:1.5rem;">لا توجد امتحانات منشورة بعد.</div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 
-    <!-- 5️⃣ قسم سجل الدرجات والتقارير -->
+    <!-- 5️⃣ قسم سجل الدرجات -->
     <div id="sec-results" class="dashboard-section">
         <div class="card">
             <div class="card-header-bar">
-                <h3 style="color:var(--cyan);">📊 سجل نتائج وتقارير الامتحانات ({{ current_grade_title }})</h3>
-                <span style="color:var(--text-secondary); font-size:0.88rem;">اضغطي على أي امتحان لفتح كشف درجات طلابه</span>
+                <h3 style="color:var(--cyan); font-size:1.05rem;">📊 نتائج الامتحانات ({{ current_grade_title }})</h3>
             </div>
 
             {% for ex in exams %}
             <div class="exam-report-card">
-                <div class="exam-report-header" onclick="toggleExamResults('{{ ex._id }}')">
+                <div class="exam-report-header" style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="toggleExamResults('{{ ex._id }}')">
                     <div>
-                        <h4 style="color:#fff; font-size:1.15rem; display:inline-flex; align-items:center; gap:8px;">
-                            <span style="color:var(--cyan);">📝</span> {{ ex.title }}
-                        </h4>
-                        <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:4px;">
-                            الدرجة الكلية: <strong style="color:var(--cyan);">{{ ex.total_marks }}</strong> | 
-                            عدد الذين أدوا الامتحان: <strong style="color:var(--emerald);">{{ ex.submissions_count }}</strong> طالب
+                        <h4 style="color:#fff; font-size:0.95rem;">📝 {{ ex.title }}</h4>
+                        <p style="color:var(--text-secondary); font-size:0.76rem; margin-top:2px;">
+                            الدرجة: {{ ex.total_marks }} | سُلّم: <strong style="color:var(--emerald);">{{ ex.submissions_count }}</strong>
                         </p>
                     </div>
-                    <button class="btn-act" style="background:rgba(0, 242, 254, 0.1); color:var(--cyan); border:1px solid var(--cyan);">
-                        <span>عرض كشف درجات الطلاب</span> 👁️
+                    <button class="btn-act" style="background:rgba(0, 242, 254, 0.1); color:var(--cyan); font-size:0.75rem;">
+                        الكشف 👁️
                     </button>
                 </div>
 
-                <div id="results_box_{{ ex._id }}" class="exam-report-body">
+                <div id="results_box_{{ ex._id }}" class="exam-report-body" style="display:none; margin-top:10px; border-top:1px dashed rgba(255,255,255,0.1); padding-top:10px;">
                     {% if ex.results|length > 0 %}
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>اسم الطالب</th>
-                                <th>الدرجة المحصلة</th>
-                                <th>النسبة المئوية</th>
-                                <th>تاريخ ووقت الحل</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for r in ex.results %}
-                            <tr>
-                                <td><strong>{{ r.student_name }}</strong></td>
-                                <td>
-                                    {% if r.score == 'محضر غش' %}
-                                        <span style="color:var(--rose); font-weight:800;">🚨 محضر غش</span>
-                                    {% else %}
-                                        <strong style="color:var(--emerald); font-size:1.05rem;">{{ r.score }}</strong> / {{ r.total_marks }}
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if r.score != 'محضر غش' and r.total_marks > 0 %}
-                                        {% set pct = (r.score / r.total_marks * 100)|round(1) %}
-                                        <span style="font-weight:700; color: {{ 'var(--emerald)' if pct >= 85 else ('var(--amber)' if pct >= 50 else 'var(--rose)') }}">
-                                            {{ pct }}%
-                                        </span>
-                                    {% else %}
-                                        -
-                                    {% endif %}
-                                </td>
-                                <td style="color:var(--text-secondary);">{{ r.date }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                    <div class="desktop-table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>اسم الطالب</th>
+                                    <th>الدرجة</th>
+                                    <th>النسبة</th>
+                                    <th>التاريخ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for r in ex.results %}
+                                <tr>
+                                    <td><strong>{{ r.student_name }}</strong></td>
+                                    <td>
+                                        {% if r.score == 'محضر غش' %}
+                                            <span style="color:var(--rose); font-weight:800;">🚨 غش</span>
+                                        {% else %}
+                                            <strong style="color:var(--emerald);">{{ r.score }}</strong> / {{ r.total_marks }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if r.score != 'محضر غش' and r.total_marks > 0 %}
+                                            {{ (r.score / r.total_marks * 100)|round(1) }}%
+                                        {% else %}-{% endif %}
+                                    </td>
+                                    <td style="color:var(--text-secondary); font-size:0.8rem;">{{ r.date }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mobile-cards-list">
+                        {% for r in ex.results %}
+                        <div class="m-item-card" style="background:rgba(0,0,0,0.3); padding:8px 10px;">
+                            <div class="m-item-row">
+                                <strong>{{ r.student_name }}</strong>
+                                {% if r.score == 'محضر غش' %}
+                                    <span style="color:var(--rose); font-weight:800;">🚨 محضر غش</span>
+                                {% else %}
+                                    <strong style="color:var(--emerald);">{{ r.score }} / {{ r.total_marks }}</strong>
+                                {% endif %}
+                            </div>
+                            <div class="m-item-row" style="color:var(--text-secondary); font-size:0.75rem;">
+                                <span>{{ r.date }}</span>
+                                {% if r.score != 'محضر غش' and r.total_marks > 0 %}
+                                    <span style="color:var(--cyan); font-weight:700;">{{ (r.score / r.total_marks * 100)|round(1) }}%</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                     {% else %}
-                    <p style="text-align:center; color:var(--text-secondary); padding:1rem;">لم يقم أي طالب بتقديم هذا الامتحان حتى الآن.</p>
+                    <p style="text-align:center; color:var(--text-secondary); padding:0.6rem; font-size:0.8rem;">لم يقدم أحد الامتحان بعد.</p>
                     {% endif %}
                 </div>
             </div>
             {% else %}
-            <p style="text-align:center; color:var(--text-secondary); padding:2rem;">لا توجد امتحانات مسجلة لهذا الصف بعد.</p>
+            <p style="text-align:center; color:var(--text-secondary); padding:1.5rem;">لا توجد امتحانات مسجلة لهذا الصف بعد.</p>
             {% endfor %}
         </div>
     </div>
 
-    <!-- نافذة تعديل البروفايل وقص الصورة -->
+    <!-- نافذة تعديل البروفايل -->
     <div class="confirm-modal" id="profileModal">
         <div class="box-inner-session">
-            <h3 style="color:var(--cyan); margin-bottom:0.4rem;">تعديل وتحديد كادر الصورة</h3>
-            <p style="color:var(--text-secondary); font-size:0.85rem; margin-bottom:1rem;">
-                يمكنكِ تحريك وتكبير الصورة بالماوس أو اللمس لضبط الوجه في المنتصف تماماً:
+            <h3 style="color:var(--cyan); font-size:1.15rem; margin-bottom:0.3rem;">تعديل الصورة الشخصية</h3>
+            <p style="color:var(--text-secondary); font-size:0.8rem; margin-bottom:0.8rem;">
+                حركي وكبري الصورة لضبط الوجه في المنتصف:
             </p>
 
             <div id="cropperWrapper" class="cropper-container-wrapper" style="display:none;">
                 <img id="cropperTargetImg" src="" alt="قص الصورة" style="max-width:100%;">
             </div>
 
-            <div id="avatarPreviewContainer" style="width:140px; height:140px; margin:0 auto 1rem auto; border-radius:50%; border:3px solid var(--cyan); box-shadow:0 0 30px rgba(0,242,254,0.4); overflow:hidden; background:#070d1e;">
+            <div id="avatarPreviewContainer" style="width:110px; height:110px; margin:0 auto 0.8rem auto; border-radius:50%; border:3px solid var(--cyan); overflow:hidden; background:#070d1e;">
                 <img id="profilePreviewImg" src="{{ teacher_avatar }}" alt="معاينة الصورة" style="width:100%; height:100%; object-fit:cover;">
             </div>
 
-            <div id="cropControls" style="display:none; gap:8px; justify-content:center; margin-bottom:12px;">
-                <button type="button" class="btn-act" style="background:rgba(255,255,255,0.08); color:#fff;" onclick="zoomCropper(0.1)">🔍➕ تكبير</button>
-                <button type="button" class="btn-act" style="background:rgba(255,255,255,0.08); color:#fff;" onclick="zoomCropper(-0.1)">🔍➖ تصغير</button>
-                <button type="button" class="btn-act" style="background:var(--cyan); color:#030712; font-weight:800;" onclick="applyCrop()">✂️ اعتماد الكادر المحدد</button>
+            <div id="cropControls" style="display:none; gap:6px; justify-content:center; margin-bottom:10px;">
+                <button type="button" class="btn-act" style="background:rgba(255,255,255,0.08); color:#fff; font-size:0.75rem;" onclick="zoomCropper(0.1)">🔍➕ تكبير</button>
+                <button type="button" class="btn-act" style="background:rgba(255,255,255,0.08); color:#fff; font-size:0.75rem;" onclick="zoomCropper(-0.1)">🔍➖ تصغير</button>
+                <button type="button" class="btn-act" style="background:var(--cyan); color:#030712; font-weight:800; font-size:0.75rem;" onclick="applyCrop()">✂️ اعتماد</button>
             </div>
 
-            <div style="margin-bottom:1rem; text-align:right;">
-                <label style="font-size:0.85rem; color:var(--cyan); font-weight:700;">اسم المعلمة:</label>
+            <div style="margin-bottom:0.8rem; text-align:right;">
+                <label style="font-size:0.8rem; color:var(--cyan); font-weight:700;">اسم المعلمة:</label>
                 <input type="text" id="profileNameInput" class="form-ctrl" value="{{ teacher_name }}">
             </div>
 
             <input type="file" id="avatarFileInput" accept="image/*" style="display:none;" onchange="initImageCropper(this)">
-            <button type="button" class="btn-act" style="background:rgba(255,255,255,0.06); color:#fff; width:100%; padding:10px; justify-content:center; border-radius:12px; border:1px dashed var(--cyan);" onclick="document.getElementById('avatarFileInput').click()">
-                📷 اختيار صورة جديدة من جهازكِ
+            <button type="button" class="btn-act" style="background:rgba(255,255,255,0.06); color:#fff; width:100%; padding:8px; border-radius:10px; border:1px dashed var(--cyan);" onclick="document.getElementById('avatarFileInput').click()">
+                📷 اختيار صورة
             </button>
 
-            <div style="display:flex; gap:10px; margin-top:1.4rem;">
-                <button type="button" class="btn-act" style="flex:1; background:linear-gradient(135deg, var(--emerald), #059669); color:#fff; padding:12px; justify-content:center; border-radius:12px;" onclick="saveProfileChanges()">
-                    💾 حفظ واعتماد التعديلات
+            <div style="display:flex; gap:8px; margin-top:1rem;">
+                <button type="button" class="btn-act" style="flex:1; background:linear-gradient(135deg, var(--emerald), #059669); color:#fff;" onclick="saveProfileChanges()">
+                    💾 حفظ
                 </button>
-                <button type="button" class="btn-act" style="flex:1; background:rgba(255,255,255,0.08); color:#fff; justify-content:center; border-radius:12px;" onclick="closeProfileModal()">
+                <button type="button" class="btn-act" style="flex:1; background:rgba(255,255,255,0.08); color:#fff;" onclick="closeProfileModal()">
                     إلغاء
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- نافذة تحذير مسح كشف الحصة -->
+    <!-- نافذة مسح الحصة -->
     <div class="confirm-modal" id="deleteSessionModal">
-        <div class="box-inner" style="border: 2px solid var(--rose); box-shadow: 0 0 50px rgba(244, 63, 94, 0.45);">
-            <span style="font-size:3.2rem;">🚨</span>
-            <h3 style="color:var(--rose); margin:0.8rem 0; font-size:1.3rem;">تحذير شديد: حذف كشف الحصة بالكامل!</h3>
-            <p style="color:#fff; font-size:0.95rem; line-height:1.7;" id="deleteSessionModalText"></p>
-            <p style="color:var(--rose); font-size:0.85rem; margin-top:10px; font-weight:700; background:rgba(244,63,94,0.1); padding:8px; border-radius:10px;">
-                ⚠️ تنبيه نهائي: سيتم مسح الحصة من القائمة وحذف كافة تسجيلات حضور وغياب الطلاب المسجلة بها لليوم، ولن يمكن استرجاعها مطلقاً!
-            </p>
-            <div style="display:flex; gap:12px; margin-top:1.8rem;">
-                <button class="btn-act btn-a" style="flex:1; padding:12px; justify-content:center; font-size:0.95rem;" onclick="confirmDeleteSession()">
-                    نعم، حذف الحصة وسجلاتها نهائياً 🗑️
-                </button>
-                <button class="btn-act" style="flex:1; background:rgba(255,255,255,0.1); color:#fff; justify-content:center;" onclick="closeDeleteSessionModal()">
-                    تراجع وإلغاء
-                </button>
+        <div class="box-inner" style="border: 2px solid var(--rose);">
+            <span style="font-size:2.2rem;">🚨</span>
+            <h3 style="color:var(--rose); margin:0.4rem 0; font-size:1.1rem;">حذف كشف الحصة!</h3>
+            <p style="color:#fff; font-size:0.85rem; line-height:1.5;" id="deleteSessionModalText"></p>
+            <div style="display:flex; gap:8px; margin-top:1.2rem;">
+                <button class="btn-act btn-a" style="flex:1;" onclick="confirmDeleteSession()">حذف 🗑️</button>
+                <button class="btn-act" style="flex:1; background:rgba(255,255,255,0.1); color:#fff;" onclick="closeDeleteSessionModal()">إلغاء</button>
             </div>
         </div>
     </div>
@@ -590,104 +749,80 @@
     <!-- نافذة إنشاء حصة جديدة -->
     <div class="confirm-modal" id="newSessionModal">
         <div class="box-inner-session">
-            <span style="font-size:2.8rem;">📚</span>
-            <h3 style="color:var(--cyan); margin:0.8rem 0;">إنشاء حصة جديدة وحفظها</h3>
-            <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:1.2rem;">
-                اكتبي اسم الحصة لرصد الغياب فيها بشكل دائم:
-            </p>
-            <input type="text" id="newSessionInput" class="form-ctrl" style="text-align:center; font-weight:800; font-size:1.1rem;" placeholder="مثال: الحصة الثانية">
-            <div style="display:flex; gap:12px; margin-top:1.5rem;">
-                <button class="btn-act" style="flex:1; background:linear-gradient(135deg, var(--emerald), #059669); color:#fff; padding:12px; justify-content:center; border-radius:12px;" onclick="confirmCreateSession()">
-                    اعتماد وحفظ الحصة ✓
-                </button>
-                <button class="btn-act" style="flex:1; background:rgba(255,255,255,0.08); color:#fff; justify-content:center; border-radius:12px;" onclick="closeNewSessionModal()">
-                    إلغاء
-                </button>
+            <span style="font-size:2rem;">📚</span>
+            <h3 style="color:var(--cyan); margin:0.4rem 0; font-size:1.1rem;">إنشاء حصة جديدة</h3>
+            <input type="text" id="newSessionInput" class="form-ctrl" style="text-align:center; font-weight:800;" placeholder="مثال: الحصة الثانية">
+            <div style="display:flex; gap:8px; margin-top:1rem;">
+                <button class="btn-act" style="flex:1; background:linear-gradient(135deg, var(--emerald), #059669); color:#fff;" onclick="confirmCreateSession()">حفظ ✓</button>
+                <button class="btn-act" style="flex:1; background:rgba(255,255,255,0.08); color:#fff;" onclick="closeNewSessionModal()">إلغاء</button>
             </div>
         </div>
     </div>
 
-    <!-- نافذة تأكيد تسجيل الغياب لطالب -->
+    <!-- ⚠️ نافذة تأكيد الغياب المحدثة: الاسم غامق وتحته الحصة بمسافة صغيرة -->
     <div class="confirm-modal" id="absenceModal">
         <div class="box-inner">
-            <span style="font-size:2.8rem;">⚠️</span>
-            <h3 style="color:var(--rose); margin:0.8rem 0;">تأكيد رصد الغياب</h3>
-            <p style="color:var(--text-secondary); line-height:1.7;" id="absenceModalText"></p>
-            <div style="display:flex; gap:12px; margin-top:1.8rem;">
-                <button class="btn-act btn-a" style="flex:1; padding:12px; justify-content:center;" id="confirmAbsenceBtn">نعم، تأكيد الغياب</button>
-                <button class="btn-act" style="flex:1; background:rgba(255,255,255,0.1); color:#fff; justify-content:center;" onclick="closeAbsenceModal()">إلغاء</button>
+            <span style="font-size:2.2rem;">⚠️</span>
+            <h3 style="color:var(--rose); margin:0.4rem 0 0.8rem 0; font-size:1.15rem;">تأكيد الغياب</h3>
+            <div id="absenceModalText"></div>
+            <div style="display:flex; gap:8px; margin-top:1.2rem;">
+                <button class="btn-act btn-a" style="flex:1;" id="confirmAbsenceBtn">تأكيد الغياب</button>
+                <button class="btn-act" style="flex:1; background:rgba(255,255,255,0.1); color:#fff;" onclick="closeAbsenceModal()">إلغاء</button>
             </div>
         </div>
     </div>
 
-    <!-- نافذة معاينة وضبط درجات الامتحان -->
+    <!-- نافذة إعداد الامتحان -->
     <div class="preview-modal" id="previewModal">
         <div class="preview-inner">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 1.2rem;">
-                <div>
-                    <h3 id="modalHeading" style="color:var(--cyan); font-size:1.35rem;">🧪 إعداد وضبط درجات الامتحان</h3>
-                    <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:3px;">
-                        حددي درجات كل نمط ووقت الإغلاق بسهولة
-                    </p>
-                </div>
-                <button onclick="closePreviewModal()" style="background:rgba(255,255,255,0.08); border:none; color:#fff; width:34px; height:34px; border-radius:50%; cursor:pointer;">✕</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.6rem;">
+                <h3 id="modalHeading" style="color:var(--cyan); font-size:1.05rem;">🧪 إعداد الامتحان</h3>
+                <button onclick="closePreviewModal()" style="background:rgba(255,255,255,0.08); border:none; color:#fff; width:28px; height:28px; border-radius:50%; cursor:pointer;">✕</button>
             </div>
 
             <input type="hidden" id="editingExamId" value="">
 
-            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 1.2rem; margin-bottom: 1.2rem;">
-                <div style="display:grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 12px;">
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 0.8rem; margin-bottom: 0.6rem;">
+                <div style="margin-bottom: 6px;">
+                    <label style="font-size:0.75rem; color:var(--cyan); font-weight:700;">📌 عنوان الامتحان:</label>
+                    <input type="text" id="examTitle" class="form-ctrl">
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 6px;">
                     <div>
-                        <label style="font-size:0.85rem; color:var(--cyan); font-weight:700;">📌 عنوان الامتحان:</label>
-                        <input type="text" id="examTitle" class="form-ctrl">
-                    </div>
-                    <div>
-                        <label style="font-size:0.85rem; color:var(--cyan); font-weight:700;">⏱️ المدة (بالدقائق):</label>
+                        <label style="font-size:0.75rem; color:var(--cyan); font-weight:700;">⏱️ المدة (د):</label>
                         <input type="number" id="examDuration" class="form-ctrl" value="20" min="5">
                     </div>
-                </div>
-
-                <div>
-                    <label style="font-size:0.85rem; color:var(--cyan); font-weight:700; display:block; margin-bottom:6px;">
-                        ⏰ موعد إغلاق الامتحان:
-                    </label>
-                    <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-                        <input type="datetime-local" id="examDeadline" class="form-ctrl" style="flex:1; min-width:240px; font-weight:700; color:var(--cyan);">
-                        
-                        <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                            <button type="button" class="btn-act" style="background:rgba(0,242,254,0.1); color:var(--cyan); font-size:0.85rem; padding:8px 16px; font-weight:700;" onclick="setQuickDeadline(24)">يوم</button>
-                            <button type="button" class="btn-act" style="background:rgba(0,242,254,0.1); color:var(--cyan); font-size:0.85rem; padding:8px 16px; font-weight:700;" onclick="setQuickDeadline(48)">يومين</button>
-                            <button type="button" class="btn-act" style="background:rgba(0,242,254,0.1); color:var(--cyan); font-size:0.85rem; padding:8px 16px; font-weight:700;" onclick="setQuickDeadline(168)">أسبوع</button>
-                            <button type="button" class="btn-act" style="background:rgba(255,255,255,0.08); color:#fff; font-size:0.85rem; padding:8px 16px; font-weight:700;" onclick="document.getElementById('examDeadline').value = ''">بدون قفل</button>
-                        </div>
+                    <div>
+                        <label style="font-size:0.75rem; color:var(--cyan); font-weight:700;">⏰ الإغلاق:</label>
+                        <input type="datetime-local" id="examDeadline" class="form-ctrl">
                     </div>
                 </div>
             </div>
 
-            <div style="display:grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 12px; margin-bottom: 1.5rem;">
-                <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid var(--blue); border-radius: 14px; padding: 12px;">
-                    <span style="font-weight:800; color:var(--blue); font-size:0.9rem;">🔘 اختيار من متعدد (MCQ)</span>
-                    <input type="number" id="pts_mcq" class="form-ctrl" value="5" step="0.5" min="0.5" style="border-color:var(--blue); font-weight:800; text-align:center;" oninput="updateLiveScoreSummary()">
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 0.8rem;">
+                <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid var(--blue); border-radius: 8px; padding: 6px; text-align:center;">
+                    <span style="font-weight:700; color:var(--blue); font-size:0.72rem;">MCQ</span>
+                    <input type="number" id="pts_mcq" class="form-ctrl" value="5" step="0.5" min="0.5" style="text-align:center; padding:4px;" oninput="updateLiveScoreSummary()">
                 </div>
 
-                <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid var(--emerald); border-radius: 14px; padding: 12px;">
-                    <span style="font-weight:800; color:var(--emerald); font-size:0.9rem;">✔️ صح وخطأ (T / F)</span>
-                    <input type="number" id="pts_tf" class="form-ctrl" value="2.5" step="0.5" min="0.5" style="border-color:var(--emerald); font-weight:800; text-align:center;" oninput="updateLiveScoreSummary()">
+                <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid var(--emerald); border-radius: 8px; padding: 6px; text-align:center;">
+                    <span style="font-weight:700; color:var(--emerald); font-size:0.72rem;">T / F</span>
+                    <input type="number" id="pts_tf" class="form-ctrl" value="2.5" step="0.5" min="0.5" style="text-align:center; padding:4px;" oninput="updateLiveScoreSummary()">
                 </div>
 
-                <div style="background: rgba(0,0,0,0.4); border: 1px dashed rgba(0, 242, 254, 0.35); border-radius: 14px; padding: 12px; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-                    <span style="color:var(--text-secondary); font-size:0.8rem;">المجموع الكلي</span>
-                    <div style="font-size: 1.8rem; font-weight: 900; color: var(--cyan);" id="live_total_score">0</div>
+                <div style="background: rgba(0,0,0,0.4); border: 1px dashed rgba(0, 242, 254, 0.35); border-radius: 8px; padding: 6px; text-align:center; display:flex; flex-direction:column; justify-content:center;">
+                    <span style="color:var(--text-secondary); font-size:0.68rem;">الإجمالي</span>
+                    <div style="font-size: 1.05rem; font-weight: 900; color: var(--cyan);" id="live_total_score">0</div>
                 </div>
             </div>
 
             <div id="previewQuestionsList"></div>
 
-            <div style="display:flex; gap:10px; margin-top:1.5rem;">
-                <button class="btn-act" style="flex:2; background:linear-gradient(135deg, var(--emerald), #059669); color:#fff; padding:12px; justify-content:center; font-size:1.05rem; border-radius:12px;" onclick="confirmSaveExam()">
-                    💾 اعتماد ونشر الامتحان فوراً
+            <div style="display:flex; gap:8px; margin-top:0.8rem;">
+                <button class="btn-act" style="flex:2; background:linear-gradient(135deg, var(--emerald), #059669); color:#fff;" onclick="confirmSaveExam()">
+                    💾 اعتماد ونشر
                 </button>
-                <button class="btn-act" style="flex:1; background:rgba(255,255,255,0.1); color:#fff; justify-content:center; border-radius:12px;" onclick="closePreviewModal()">
+                <button class="btn-act" style="flex:1; background:rgba(255,255,255,0.1); color:#fff;" onclick="closePreviewModal()">
                     إلغاء
                 </button>
             </div>
@@ -706,7 +841,6 @@
         let cropperInstance = null;
         let finalCroppedBase64 = null;
 
-        // الحفاظ على التبويب النشط بعد التحديث التلقائي
         const savedTab = localStorage.getItem('adminActiveTab') || 'attendance';
         const targetBtn = document.querySelector(`.nav-btn[onclick*="'${savedTab}'"]`);
         if (targetBtn) {
@@ -810,7 +944,7 @@
                     body: JSON.stringify(payload)
                 });
                 if (res.ok) {
-                    alert("✅ تم حفظ الصورة المضبوطة بنجاح!");
+                    alert("✅ تم حفظ الصورة بنجاح!");
                     location.reload();
                 } else {
                     alert("❌ تعذر حفظ التعديلات");
@@ -822,13 +956,13 @@
 
         function toggleExamResults(examId) {
             const el = document.getElementById(`results_box_${examId}`);
-            if (el) el.classList.toggle('open');
+            if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
         }
 
         function openDeleteSessionModal(sessionName) {
             sessionToDelete = sessionName;
             document.getElementById('deleteSessionModalText').innerHTML = 
-                `أنتِ على وشك حذف كشف <strong>(${sessionName})</strong> بالكامل لصف (<strong>{{ current_grade_title }}</strong>) لتاريخ اليوم.`;
+                `أنتِ على وشك حذف كشف <strong>(${sessionName})</strong> لصف (<strong>{{ current_grade_title }}</strong>).`;
             document.getElementById('deleteSessionModal').classList.add('active');
         }
 
@@ -846,81 +980,58 @@
                     body: JSON.stringify({ grade: currentGrade, session_name: sessionToDelete })
                 });
                 if (res.ok) {
-                    alert(`✅ تم حذف كشف (${sessionToDelete}) ومسح جميع سجلات حضورها بنجاح.`);
+                    alert(`✅ تم حذف كشف (${sessionToDelete}).`);
                     window.location.href = `/teacher-portal?grade=${currentGrade}`;
-                } else {
-                    alert("حدث خطأ أثناء محاولة حذف الحصة");
                 }
-            } catch(e) {
-                alert("فشل الاتصال بالخادم");
-            }
+            } catch(e) { alert("فشل الاتصال"); }
         }
 
         async function approveStudent(studentId, name) {
-            if (!confirm(`هل أنتِ متأكدة من قبول واعتماد الطالب (${name}) للانضمام؟`)) return;
+            if (!confirm(`قبول الطالب (${name})؟`)) return;
             try {
                 const res = await fetch(`/api/admin/approve-student/${studentId}`, { method: 'POST' });
                 if (res.ok) {
-                    alert(`✅ تم اعتماد الطالب (${name}) بنجاح ويمكنه الآن تسجيل الدخول.`);
+                    alert(`✅ تم اعتماد الطالب (${name}).`);
                     location.reload();
-                } else {
-                    alert("حدث خطأ أثناء اعتماد الطالب");
                 }
-            } catch(e) {
-                alert("فشل الاتصال بالخادم");
-            }
+            } catch(e) { alert("فشل الاتصال"); }
         }
 
         async function rejectStudent(studentId, name) {
-            if (!confirm(`هل أنتِ متأكدة من رفض طلب الطالب (${name})؟ سيتم حذف طلبه.`)) return;
+            if (!confirm(`رفض طلب الطالب (${name})؟`)) return;
             try {
                 const res = await fetch(`/api/admin/reject-student/${studentId}`, { method: 'POST' });
                 if (res.ok) {
-                    alert(`تم رفض وحذف طلب الطالب (${name}).`);
+                    alert(`تم رفض الطالب (${name}).`);
                     location.reload();
-                } else {
-                    alert("حدث خطأ أثناء رفض الطلب");
                 }
-            } catch(e) {
-                alert("فشل الاتصال بالخادم");
-            }
+            } catch(e) { alert("فشل الاتصال"); }
         }
 
         async function deleteStudentPermanently(studentId, name) {
-            if (!confirm(`⚠️ تحذير: هل أنتِ متأكدة تماماً من حذف الطالب (${name}) نهائياً؟\nسيتم مسح سجلات غيابه ونتائج امتحاناته بالكامل.`)) return;
+            if (!confirm(`حذف الطالب (${name}) نهائياً؟`)) return;
             try {
                 const res = await fetch(`/api/admin/delete-student/${studentId}`, { method: 'POST' });
                 if (res.ok) {
-                    const row = document.getElementById(`student_row_${studentId}`);
-                    if (row) row.remove();
-                    alert(`✅ تم حذف الطالب (${name}) نهائياً بنجاح.`);
+                    alert(`✅ تم حذف الطالب (${name}).`);
                     location.reload();
-                } else {
-                    alert("حدث خطأ أثناء حذف الطالب");
                 }
-            } catch(e) {
-                alert("فشل الاتصال بالخادم");
-            }
+            } catch(e) { alert("فشل الاتصال"); }
         }
 
         function openNewSessionModal() {
-            const arabicNumbers = [
-                'الأولى', 'الثانية', 'الثالثة', 'الرابعة', 'الخامسة', 
-                'السادسة', 'السابعة', 'الثامنة', 'التاسعة', 'العاشرة'
-            ];
+            const arabicNumbers = ['الأولى', 'الثانية', 'الثالثة', 'الرابعة', 'الخامسة', 'السادسة', 'السابعة', 'الثامنة', 'التاسعة', 'العاشرة'];
             const nextIdx = existingSessions.length;
             const suggestedName = nextIdx < arabicNumbers.length ? `الحصة ${arabicNumbers[nextIdx]}` : `الحصة رقم ${nextIdx + 1}`;
             document.getElementById('newSessionInput').value = suggestedName;
             document.getElementById('newSessionModal').classList.add('active');
         }
 
-        function closeNewSessionModal() {
-            document.getElementById('newSessionModal').classList.remove('active');
-        }
+        function closeNewSessionModal() { document.getElementById('newSessionModal').classList.remove('active'); }
 
         async function confirmCreateSession() {
             const name = document.getElementById('newSessionInput').value.trim();
-            if (!name) { alert("يرجى كتابة اسم الحصة"); return; }
+            if (!name) { alert("اكتبي اسم الحصة"); return; }
             const res = await fetch('/api/admin/create-session', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -928,8 +1039,6 @@
             });
             if (res.ok) {
                 window.location.href = `/teacher-portal?grade=${currentGrade}&session=${encodeURIComponent(name)}`;
-            } else {
-                alert("تعذر حفظ الحصة");
             }
         }
 
@@ -941,14 +1050,28 @@
             });
             if(res.ok) {
                 const badge = document.getElementById(`st_badge_${id}`);
-                badge.textContent = status;
-                badge.style.color = (status === 'حاضر') ? 'var(--emerald)' : 'var(--rose)';
+                if (badge) {
+                    badge.textContent = status;
+                    badge.style.color = (status === 'حاضر') ? 'var(--emerald)' : 'var(--rose)';
+                }
+                const mBadge = document.getElementById(`m_st_badge_${id}`);
+                if (mBadge) {
+                    mBadge.textContent = status;
+                    mBadge.style.color = (status === 'حاضر') ? 'var(--emerald)' : 'var(--rose)';
+                }
             }
         }
 
         function openAbsenceConfirm(id, name) {
             targetStudentId = id;
-            document.getElementById('absenceModalText').innerHTML = `هل أنتِ متأكدة من تسجيل الطالب <strong>(${name})</strong> غائباً في <strong>(${currentSession})</strong>؟`;
+            document.getElementById('absenceModalText').innerHTML = `
+                <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff; margin-bottom: 4px;">
+                    ${name}
+                </div>
+                <div style="font-size: 0.88rem; font-weight: 600; color: var(--cyan);">
+                    ${currentSession}
+                </div>
+            `;
             document.getElementById('absenceModal').classList.add('active');
         }
         function closeAbsenceModal() { document.getElementById('absenceModal').classList.remove('active'); }
@@ -957,13 +1080,6 @@
             if(targetStudentId) { recordAttendance(targetStudentId, 'غائب'); closeAbsenceModal(); }
         });
 
-        function setQuickDeadline(hoursFromNow) {
-            const date = new Date();
-            date.setTime(date.getTime() + (hoursFromNow * 60 * 60 * 1000));
-            const pad = (n) => String(n).padStart(2, '0');
-            document.getElementById('examDeadline').value = `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
-        }
-
         function updateLiveScoreSummary() {
             const mcqPts = parseFloat(document.getElementById('pts_mcq').value) || 0;
             const tfPts = parseFloat(document.getElementById('pts_tf').value) || 0;
@@ -971,7 +1087,7 @@
             parsedQuestions.forEach(q => {
                 if (q.type === 'tf' || q.options.length === 2) tfCount++; else mcqCount++;
             });
-            document.getElementById('live_total_score').textContent = `${Number(((mcqCount * mcqPts) + (tfCount * tfPts)).toFixed(2))} درجة`;
+            document.getElementById('live_total_score').textContent = `${Number(((mcqCount * mcqPts) + (tfCount * tfPts)).toFixed(2))}`;
         }
 
         function renderQuestionsEditor() {
@@ -985,33 +1101,31 @@
                 const isTF = (q.type === 'tf' || optsCount === 2);
 
                 const card = document.createElement('div');
-                card.style.cssText = `background:rgba(255,255,255,0.03); border:1px solid ${isTF ? 'rgba(16, 185, 129, 0.3)' : 'rgba(0,242,254,0.2)'}; padding:14px; border-radius:14px; margin-bottom:12px;`;
+                card.style.cssText = `background:rgba(255,255,255,0.03); border:1px solid ${isTF ? 'rgba(16, 185, 129, 0.3)' : 'rgba(0,242,254,0.2)'}; padding:8px; border-radius:10px; margin-bottom:8px;`;
 
                 const header = document.createElement('div');
-                header.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;';
-                header.innerHTML = `<label style="font-size:0.85rem; color:${isTF ? 'var(--emerald)' : 'var(--cyan)'}; font-weight:800;">السؤال ${i + 1} - ${isTF ? '⚡ (صح أو خطأ)' : '🔘 (اختيار من متعدد)'}:</label>`;
+                header.innerHTML = `<label style="font-size:0.75rem; color:${isTF ? 'var(--emerald)' : 'var(--cyan)'}; font-weight:800;">س ${i + 1} - ${isTF ? '⚡ صح وخطأ' : '🔘 MCQ'}:</label>`;
                 card.appendChild(header);
 
                 const qTextarea = document.createElement('textarea');
                 qTextarea.className = 'form-ctrl';
                 qTextarea.rows = 2;
-                qTextarea.style.cssText = 'resize:vertical; font-weight:600; line-height:1.5; margin-bottom:8px;';
                 qTextarea.value = q.text || '';
                 qTextarea.oninput = function() { parsedQuestions[i].text = this.value; };
                 card.appendChild(qTextarea);
 
                 const optsDiv = document.createElement('div');
-                optsDiv.style.cssText = 'margin:8px 0;';
+                optsDiv.style.cssText = 'margin:4px 0;';
 
                 q.options.forEach((opt, idx) => {
                     const optRow = document.createElement('div');
-                    optRow.style.cssText = 'display:flex; align-items:center; gap:6px; margin-bottom:4px;';
-                    optRow.innerHTML = `<span style="font-weight:800; color:#fff; width:20px;">${labels[idx]}:</span>`;
+                    optRow.style.cssText = 'display:flex; align-items:center; gap:4px; margin-bottom:3px;';
+                    optRow.innerHTML = `<span style="font-weight:800; color:#fff; width:14px; font-size:0.75rem;">${labels[idx]}:</span>`;
                     
                     const optInput = document.createElement('input');
                     optInput.type = 'text';
                     optInput.className = 'form-ctrl';
-                    optInput.style.cssText = 'padding:6px 10px; font-size:0.85rem; margin:0;';
+                    optInput.style.cssText = 'padding:4px 6px; font-size:0.78rem; margin:0;';
                     optInput.value = opt || '';
                     optInput.oninput = function() { parsedQuestions[i].options[idx] = this.value; };
 
@@ -1021,11 +1135,11 @@
                 card.appendChild(optsDiv);
 
                 const footer = document.createElement('div');
-                footer.style.cssText = 'display:flex; align-items:center; gap:10px; border-top:1px dashed rgba(255,255,255,0.1); padding-top:8px;';
-                footer.innerHTML = `<label style="color:var(--emerald); font-weight:700; font-size:0.85rem;">الإجابة الصحيحة:</label>`;
+                footer.style.cssText = 'display:flex; align-items:center; justify-content:space-between; border-top:1px dashed rgba(255,255,255,0.1); padding-top:4px;';
+                footer.innerHTML = `<label style="color:var(--emerald); font-weight:700; font-size:0.75rem;">الإجابة الصحيحة:</label>`;
 
                 const select = document.createElement('select');
-                select.style.cssText = 'background:#070d1e; color:var(--emerald); border:1px solid var(--emerald); border-radius:8px; padding:4px 10px; font-weight:800; outline:none;';
+                select.style.cssText = 'background:#070d1e; color:var(--emerald); border:1px solid var(--emerald); border-radius:6px; padding:2px 6px; font-weight:800; font-size:0.75rem;';
                 for (let idx = 0; idx < optsCount; idx++) {
                     const char = labels[idx].toLowerCase();
                     const optEl = document.createElement('option');
@@ -1049,7 +1163,7 @@
         async function handleDocxUpload(input) {
             if (!input.files[0]) return;
             const status = document.getElementById('docxStatus');
-            status.textContent = "جاري قراءة واستخراج الأسئلة...";
+            status.textContent = "جاري القراءة...";
             status.style.color = "var(--cyan)";
 
             const formData = new FormData();
@@ -1060,18 +1174,17 @@
                 const data = await res.json();
                 if(res.ok && data.status === 'success') {
                     document.getElementById('editingExamId').value = "";
-                    document.getElementById('modalHeading').textContent = "🧪 إعداد ونشر الامتحان الجديد";
+                    document.getElementById('modalHeading').textContent = "🧪 إعداد الامتحان";
                     document.getElementById('examTitle').value = input.files[0].name.replace(/\.[^/.]+$/, "");
-                    setQuickDeadline(24);
                     parsedQuestions = data.questions;
-                    status.textContent = `✅ تم استخراج ${data.questions_count} سؤال بنجاح!`;
+                    status.textContent = `✅ تم استخراج ${data.questions_count} سؤال!`;
                     openPreviewModal();
                 } else {
-                    status.textContent = "❌ " + (data.msg || "حدث خطأ");
+                    status.textContent = "❌ " + (data.msg || "خطأ");
                     status.style.color = "var(--rose)";
                 }
             } catch (e) {
-                status.textContent = "❌ فشل الاتصال بالخادم";
+                status.textContent = "❌ فشل الاتصال";
                 status.style.color = "var(--rose)";
             }
         }
@@ -1103,7 +1216,7 @@
             const pts_mcq = parseFloat(document.getElementById('pts_mcq').value) || 5;
             const pts_tf = parseFloat(document.getElementById('pts_tf').value) || 2.5;
 
-            if(!title) { alert("يرجى كتابة عنوان الامتحان"); return; }
+            if(!title) { alert("اكتبي عنوان الامتحان"); return; }
 
             const url = examId ? `/api/admin/update-exam/${examId}` : '/api/admin/publish-exam';
             const payload = {
@@ -1119,29 +1232,23 @@
             });
 
             if(res.ok) {
-                alert(examId ? "✅ تم حفظ التعديل بنجاح!" : "✅ تم نشر الامتحان بنجاح!");
+                alert("✅ تم الحفظ بنجاح!");
                 location.reload();
             }
         }
 
         async function deleteExam(examId, title) {
-            if (!confirm(`هل أنتِ متأكدة من حذف امتحان (${title}) نهائياً وكافة درجاته؟`)) return;
+            if (!confirm(`حذف امتحان (${title})؟`)) return;
             const res = await fetch(`/api/admin/delete-exam/${examId}`, { method: 'POST' });
             if(res.ok) {
-                const row = document.getElementById(`exam_row_${examId}`);
-                if (row) row.remove();
-                alert("تم حذف الامتحان ونتائجه بنجاح");
+                alert("تم الحذف بنجاح");
                 location.reload();
             }
         }
 
-        // =========================================================================
-        // 🔄 المراقبة والتحديث التلقائي اللحظي لشاشة الإدارة
-        // =========================================================================
         let lastAdminSignature = "{{ initial_signature }}";
 
         setInterval(async () => {
-            // لا يتم التحديث أثناء فتح النوافذ المنبثقة لمنع مقاطعة المعلمة
             const hasOpenModal = document.querySelector('.confirm-modal.active, .preview-modal.active');
             if (hasOpenModal) return;
 
@@ -1153,9 +1260,7 @@
                         location.reload();
                     }
                 }
-            } catch (e) {
-                // تجاهل أخطاء الشبكة المؤقتة
-            }
+            } catch (e) {}
         }, 4000);
     </script>
 </body>
