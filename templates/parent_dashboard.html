@@ -21,8 +21,8 @@
             --text: #ffffff;
             --muted: #94a3b8;
             --font-main: 'Readex Pro', 'Cairo', sans-serif;
-            --radius-lg: 20px;
-            --radius-md: 14px;
+            --radius-lg: 18px;
+            --radius-md: 12px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); }
@@ -41,35 +41,58 @@
             align-items: center;
             background: var(--card); 
             border: 1px solid rgba(0, 242, 254, 0.25);
-            padding: 1.2rem 2rem; 
+            padding: 1.2rem 1.8rem; 
             border-radius: var(--radius-lg); 
-            margin-bottom: 1.8rem;
+            margin-bottom: 1.5rem;
             box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
+        }
+
+        .header-title {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .header-title h2 {
             color: var(--cyan);
             font-size: 1.35rem;
             font-weight: 800;
+            white-space: nowrap;
         }
 
-        .header-title p {
+        /* السطر الثاني: الوصف */
+        .header-title .sub-desc {
             color: var(--muted);
-            font-size: 0.9rem;
-            margin-top: 4px;
+            font-size: 0.86rem;
+            white-space: nowrap;
+        }
+
+        /* السطر الثالث: إشراف المعلمة */
+        .header-title .sub-teacher {
+            color: #e2e8f0;
+            font-size: 0.84rem;
+            white-space: nowrap;
+        }
+
+        .prof-name {
+            color: var(--cyan);
+            font-weight: 800;
         }
 
         .btn-logout {
             color: var(--rose); 
             text-decoration: none; 
             font-weight: 700;
-            font-size: 0.9rem;
-            padding: 8px 18px;
+            font-size: 0.88rem;
+            padding: 8px 16px;
             border: 1px solid var(--rose);
             border-radius: var(--radius-md);
             background: rgba(244, 63, 94, 0.06);
             white-space: nowrap;
             transition: 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
         .btn-logout:hover {
@@ -81,8 +104,8 @@
             background: var(--card); 
             border: 1px solid rgba(255, 255, 255, 0.08); 
             border-radius: var(--radius-lg); 
-            padding: 1.8rem; 
-            margin-bottom: 2rem;
+            padding: 1.6rem; 
+            margin-bottom: 1.5rem;
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
         }
 
@@ -93,7 +116,7 @@
             flex-wrap: wrap;
             gap: 12px;
             padding-bottom: 1.2rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
@@ -103,26 +126,35 @@
             font-weight: 800;
             display: flex;
             align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .badges-wrapper {
+            display: flex;
+            align-items: center;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
         .child-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: rgba(0, 242, 254, 0.08);
-            border: 1px solid rgba(0, 242, 254, 0.2);
-            padding: 6px 14px;
-            border-radius: var(--radius-md);
+            background: rgba(0, 242, 254, 0.07);
+            border: 1px solid rgba(0, 242, 254, 0.25);
+            padding: 6px 12px;
+            border-radius: 10px;
             color: #fff;
-            font-size: 0.88rem;
+            font-size: 0.82rem;
             font-weight: 700;
+            white-space: nowrap;
         }
 
         .child-sections-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.8rem;
+            gap: 1.5rem;
         }
 
         .section-box {
@@ -134,12 +166,13 @@
 
         .section-title {
             color: #fff;
-            font-size: 1.05rem;
+            font-size: 1.02rem;
             font-weight: 800;
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
             gap: 8px;
+            white-space: nowrap;
         }
 
         .table-responsive {
@@ -151,28 +184,31 @@
         table { 
             width: 100%; 
             border-collapse: collapse; 
-            min-width: 280px;
+            min-width: 270px;
         }
 
         th, td { 
-            padding: 11px 12px; 
+            padding: 10px 10px; 
             text-align: right; 
             border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
-            font-size: 0.9rem;
+            font-size: 0.88rem;
+            white-space: nowrap;
         }
 
         th { 
             color: var(--muted); 
             font-weight: 700;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 6px;
         }
 
         .badge-status {
             display: inline-block;
-            padding: 4px 10px;
+            padding: 3px 10px;
             border-radius: 8px;
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             font-weight: 800;
+            white-space: nowrap;
         }
         .status-present { background: rgba(16, 185, 129, 0.15); color: var(--emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
         .status-absent { background: rgba(244, 63, 94, 0.15); color: var(--rose); border: 1px solid rgba(244, 63, 94, 0.3); }
@@ -180,48 +216,97 @@
         .empty-cell {
             text-align: center;
             color: var(--muted);
-            padding: 2rem 1rem;
-            font-size: 0.9rem;
+            padding: 1.8rem 1rem;
+            font-size: 0.85rem;
+            white-space: nowrap;
         }
 
-        @media (max-width: 900px) {
-            body { padding: 1rem 3%; }
+        /* 📱 شاشات الهواتف الذكية */
+        @media (max-width: 768px) {
+            body { 
+                padding: 0.8rem 3%; 
+            }
 
             header {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 14px;
-                padding: 1.2rem;
+                gap: 12px;
+                padding: 1rem;
+            }
+
+            .header-title h2 {
+                font-size: 1.15rem;
+            }
+
+            .header-title .sub-desc {
+                font-size: 0.78rem;
+            }
+
+            .header-title .sub-teacher {
+                font-size: 0.8rem;
             }
 
             .btn-logout {
                 align-self: flex-end;
+                padding: 6px 14px;
+                font-size: 0.8rem;
             }
 
             .child-card {
-                padding: 1.2rem;
-                margin-bottom: 1.5rem;
-                border-radius: 16px;
+                padding: 1rem;
+                margin-bottom: 1.2rem;
+                border-radius: 15px;
             }
 
             .child-header {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: stretch;
                 gap: 10px;
+                padding-bottom: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .child-info h3 {
+                font-size: 1.08rem;
+            }
+
+            .badges-wrapper {
+                display: flex;
+                flex-direction: row;
+                gap: 6px;
+                width: 100%;
+            }
+
+            .child-badge {
+                flex: 1;
+                justify-content: center;
+                font-size: 0.76rem;
+                padding: 6px 8px;
+                text-align: center;
             }
 
             .child-sections-grid {
                 grid-template-columns: 1fr;
-                gap: 1.2rem;
+                gap: 1.1rem;
             }
 
             .section-box {
-                padding: 1rem 0.8rem;
+                padding: 0.9rem 0.7rem;
+            }
+
+            .section-title {
+                font-size: 0.92rem;
+                margin-bottom: 0.8rem;
             }
 
             th, td {
-                padding: 9px 8px;
-                font-size: 0.84rem;
+                padding: 8px 6px;
+                font-size: 0.8rem;
+            }
+
+            .badge-status {
+                padding: 3px 8px;
+                font-size: 0.75rem;
             }
         }
     </style>
@@ -230,8 +315,12 @@
 
     <header>
         <div class="header-title">
+            <!-- السطر 1 -->
             <h2>لوحة متابعة ولي الأمر 👨‍👩‍👧</h2>
-            <p>متابعة تقارير الحضور والغياب والنتائج تحت إشراف <strong style="color:var(--cyan);">الأستاذة هايدي عطية</strong></p>
+            <!-- السطر 2 -->
+            <p class="sub-desc">متابعة تقارير الحضور والغياب والنتائج</p>
+            <!-- السطر 3 -->
+            <p class="sub-teacher">تحت إشراف: <strong class="prof-name">الأستاذة هايدي عطية</strong></p>
         </div>
         <a href="/logout" class="btn-logout">تسجيل الخروج 🚪</a>
     </header>
@@ -242,13 +331,14 @@
             <div class="child-info">
                 <h3>👨‍🎓 الطالب: {{ rep.child.name }}</h3>
             </div>
-            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <div class="badges-wrapper">
                 <span class="child-badge">📚 المرحلة: {{ rep.grade_title }}</span>
                 <span class="child-badge">🔖 الكود: <strong style="color:var(--cyan);">{{ rep.child.student_code }}</strong></span>
             </div>
         </div>
 
         <div class="child-sections-grid">
+            <!-- سجل الحضور والغياب -->
             <div class="section-box">
                 <div class="section-title">
                     <span>📅</span> سجل الحضور والغياب
@@ -283,6 +373,7 @@
                 </div>
             </div>
 
+            <!-- درجات الاختبارات -->
             <div class="section-box">
                 <div class="section-title">
                     <span>📈</span> درجات الاختبارات الإلكترونية
@@ -304,10 +395,10 @@
                                     {% if r.score == 'محضر غش' %}
                                         <span style="color:var(--rose); font-weight:800;">🚨 محضر غش</span>
                                     {% else %}
-                                        <strong style="color:var(--emerald); font-size:1.05rem;">{{ r.score }}</strong> / {{ r.total_marks }}
+                                        <strong style="color:var(--emerald); font-size:0.95rem;">{{ r.score }}</strong> / {{ r.total_marks }}
                                     {% endif %}
                                 </td>
-                                <td style="color:var(--muted); font-size:0.85rem;">{{ r.date }}</td>
+                                <td style="color:var(--muted); font-size:0.8rem;">{{ r.date }}</td>
                             </tr>
                             {% else %}
                             <tr>
@@ -321,18 +412,15 @@
         </div>
     </div>
     {% else %}
-    <div class="child-card" style="text-align:center; padding:3.5rem 1.5rem;">
-        <span style="font-size:3rem; display:block; margin-bottom:1rem;">⚠️</span>
-        <h3 style="color:var(--rose); margin-bottom:0.8rem; font-size:1.3rem;">لا يوجد طلاب مرتبطين برقم هذا الحساب حتى الآن</h3>
-        <p style="color:var(--muted); max-width:550px; margin:0 auto; line-height:1.8; font-size:0.95rem;">
+    <div class="child-card" style="text-align:center; padding:3rem 1.2rem;">
+        <span style="font-size:2.8rem; display:block; margin-bottom:0.8rem;">⚠️</span>
+        <h3 style="color:var(--rose); margin-bottom:0.6rem; font-size:1.15rem;">لا يوجد طلاب مرتبطين برقم هذا الحساب حتى الآن</h3>
+        <p style="color:var(--muted); max-width:500px; margin:0 auto; line-height:1.7; font-size:0.88rem;">
             يرجى التأكد من قيام الطالب بإدخال رقم هاتفك في خانة <strong>(رقم هاتف ولي الأمر)</strong> عند إنشاء حسابه، ليتم ربط تقاريره ونتائجه بحسابك تلقائياً.
         </p>
     </div>
     {% endfor %}
 
-    <!-- ========================================================================= -->
-    <!-- 🔄 المراقبة والتحديث التلقائي اللحظي لشاشة ولي الأمر -->
-    <!-- ========================================================================= -->
     <script>
         let lastParentSignature = "{{ initial_signature }}";
 
