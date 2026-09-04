@@ -200,9 +200,18 @@ def index():
         elif role == 'parent': return redirect(url_for('parent_dashboard'))
         elif role == 'admin': return redirect(url_for('teacher_portal'))
 
-    admin = users_col.find_one({"role": "admin"})
-    teacher_avatar = admin.get('avatar') if admin and admin.get('avatar') else DEFAULT_AVATAR
-    teacher_name = admin.get('name', 'الأستاذة هايدي عطية') if admin else 'الأستاذة هايدي عطية'
+    teacher_avatar = DEFAULT_AVATAR
+    teacher_name = 'الأستاذة هايدي عطية'
+
+    try:
+        admin = users_col.find_one({"role": "admin"})
+        if admin:
+            if admin.get('avatar'):
+                teacher_avatar = admin['avatar']
+            if admin.get('name'):
+                teacher_name = admin['name']
+    except Exception as e:
+        print(f"Error retrieving teacher profile: {e}")
 
     return render_template('index.html', 
                            grades=GRADE_NAMES, 
