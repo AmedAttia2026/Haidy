@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>منصة الأستاذة هايدي عطية التعليمية</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +21,7 @@
             --text-secondary: #94a3b8;
             --font-sans: 'Readex Pro', 'Cairo', sans-serif;
             --radius-full: 9999px;
-            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-sans); }
@@ -33,6 +33,7 @@
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             overflow-x: hidden; position: relative;
+            padding: 1.5rem 1rem;
         }
 
         canvas#bg-canvas {
@@ -41,36 +42,38 @@
         }
 
         .orb {
-            position: fixed; border-radius: 50%; filter: blur(130px);
-            pointer-events: none; z-index: 0; opacity: 0.28;
+            position: fixed; border-radius: 50%; filter: blur(100px);
+            pointer-events: none; z-index: 0; opacity: 0.25;
             animation: orbFloat 22s infinite alternate ease-in-out;
         }
-        .orb--1 { width: 600px; height: 600px; top: -200px; right: -150px; background: radial-gradient(circle, var(--cyan), transparent 70%); }
-        .orb--2 { width: 550px; height: 550px; bottom: -200px; left: -150px; background: radial-gradient(circle, var(--purple), transparent 70%); }
+        .orb--1 { width: 420px; height: 420px; top: -150px; right: -100px; background: radial-gradient(circle, var(--cyan), transparent 70%); }
+        .orb--2 { width: 400px; height: 400px; bottom: -150px; left: -100px; background: radial-gradient(circle, var(--purple), transparent 70%); }
 
         @keyframes orbFloat {
             0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(50px, -50px) scale(1.12); }
+            100% { transform: translate(35px, -35px) scale(1.08); }
         }
 
         .hero-container {
             position: relative; z-index: 10;
-            width: 100%; max-width: 850px;
-            padding: 3rem 1.5rem; text-align: center;
+            width: 100%; max-width: 650px;
+            padding: 1rem 0.5rem; text-align: center;
             display: flex; flex-direction: column; align-items: center;
         }
 
+        /* 🌟 تكبير كادر الصورة الشخصية بصورة واضحة وجذابة */
         .avatar-box {
-            position: relative; width: 220px; height: 220px;
-            margin: 0 auto 2rem auto;
+            position: relative; 
+            width: 200px; height: 200px;
+            margin: 0 auto 1.6rem auto;
         }
 
         .avatar-ring {
-            position: absolute; inset: -8px; border-radius: 50%;
+            position: absolute; inset: -7px; border-radius: 50%;
             background: linear-gradient(135deg, var(--cyan), var(--purple), var(--blue), var(--cyan));
             background-size: 300% 300%;
             animation: ringSpin 7s linear infinite;
-            box-shadow: 0 0 60px rgba(0, 242, 254, 0.35);
+            box-shadow: 0 0 45px rgba(0, 242, 254, 0.4);
         }
 
         @keyframes ringSpin {
@@ -82,7 +85,7 @@
         .avatar-img-wrap {
             position: relative; width: 100%; height: 100%;
             border-radius: 50%; background: #070d1e;
-            padding: 6px; overflow: hidden;
+            padding: 5px; overflow: hidden;
         }
 
         .avatar-img-wrap img {
@@ -92,26 +95,26 @@
         }
 
         .badge-verified {
-            position: absolute; bottom: 10px; right: 15px;
+            position: absolute; bottom: 8px; right: 12px;
             background: linear-gradient(135deg, var(--cyan), var(--blue));
-            color: #030712; width: 38px; height: 38px;
+            color: #030712; width: 34px; height: 34px;
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; font-weight: 900; border: 3px solid var(--bg-primary);
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.7);
+            font-size: 1.15rem; font-weight: 900; border: 3px solid var(--bg-primary);
+            box-shadow: 0 0 18px rgba(0, 242, 254, 0.65);
         }
 
         .teacher-tag {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 8px 24px; border-radius: var(--radius-full);
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 6px 18px; border-radius: var(--radius-full);
             background: rgba(0, 242, 254, 0.08);
             border: 1px solid rgba(0, 242, 254, 0.25);
-            color: var(--cyan); font-size: 0.95rem; font-weight: 700;
-            margin-bottom: 1.2rem; backdrop-filter: blur(10px);
+            color: var(--cyan); font-size: 0.85rem; font-weight: 700;
+            margin-bottom: 0.8rem; backdrop-filter: blur(10px);
         }
 
         h1.teacher-title {
-            font-size: 3.6rem; font-weight: 900;
-            letter-spacing: -1px; margin-bottom: 2.5rem; line-height: 1.2;
+            font-size: 2.6rem; font-weight: 900;
+            letter-spacing: -0.5px; margin-bottom: 2rem; line-height: 1.25;
         }
 
         h1.teacher-title span {
@@ -120,84 +123,83 @@
         }
 
         .cta-button-group {
-            display: flex; gap: 1.5rem; justify-content: center;
-            width: 100%; max-width: 540px; flex-wrap: wrap;
+            display: flex; gap: 1rem; justify-content: center;
+            width: 100%; max-width: 440px; flex-wrap: wrap;
         }
 
         .btn-cta {
-            flex: 1; min-width: 230px;
-            padding: 1.25rem 2.4rem; border-radius: var(--radius-full);
-            font-size: 1.15rem; font-weight: 800;
+            flex: 1; min-width: 170px;
+            padding: 0.95rem 1.6rem; border-radius: var(--radius-full);
+            font-size: 1rem; font-weight: 800;
             cursor: pointer; text-decoration: none;
             display: inline-flex; align-items: center; justify-content: center;
-            gap: 12px; border: none; outline: none;
+            gap: 8px; border: none; outline: none;
             transition: var(--transition-smooth);
         }
 
         .btn-register-cta {
             background: linear-gradient(135deg, var(--cyan), var(--blue));
             color: #030712;
-            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.4);
+            box-shadow: 0 8px 24px rgba(0, 242, 254, 0.35);
         }
         .btn-register-cta:hover {
-            transform: translateY(-4px) scale(1.03);
-            box-shadow: 0 18px 45px rgba(0, 242, 254, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(0, 242, 254, 0.5);
         }
 
         .btn-login-cta {
             background: rgba(255, 255, 255, 0.04);
             color: #ffffff;
             border: 1px solid rgba(0, 242, 254, 0.25);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(10px);
         }
         .btn-login-cta:hover {
             border-color: var(--cyan); color: var(--cyan);
-            transform: translateY(-4px);
+            transform: translateY(-2px);
             background: rgba(0, 242, 254, 0.08);
-            box-shadow: 0 10px 35px rgba(0, 242, 254, 0.25);
         }
 
         .modal-overlay {
             position: fixed; inset: 0; z-index: 1000;
             background: rgba(3, 7, 18, 0.88);
-            backdrop-filter: blur(25px);
+            backdrop-filter: blur(20px);
             display: none; align-items: center; justify-content: center;
-            padding: 1.5rem;
+            padding: 1rem;
         }
         .modal-overlay.active { display: flex; }
 
         .auth-card {
-            background: rgba(13, 20, 38, 0.95);
+            background: rgba(13, 20, 38, 0.96);
             border: 1px solid rgba(0, 242, 254, 0.25);
-            border-radius: 28px; width: 100%; max-width: 480px;
-            padding: 2.5rem 2rem;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85);
+            border-radius: 22px; width: 100%; max-width: 420px;
+            padding: 1.8rem 1.4rem;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
             position: relative;
-            animation: modalIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: modalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes modalIn {
-            from { opacity: 0; transform: scale(0.92) translateY(20px); }
+            from { opacity: 0; transform: scale(0.95) translateY(12px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .modal-close {
-            position: absolute; top: 22px; left: 22px;
+            position: absolute; top: 16px; left: 16px;
             background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff; width: 34px; height: 34px; border-radius: 50%;
+            color: #fff; width: 30px; height: 30px; border-radius: 50%;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
-            font-size: 1.1rem; transition: 0.2s;
+            font-size: 0.95rem; transition: 0.2s;
         }
         .modal-close:hover { background: var(--rose); border-color: var(--rose); }
 
         .role-selector {
-            display: flex; gap: 8px; background: rgba(0, 0, 0, 0.45);
-            padding: 5px; border-radius: var(--radius-full); margin-bottom: 1.6rem;
+            display: flex; gap: 6px; background: rgba(0, 0, 0, 0.45);
+            padding: 4px; border-radius: var(--radius-full); margin-bottom: 1.2rem;
         }
         .role-btn {
-            flex: 1; padding: 10px; border-radius: var(--radius-full);
+            flex: 1; padding: 8px; border-radius: var(--radius-full);
             background: transparent; border: none; color: var(--text-secondary);
-            font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: 0.3s;
+            font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: 0.25s;
         }
         .role-btn.active {
             background: linear-gradient(135deg, var(--cyan), var(--blue));
@@ -205,36 +207,46 @@
         }
 
         .form-input, .form-select {
-            width: 100%; padding: 14px 18px;
+            width: 100%; padding: 11px 14px;
             background: rgba(7, 12, 26, 0.9);
             border: 1px solid rgba(0, 242, 254, 0.16);
-            border-radius: 16px; color: #fff;
-            font-size: 1rem; margin-bottom: 1.1rem;
-            outline: none; transition: 0.3s;
+            border-radius: 12px; color: #fff;
+            font-size: 0.9rem; margin-bottom: 0.9rem;
+            outline: none; transition: 0.25s;
         }
         .form-input:focus, .form-select:focus {
             border-color: var(--cyan);
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.25);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.25);
         }
         .form-select option { background: #070d1e; color: #fff; }
 
         .btn-submit {
-            width: 100%; padding: 14px;
+            width: 100%; padding: 12px;
             background: linear-gradient(135deg, var(--cyan), var(--purple));
-            color: #fff; font-weight: 800; font-size: 1.1rem;
-            border-radius: 16px; border: none; cursor: pointer;
-            box-shadow: 0 10px 25px rgba(0, 242, 254, 0.3);
-            transition: 0.3s;
+            color: #fff; font-weight: 800; font-size: 1rem;
+            border-radius: 14px; border: none; cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 242, 254, 0.3);
+            transition: 0.25s;
         }
-        .btn-submit:hover { transform: translateY(-2px); filter: brightness(1.15); }
+        .btn-submit:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
         .admin-link {
-            position: fixed; bottom: 15px; left: 20px;
+            position: fixed; bottom: 12px; left: 16px;
             color: var(--text-secondary); text-decoration: none;
-            font-size: 0.8rem; opacity: 0.6; transition: 0.3s;
+            font-size: 0.75rem; opacity: 0.65; transition: 0.25s;
             z-index: 20;
         }
         .admin-link:hover { opacity: 1; color: var(--cyan); }
+
+        /* 📱 تكبير متناسق لشاشات الموبايل */
+        @media (max-width: 480px) {
+            .avatar-box { width: 175px; height: 175px; margin-bottom: 1.4rem; }
+            h1.teacher-title { font-size: 2.25rem; margin-bottom: 1.6rem; }
+            .teacher-tag { font-size: 0.8rem; padding: 5px 15px; }
+            .cta-button-group { flex-direction: column; width: 100%; gap: 0.75rem; }
+            .btn-cta { width: 100%; min-width: unset; padding: 0.85rem 1.2rem; font-size: 0.95rem; }
+            .auth-card { padding: 1.5rem 1.1rem; border-radius: 18px; }
+        }
     </style>
 </head>
 <body>
@@ -266,11 +278,11 @@
         <div class="cta-button-group">
             <button class="btn-cta btn-register-cta" onclick="openAuthModal('register')">
                 <span>طلب التسجيل</span>
-                <span style="font-size:1.3rem;">✨</span>
+                <span style="font-size:1.15rem;">✨</span>
             </button>
             <button class="btn-cta btn-login-cta" onclick="openAuthModal('login')">
                 <span>تسجيل الدخول</span>
-                <span style="font-size:1.3rem;">🔐</span>
+                <span style="font-size:1.15rem;">🔐</span>
             </button>
         </div>
 
@@ -280,7 +292,7 @@
         <div class="auth-card">
             <button class="modal-close" onclick="closeAuthModal()">✕</button>
 
-            <h3 id="modalTitle" style="font-size: 1.5rem; margin-bottom: 1.2rem; text-align: center; color: var(--cyan);">تسجيل الدخول</h3>
+            <h3 id="modalTitle" style="font-size: 1.25rem; margin-bottom: 1rem; text-align: center; color: var(--cyan);">تسجيل الدخول</h3>
 
             <div class="role-selector">
                 <button type="button" class="role-btn active" id="roleStudent" onclick="setRole('student')">👨‍🎓 طالب</button>
@@ -295,7 +307,7 @@
                     <input type="text" id="userName" class="form-input" placeholder="اسم الطالب ثلاثي">
                     
                     <div id="studentGradeField">
-                        <label style="display:block; font-size:0.85rem; color:var(--cyan); margin-bottom:6px;">اختر المرحلة الدراسية بدقة:</label>
+                        <label style="display:block; font-size:0.8rem; color:var(--cyan); margin-bottom:4px;">اختر المرحلة الدراسية:</label>
                         <select id="userGrade" class="form-select">
                             <option value="p4">الصف الرابع الابتدائي</option>
                             <option value="p5">الصف الخامس الابتدائي</option>
@@ -306,7 +318,7 @@
                     </div>
 
                     <div id="parentPhoneField">
-                        <input type="tel" id="parentPhone" class="form-input" placeholder="رقم هاتف ولي الأمر (لربط التقارير)">
+                        <input type="tel" id="parentPhone" class="form-input" placeholder="رقم هاتف ولي الأمر">
                     </div>
                 </div>
 
@@ -314,7 +326,7 @@
                 <input type="password" id="userPassword" class="form-input" placeholder="كلمة المرور" required>
 
                 <button type="submit" class="btn-submit" id="submitBtnText">تأكيد الدخول</button>
-                <div id="authAlert" style="margin-top: 14px; font-size: 0.92rem; text-align: center; display: none; line-height: 1.6;"></div>
+                <div id="authAlert" style="margin-top: 10px; font-size: 0.85rem; text-align: center; display: none; line-height: 1.5;"></div>
             </form>
         </div>
     </div>
@@ -325,22 +337,22 @@
             const ctx = canvas.getContext('2d');
             let w = canvas.width = window.innerWidth, h = canvas.height = window.innerHeight;
             window.addEventListener('resize', () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; });
-            const pts = Array.from({length: 45}, () => ({
+            const pts = Array.from({length: 35}, () => ({
                 x: Math.random() * w, y: Math.random() * h,
-                vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4
+                vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35
             }));
             function loop() {
                 ctx.clearRect(0,0,w,h);
                 pts.forEach((p, i) => {
                     p.x += p.vx; p.y += p.vy;
                     if(p.x<0 || p.x>w) p.vx *= -1; if(p.y<0 || p.y>h) p.vy *= -1;
-                    ctx.beginPath(); ctx.arc(p.x, p.y, 2.2, 0, Math.PI*2);
+                    ctx.beginPath(); ctx.arc(p.x, p.y, 1.8, 0, Math.PI*2);
                     ctx.fillStyle = '#00f2fe'; ctx.fill();
                     for(let j=i+1; j<pts.length; j++) {
                         const d = Math.hypot(p.x-pts[j].x, p.y-pts[j].y);
-                        if(d < 140) {
+                        if(d < 120) {
                             ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(pts[j].x, pts[j].y);
-                            ctx.strokeStyle = `rgba(0, 242, 254, ${0.16 - d/1000})`; ctx.stroke();
+                            ctx.strokeStyle = `rgba(0, 242, 254, ${0.15 - d/1000})`; ctx.stroke();
                         }
                     }
                 });
@@ -386,14 +398,9 @@
             studentGradeField.style.display = (role === 'student' && isReg) ? 'block' : 'none';
             parentPhoneField.style.display = (role === 'student' && isReg) ? 'block' : 'none';
 
-            // تبديل نص placeholder حسب الدور المختار
             const nameInput = document.getElementById('userName');
             if (nameInput) {
-                if (role === 'student') {
-                    nameInput.placeholder = "اسم الطالب ثلاثي";
-                } else {
-                    nameInput.placeholder = "اسم ولي الأمر ثلاثي";
-                }
+                nameInput.placeholder = (role === 'student') ? "اسم الطالب ثلاثي" : "اسم ولي الأمر ثلاثي";
             }
         }
 
